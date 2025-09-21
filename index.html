@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Xalara (XALRA) — Official Site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Xalara (XALRA) — ERC‑20 token on Sepolia. Contract, links, and wallet helpers." />
+  <link rel="canonical" href="https://xalara.io/" />
+  <meta property="og:title" content="Xalara (XALRA)" />
+  <meta property="og:description" content="Official token page for Xalara (XALRA). Contract, links, and wallet helpers." />
+  <meta property="og:type" content="website" />
+  <style>
+    :root { --bg:#0b0d12; --card:#121621; --text:#e7edf5; --muted:#98a3b3; --accent:#6ee7ff; --accent2:#a78bfa; }
+    * { box-sizing: border-box; }
+    body { margin:0; font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial; color:var(--text); background:radial-gradient(1200px 600px at 80% -10%, #1b2131 0%, #0b0d12 60%); }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 24px; }
+    header { padding: 24px 0 8px; }
+    h1 { margin:0 0 6px; font-size: clamp(28px, 4vw, 40px); letter-spacing:.2px; }
+    .subtitle { color:var(--muted); margin:0 0 18px; }
+    .card { background:var(--card); border:1px solid #1f2737; border-radius:14px; padding:18px; margin:16px 0; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+    .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    code { background:#0e1320; border:1px solid #1b2233; padding:4px 8px; border-radius:8px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; color:#cfe1ff; word-break: break-all; }
+    button { cursor: pointer; border:1px solid #2a3550; background:#141a29; color:#eaf2ff; padding:10px 14px; border-radius:10px; font-weight:600; transition:.15s ease; }
+    button:hover { border-color:#3b4670; transform: translateY(-1px); }
+    .btn-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+    .tag { display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:999px; background:#0e1320; border:1px solid #1b2233; color:#cde0ff; font-size:13px; }
+    .muted { color: var(--muted); }
+    .warn  { color:#ffd166; }
+    footer { color: var(--muted); font-size: 13px; padding: 18px 6px 36px; }
+    a { color: #84c5ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>⚡ Xalara <span class="muted">(XALRA)</span></h1>
+      <p class="subtitle">Official site · ERC‑20 on <strong>Sepolia</strong> (testnet) · xalara.io</p>
+      <div id="networkNote" class="tag">Checking wallet network…</div>
+    </header>
+
+    <section id="wallet" class="card">
+      <h2>Contract</h2>
+      <p><strong>Address:</strong> <code id="addr">0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16</code></p>
+      <div class="btn-row">
+        <button id="copy">Copy address</button>
+        <a id="etherscan" class="tag" href="https://sepolia.etherscan.io/address/0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16#code" target="_blank" rel="noopener">View on Etherscan ↗</a>
+        <button id="add">Add XALRA to MetaMask</button>
+      </div>
+      <p class="muted" style="margin-top:10px">Symbol: <strong>XALRA</strong> · Decimals: <strong>18</strong> · Total Supply: <strong>1,000,000,000</strong></p>
+    </section>
+
+    <section class="card">
+      <h2>About Xalara</h2>
+      <div class="grid">
+        <div>
+          <p><strong>Standard:</strong> ERC‑20</p>
+          <p><strong>Features:</strong> Burnable, Pausable, Permit (EIP‑2612)</p>
+          <p><strong>Owner:</strong> <code>0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b</code></p>
+        </div>
+        <div>
+          <p><strong>Source:</strong> Verified on Etherscan &amp; Sourcify</p>
+          <ul>
+            <li><a href="https://sepolia.etherscan.io/address/0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16#code" target="_blank" rel="noopener">Etherscan (Code)</a></li>
+            <li><a href="https://repo.sourcify.dev/contracts/full_match/11155111/0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16/" target="_blank" rel="noopener">Sourcify</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Important</h2>
+      <p class="warn">This is a <strong>Sepolia testnet</strong> token for development and demonstration. It has <strong>no financial value</strong> and is <strong>not an investment</strong>.</p>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Xalara · Contract: <code>0x6cC3…B5F16</code> · Network: Sepolia (chainId <code>11155111</code>)
+    </footer>
+  </div>
+
+  <script>
+    const CONTRACT = "0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16";
+    const CHAIN_ID_HEX = "0xaa36a7"; // 11155111
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    document.getElementById("copy").onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(CONTRACT);
+        const btn = document.getElementById("copy");
+        const old = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => btn.textContent = old, 1200);
+      } catch {}
+    };
+
+    document.getElementById("add").onclick = async () => {
+      if (!window.ethereum) { alert("MetaMask not detected."); return; }
+      try {
+        const current = await window.ethereum.request({ method: "eth_chainId" });
+        if (current !== CHAIN_ID_HEX) {
+          try {
+            await window.ethereum.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: CHAIN_ID_HEX }],
+            });
+          } catch (err) {
+            if (err && err.code === 4902) {
+              await window.ethereum.request({
+                method: "wallet_addEthereumChain",
+                params: [{
+                  chainId: CHAIN_ID_HEX,
+                  chainName: "Sepolia",
+                  nativeCurrency: { name: "Sepolia ETH", symbol: "ETH", decimals: 18 },
+                  rpcUrls: ["https://rpc.sepolia.org"],
+                  blockExplorerUrls: ["https://sepolia.etherscan.io"],
+                }],
+              });
+            } else { throw err; }
+          }
+        }
+        await window.ethereum.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: { address: CONTRACT, symbol: "XALRA", decimals: 18 }
+          }
+        });
+      } catch (e) {
+        console.error(e);
+        alert("Could not add token. See console for details.");
+      }
+    };
+
+    (async () => {
+      const el = document.getElementById("networkNote");
+      if (!window.ethereum) { el.textContent = "MetaMask not detected"; return; }
+      try {
+        const id = await window.ethereum.request({ method: "eth_chainId" });
+        el.textContent = (id === CHAIN_ID_HEX) ? "Wallet network: Sepolia ✓"
+          : `Wallet network: not Sepolia (chainId ${parseInt(id,16)})`;
+      } catch { el.textContent = "Could not read wallet network"; }
+    })();
+  </script>
+</body>
+</html>

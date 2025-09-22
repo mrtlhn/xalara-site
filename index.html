@@ -158,6 +158,114 @@
   </div>
   <p class="muted" id="txStatus"></p>
 </section>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.min.js"></script>
+<script>
+  const CONTRACT = "0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16";  // Sepolia
+  const CHAIN_ID_HEX = "0xaa36a7"; // Sepolia
+  const ABI = [
+    "function name() view returns (string)",
+    "function symbol() view returns (string)",
+    "function decimals() view returns (uint8)",
+    "function totalSupply() view returns (uint256)",
+    "function balanceOf(address) view returns (uint256)",
+    "function transfer(address,uint256) returns (bool)"
+  ];
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  const $ = (id) => document.getElementById(id);
+  const note = (msg) => $("txStatus").textContent = msg;
+
+  async function ensureProvider() {
+    if (!window.ethereum) throw new Error("MetaMask not detected");
+    return new ethers.BrowserProvider(window.ethereum);
+  }
+
+  async function ensureSepolia() {
+    const id = await window.ethereum.request({ method: "eth_chainId" });
+    if (id !== CHAIN_ID_HEX) {
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: CHAIN_ID_HEX }]
+        });
+      } catch (e) {
+        if (e && e.code === 4902) {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [{
+              chainId: CHAIN_ID_HEX,
+              chainName: "Sepolia",
+              nativeCurrency: { name: "Sepolia ETH", symbol: "ETH", decimals: 18 },
+              rpcUrls: ["https://rpc.sepolia.org"],
+              blockExplorerUrls: ["https://sepolia.etherscan.io"]
+            }]
+          });
+        } else { throw e; }
+      }
+    }
+  }
+
+  let provider, signer, token;
+
+  async function connect() {
+    provider = await ensureProvider();
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+    await ensureSepolia();
+    signer = await provider.getSigner();
+    token = new ethers.Contract(CONTRACT, ABI, signer);
+
+    const addr = await signer.getAddress();
+    $("walletAddr").textContent = addr;
+    $("addrRow").style.display = "block";
+
+    const bal = await token.balanceOf(addr);
+    $("myBalance").textContent = ethers.formatUnits(bal, 18);
+
+    note("Connected to Sepolia.");
+  }
+
+  $("connect").onclick = () => connect().catch(e => note(e.message || String(e)));
+  $("switch").onclick = () =>
+    window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: CHAIN_ID_HEX }] })
+      .catch(e => note(e.message || String(e)));
+  $("addToken").onclick = async () => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: { type: "ERC20", options: { address: CONTRACT, symbol: "XALRA", decimals: 18 } }
+      });
+    } catch (e) { note(e.message || String(e)); }
+  };
+  $("send").onclick = async () => {
+    try {
+      if (!signer) await connect();
+      const to = $("to").value.trim();
+      const amount = $("amount").value.trim();
+      if (!ethers.isAddress(to)) throw new Error("Invalid recipient address");
+      const value = ethers.parseUnits(amount || "0", 18);
+      note("Sending…");
+      const tx = await token.transfer(to, value);
+      note("Pending: " + tx.hash);
+      const rcpt = await tx.wait();
+      note("Confirmed in block " + rcpt.blockNumber + ". Tx: " + tx.hash);
+      const bal = await token.balanceOf(await signer.getAddress());
+      $("myBalance").textContent = ethers.formatUnits(bal, 18);
+    } catch (e) { note(e.message || String(e)); }
+  };
+
+  // Network badge
+  (async () => {
+    const el = document.getElementById("networkNote");
+    if (!window.ethereum) { el.textContent = "MetaMask not detected"; return; }
+    try {
+      const id = await window.ethereum.request({ method: "eth_chainId" });
+      el.textContent = (id === CHAIN_ID_HEX) ? "Wallet network: Sepolia ✓"
+        : `Wallet network: not Sepolia (chainId ${parseInt(id,16)})`;
+    } catch { el.textContent = "Could not read wallet network"; }
+  })();
+</script>
+
 
 </body>
 </html>

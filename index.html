@@ -142,5 +142,22 @@
       } catch { el.textContent = "Could not read wallet network"; }
     })();
   </script>
+  <section class="card" id="wallet">
+  <h2>Try it (Sepolia)</h2>
+  <div class="btn-row">
+    <button id="connect">Connect wallet</button>
+    <button id="switch">Switch to Sepolia</button>
+    <button id="addToken">Add XALRA to MetaMask</button>
+  </div>
+  <p id="addrRow" class="muted" style="display:none">Wallet: <code id="walletAddr">–</code></p>
+  <p>My XALRA balance: <strong id="myBalance">–</strong></p>
+  <div style="margin-top:12px">
+    <label>Send to: <input id="to" placeholder="0x..." style="width:340px"></label>
+    <label style="margin-left:10px">Amount (XALRA): <input id="amount" type="number" step="0.0001" min="0" style="width:140px"></label>
+    <button id="send">Send</button>
+  </div>
+  <p class="muted" id="txStatus"></p>
+</section>
+
 </body>
 </html>

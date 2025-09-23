@@ -104,6 +104,172 @@
     const CONTRACT = "0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16";
     const CHAIN_ID_HEX = "0xaa36a7"; // 11155111
 
+    <script>
+  // ===== Owner Tools (pause/unpause) =====
+  // Only visible when the connected wallet is the contract owner
+  const OWNER = "0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b".toLowerCase();
+
+  const OWNER_ABI = [
+    "function paused() view returns (bool)",
+    "function pause()",
+    "function unpause()",
+    "function owner() view returns (address)"
+  ];
+
+  const ownerEls = {
+    card:       document.getElementById("ownerCard"),
+    status:     document.getElementById("ownerStatus"),
+    connectRow: document.getElementById("ownerConnect"),
+    connectBtn: document.getElementById("ownerConnectBtn"),
+    pauseBtn:   document.getElementById("pauseBtn"),
+    unpauseBtn: document.getElementById("unpauseBtn"),
+  };
+
+  async function getAccounts() {
+    if (!window.ethereum) return [];
+    try { return await window.ethereum.request({ method: "eth_accounts" }); }
+    catch { return []; }
+  }
+
+  async function ensureSepolia() {
+    const current = await window.ethereum.request({ method: "eth_chainId" });
+    if (current !== CHAIN_ID_HEX) {
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: CHAIN_ID_HEX }],
+        });
+      } catch (err) {
+        if (err && err.code === 4902) {
+          // Add Sepolia if missing
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [{
+              chainId: CHAIN_ID_HEX,
+              chainName: "Sepolia",
+              nativeCurrency: { name: "Sepolia ETH", symbol: "ETH", decimals: 18 },
+              rpcUrls: ["https://rpc.sepolia.org"],
+              blockExplorerUrls: ["https://sepolia.etherscan.io"],
+            }],
+          });
+        } else {
+          throw err;
+        }
+      }
+    }
+  }
+
+  function cleanError(e) {
+    const m = e?.error?.message || e?.data?.message || e?.message || String(e);
+    return m.replace(/^execution reverted:? /i, "");
+  }
+
+  async function updateOwnerUI() {
+    if (!ownerEls.card) return;
+
+    const hasWallet = !!window.ethereum;
+    if (!hasWallet) {
+      ownerEls.card.style.display = "none";
+      ownerEls.connectRow.style.display = "none";
+      return;
+    }
+
+    let chainOk = false;
+    try { chainOk = (await window.ethereum.request({ method: "eth_chainId" })) === CHAIN_ID_HEX; }
+    catch {}
+
+    const accounts = await getAccounts();
+    const acct = (accounts[0] || "").toLowerCase();
+    const isOwner = acct === OWNER;
+
+    // Show/hide card
+    if (!isOwner || !chainOk) {
+      ownerEls.card.style.display = "none";
+      // Prompt to connect if no account or wrong chain
+      ownerEls.connectRow.style.display = hasWallet ? "block" : "none";
+      return;
+    }
+
+    ownerEls.card.style.display = "block";
+    ownerEls.connectRow.style.display = "none";
+
+    // Read paused state
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer   = await provider.getSigner();
+      const c = new ethers.Contract(CONTRACT, OWNER_ABI, signer);
+      const paused = await c.paused();
+
+      ownerEls.status.textContent = paused ? "Paused" : "Active";
+      ownerEls.status.style.color = paused ? "#ffd166" : "#a7f3d0";
+    } catch {
+      ownerEls.status.textContent = "Error";
+      ownerEls.status.style.color = "#ffd166";
+    }
+  }
+
+  ownerEls?.connectBtn?.addEventListener("click", async () => {
+    if (!window.ethereum) { alert("No wallet found"); return; }
+    try {
+      await ensureSepolia();
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      await updateOwnerUI();
+    } catch (e) {
+      alert(cleanError(e));
+    }
+  });
+
+  ownerEls?.pauseBtn?.addEventListener("click", async () => {
+    try {
+      if (!window.ethereum) return alert("No wallet");
+      await ensureSepolia();
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer   = await provider.getSigner();
+      const c = new ethers.Contract(CONTRACT, OWNER_ABI, signer);
+
+      ownerEls.status.textContent = "Pausing…";
+      const tx = await c.pause();
+      await tx.wait();
+      ownerEls.status.textContent = "Paused";
+      ownerEls.status.style.color = "#ffd166";
+    } catch (e) {
+      alert(cleanError(e));
+      await updateOwnerUI();
+    }
+  });
+
+  ownerEls?.unpauseBtn?.addEventListener("click", async () => {
+    try {
+      if (!window.ethereum) return alert("No wallet");
+      await ensureSepolia();
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer   = await provider.getSigner();
+      const c = new ethers.Contract(CONTRACT, OWNER_ABI, signer);
+
+      ownerEls.status.textContent = "Unpausing…";
+      const tx = await c.unpause();
+      await tx.wait();
+      ownerEls.status.textContent = "Active";
+      ownerEls.status.style.color = "#a7f3d0";
+    } catch (e) {
+      alert(cleanError(e));
+      await updateOwnerUI();
+    }
+  });
+
+  // React to wallet changes
+  if (window.ethereum?.on) {
+    window.ethereum.on("accountsChanged", updateOwnerUI);
+    window.ethereum.on("chainChanged",   updateOwnerUI);
+  }
+
+  // Initial paint
+  updateOwnerUI();
+</script>
+
+
     document.getElementById("year").textContent = new Date().getFullYear();
 
     document.getElementById("copy").onclick = async () => {

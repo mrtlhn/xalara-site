@@ -110,6 +110,28 @@
       </div>
       <p class="muted" id="txStatus"></p>
     </section>
+    <!-- Balances (read-only) -->
+<section class="card" id="balancesCard">
+  <h2>Balances</h2>
+  <p class="muted">
+    Read-only via your wallet provider. Enter addresses (one per line or separated by commas),
+    then click <strong>Refresh</strong>. Your connected wallet will be added automatically.
+  </p>
+
+  <textarea id="addrList" rows="4" style="width:100%; background:#0e1320; color:#cfe1ff;
+    border:1px solid #1b2233; border-radius:8px; padding:8px;">
+0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b
+  </textarea>
+
+  <div class="btn-row">
+    <button id="refreshBalances">Refresh</button>
+    <button id="clearBalances" style="opacity:.85">Clear</button>
+  </div>
+
+  <div id="balancesList" style="margin-top:8px"></div>
+  <p class="muted">Total (listed): <strong id="balancesTotal">–</strong> XALRA</p>
+</section>
+
 
     <footer>
       © <span id="year"></span> Xalara · Contract: <code>0x6cC3…B5F16</code> · Network: Sepolia (chainId <code>11155111</code>)

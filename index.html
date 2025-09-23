@@ -72,6 +72,28 @@
       <h2>Important</h2>
       <p class="warn">This is a <strong>Sepolia testnet</strong> token for development and demonstration. It has <strong>no financial value</strong> and is <strong>not an investment</strong>.</p>
     </section>
+   
+<section id="ownerCard" class="card" style="display:none">
+  <h2>Owner Tools</h2>
+
+  <div class="tag">Status: <strong id="ownerStatus">Checking…</strong></div>
+
+  <div class="btn-row" style="margin-top:12px">
+    <button id="pauseBtn">Pause transfers</button>
+    <button id="unpauseBtn">Unpause transfers</button>
+    <button id="renounceBtn" disabled title="Disabled for safety">Renounce ownership (disabled)</button>
+  </div>
+
+  <!-- Shown if wallet isn’t connected or not on Sepolia -->
+  <div id="ownerConnect" class="btn-row" style="display:none; margin-top:12px">
+    <button id="ownerConnectBtn">Connect wallet</button>
+  </div>
+
+  <p class="muted" style="margin-top:10px">
+    Visible only to the owner <code>0x3Ba4…b31b</code>. Actions require Sepolia and small gas.
+  </p>
+</section>
+
 
     <footer>
       © <span id="year"></span> Xalara · Contract: <code>0x6cC3…B5F16</code> · Network: Sepolia (chainId <code>11155111</code>)

@@ -270,6 +270,58 @@
       const btnAddToken = $("addToken");
       const btnSend     = $("send");
 
+      // === Try card pause-awareness + cooldown + explorer link ===
+const EXPLORER = "https://sepolia.etherscan.io";
+let lastSendAt = 0;
+const SEND_COOLDOWN_MS = 8000;
+
+const tryEls = {
+  card: $("try"),
+  sendBtn: $("send"),
+  enable: $("enableSend"),
+  status: $("txStatus"),
+};
+
+// Grey out/disable the Try card when paused
+function setTryPaused(paused) {
+  if (!tryEls.card) return;
+  tryEls.card.style.opacity = paused ? 0.6 : 1;
+
+  const enabledToggle = tryEls.enable?.checked ?? false;
+  if (tryEls.sendBtn) tryEls.sendBtn.disabled = paused || !enabledToggle;
+
+  if (tryEls.status) {
+    tryEls.status.textContent = paused ? "Token is paused: transfers are disabled." : "";
+  }
+}
+
+// Read paused() via the user's provider (no API key)
+async function refreshPaused() {
+  if (!window.ethereum) return;
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const c = new ethers.Contract(CONTRACT, ["function paused() view returns (bool)"], provider);
+    const paused = await c.paused();
+    setTryPaused(paused);
+  } catch { /* ignore */ }
+}
+
+// Wire the toggle to control the Send button together with paused()
+if (tryEls.enable && tryEls.sendBtn) {
+  tryEls.sendBtn.disabled = true;              // default: disabled
+  tryEls.enable.addEventListener("change", refreshPaused);
+}
+
+// Re-check on wallet changes too
+if (window.ethereum?.on) {
+  window.ethereum.on("chainChanged",  refreshPaused);
+  window.ethereum.on("accountsChanged", refreshPaused);
+}
+
+// First paint
+refreshPaused();
+
+
       // Explorer + cooldown
 const EXPLORER = "https://sepolia.etherscan.io";
 let lastSendAt = 0;

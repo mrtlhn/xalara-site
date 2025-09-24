@@ -265,6 +265,60 @@
       const btnAddToken = $("addToken");
       const btnSend     = $("send");
 
+      // Explorer + cooldown
+const EXPLORER = "https://sepolia.etherscan.io";
+let lastSendAt = 0;
+const SEND_COOLDOWN_MS = 8000;
+
+// Elements used by the Try card
+const tryEls = {
+  card: $("try"),
+  sendBtn: $("send"),
+  enable: $("enableSend"),
+  status: $("txStatus"),
+};
+
+// When paused, grey out the Try card and disable Send
+function setTryPaused(paused) {
+  if (!tryEls.card) return;
+  tryEls.card.style.opacity = paused ? 0.6 : 1;
+  if (tryEls.sendBtn) {
+    const enabledToggle = tryEls.enable?.checked ?? false;
+    tryEls.sendBtn.disabled = paused || !enabledToggle;
+  }
+  if (tryEls.status) {
+    tryEls.status.textContent = paused ? "Token is paused: transfers are disabled." : "";
+  }
+}
+
+// Read paused() using the user’s provider (no API key needed)
+async function refreshPaused() {
+  if (!window.ethereum) return;
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const c = new ethers.Contract(CONTRACT, ["function paused() view returns (bool)"], provider);
+    const paused = await c.paused();
+    setTryPaused(paused);
+  } catch { /* ignore */ }
+}
+
+// Wire the “Enable sending” toggle so it re-checks pause state
+if (tryEls.enable && tryEls.sendBtn) {
+  tryEls.sendBtn.disabled = true;
+  tryEls.enable.addEventListener("change", async () => {
+    await refreshPaused();
+  });
+}
+
+// Re‑check on wallet changes
+if (window.ethereum?.on) {
+  window.ethereum.on("chainChanged", refreshPaused);
+  window.ethereum.on("accountsChanged", refreshPaused);
+}
+// First paint
+refreshPaused();
+
+
       if (btnConnect) btnConnect.onclick = () => connect().catch(e => note(cleanError(e)));
       if (btnSwitch)  btnSwitch.onclick  = () => {
         if (!window.ethereum) { note("MetaMask not detected"); return; }
@@ -290,10 +344,20 @@ enableSend?.addEventListener("change", (e) => {
 
 if (btnSend) btnSend.onclick = async () => {
   try {
-    if (!signer) await connect();                // your existing connect()
+    // Cooldown to prevent double-click
+    if (Date.now() - lastSendAt < SEND_COOLDOWN_MS) {
+      return note("Please wait a few seconds before sending again.");
+    }
+
+    if (!signer) await connect();
     const to = ($("to")?.value || "").trim();
     const amt = ($("amount")?.value || "").trim();
     if (!ethers.isAddress(to)) throw new Error("Invalid recipient address");
+
+    // Respect pause
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const pausedReader = new ethers.Contract(CONTRACT, ["function paused() view returns (bool)"], provider);
+    if (await pausedReader.paused()) throw new Error("Token is paused");
 
     const value = ethers.parseUnits(amt || "0", 18);
     if (value === 0n) throw new Error("Amount must be > 0");
@@ -305,29 +369,27 @@ if (btnSend) btnSend.onclick = async () => {
       throw new Error(`Amount exceeds your balance (${ethers.formatUnits(bal, 18)} XALRA)`);
     }
 
-    // Soft cap (demo safety)
-    const DEMO_CAP = ethers.parseUnits("100", 18);
-    if (value > DEMO_CAP) {
-      const confirmText = prompt(
-        `You are sending ${ethers.formatUnits(value,18)} XALRA.\n` +
-        `Type XALRA to confirm this large transfer.`
-      );
-      if (!confirmText || confirmText.trim().toUpperCase() !== "XALRA") {
-        throw new Error("Confirmation cancelled");
-      }
-    }
-
     note("Sending…");
     const tx = await token.transfer(to, value);
-    note("Pending: " + tx.hash);
-    const rcpt = await tx.wait();
-    note("Confirmed in block " + rcpt.blockNumber + ". Tx: " + tx.hash);
+    lastSendAt = Date.now();
 
-    // Refresh sender balance
+    const txUrl = `${EXPLORER}/tx/${tx.hash}`;
+    note(`Pending: ${tx.hash}`);
+    if ($("txStatus")) {
+      $("txStatus").innerHTML = `Pending: <a href="${txUrl}" target="_blank" rel="noopener">${tx.hash}</a>`;
+    }
+
+    const rcpt = await tx.wait();
+    if ($("txStatus")) {
+      $("txStatus").innerHTML = `Confirmed in block ${rcpt.blockNumber}. <a href="${txUrl}" target="_blank" rel="noopener">View on Etherscan ↗</a>`;
+    }
+
+    // Refresh balance & pause state
     const newBal = await token.balanceOf(sender);
     if ($("myBalance")) $("myBalance").textContent = ethers.formatUnits(newBal, 18);
+    await refreshPaused();
   } catch (e) {
-    note(cleanError(e)); // you already have cleanError()
+    note(cleanError(e));
   }
 };
 

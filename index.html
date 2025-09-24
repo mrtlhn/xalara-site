@@ -281,20 +281,56 @@
         } catch (e) { note(cleanError(e)); }
       };
       if (btnSend) btnSend.onclick = async () => {
-        try {
-          if (!signer) await connect();
-          const to = ($("to")?.value || "").trim();
-          const amt = ($("amount")?.value || "").trim();
-          if (!ethers.isAddress(to)) throw new Error("Invalid recipient address");
-          const value = ethers.parseUnits(amt || "0", 18);
-          note("Sending…");
-          const tx = await token.transfer(to, value);
-          note("Pending: " + tx.hash);
-          const rcpt = await tx.wait();
-          note("Confirmed in block " + rcpt.blockNumber + ". Tx: " + tx.hash);
-          const bal = await token.balanceOf(await signer.getAddress());
-          if ($("myBalance")) $("myBalance").textContent = ethers.formatUnits(bal, 18);
-        } catch (e) { note(cleanError(e)); }
+       // Disable send until the user checks the box
+const enableSend = $("enableSend");
+if (btnSend) btnSend.disabled = true;
+enableSend?.addEventListener("change", (e) => {
+  if (btnSend) btnSend.disabled = !e.target.checked;
+});
+
+if (btnSend) btnSend.onclick = async () => {
+  try {
+    if (!signer) await connect();                // your existing connect()
+    const to = ($("to")?.value || "").trim();
+    const amt = ($("amount")?.value || "").trim();
+    if (!ethers.isAddress(to)) throw new Error("Invalid recipient address");
+
+    const value = ethers.parseUnits(amt || "0", 18);
+    if (value === 0n) throw new Error("Amount must be > 0");
+
+    // Sender balance check
+    const sender = await signer.getAddress();
+    const bal = await token.balanceOf(sender);
+    if (value > bal) {
+      throw new Error(`Amount exceeds your balance (${ethers.formatUnits(bal, 18)} XALRA)`);
+    }
+
+    // Soft cap (demo safety)
+    const DEMO_CAP = ethers.parseUnits("100", 18);
+    if (value > DEMO_CAP) {
+      const confirmText = prompt(
+        `You are sending ${ethers.formatUnits(value,18)} XALRA.\n` +
+        `Type XALRA to confirm this large transfer.`
+      );
+      if (!confirmText || confirmText.trim().toUpperCase() !== "XALRA") {
+        throw new Error("Confirmation cancelled");
+      }
+    }
+
+    note("Sending…");
+    const tx = await token.transfer(to, value);
+    note("Pending: " + tx.hash);
+    const rcpt = await tx.wait();
+    note("Confirmed in block " + rcpt.blockNumber + ". Tx: " + tx.hash);
+
+    // Refresh sender balance
+    const newBal = await token.balanceOf(sender);
+    if ($("myBalance")) $("myBalance").textContent = ethers.formatUnits(newBal, 18);
+  } catch (e) {
+    note(cleanError(e)); // you already have cleanError()
+  }
+};
+
       };
 
       // ===== Owner Tools =====

@@ -106,46 +106,41 @@
       <div style="margin-top:12px">
         <label>Send to: <input id="to" placeholder="0x..." style="width:340px"></label>
         <label style="margin-left:10px">Amount (XALRA): <input id="amount" type="number" step="0.0001" min="0" style="width:140px"></label>
+
+        <!-- Single, canonical toggle -->
         <label class="tag" style="margin-top:8px; display:inline-flex; gap:8px; align-items:center;">
-  <input type="checkbox" id="enableSend">
-  Enable sending
-</label>
+          <input type="checkbox" id="enableSend"> Enable sending
+        </label>
 
         <button id="send">Send</button>
-        <div class="btn-row" style="margin-top:8px">
-  <label class="muted">
-    <input type="checkbox" id="enableSend"> I understand this sends from my connected wallet
-  </label>
-</div>
-<p class="muted" style="margin-top:6px">
-  Safety: capped at 100 XALRA unless you explicitly confirm a larger amount.
-</p>
-
+        <p class="muted" style="margin-top:6px">
+          Safety: if you enter more than 100 XALRA, you’ll be asked to confirm.
+        </p>
       </div>
       <p class="muted" id="txStatus"></p>
     </section>
+
     <!-- Balances (read-only) -->
-<section class="card" id="balancesCard">
-  <h2>Balances</h2>
-  <p class="muted">
-    Read-only via your wallet provider. Enter addresses (one per line or separated by commas),
-    then click <strong>Refresh</strong>. Your connected wallet will be added automatically.
-  </p>
+    <section class="card" id="balancesCard">
+      <h2>Balances</h2>
+      <p class="muted">
+        Read-only via your wallet provider. Enter addresses (one per line or separated by commas),
+        then click <strong>Refresh</strong>. Your connected wallet will be added automatically.
+      </p>
 
-  <textarea id="addrList" rows="4" style="width:100%; background:#0e1320; color:#cfe1ff;
-    border:1px solid #1b2233; border-radius:8px; padding:8px;">
+      <textarea id="addrList" rows="4" style="width:100%; background:#0e1320; color:#cfe1ff;
+        border:1px solid #1b2233; border-radius:8px; padding:8px;">
 0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b
-  </textarea>
+      </textarea>
 
-  <div class="btn-row">
-    <button id="refreshBalances">Refresh</button>
-    <button id="clearBalances" style="opacity:.85">Clear</button>
-  </div>
+      <div class="btn-row">
+        <button id="refreshBalances">Refresh</button>
+        <button id="clearBalances" style="opacity:.85">Clear</button>
+      </div>
 
-  <div id="balancesList" style="margin-top:8px"></div>
-  <p class="muted">Total (listed): <strong id="balancesTotal">–</strong> XALRA</p>
-</section>
-
+      <div id="balancesList" style="margin-top:8px"></div>
+      <p class="muted">Total (listed): <strong id="balancesTotal">–</strong> XALRA</p>
+    </section>
 
     <footer>
       © <span id="year"></span> Xalara · Contract: <code>0x6cC3…B5F16</code> · Network: Sepolia (chainId <code>11155111</code>)
@@ -271,110 +266,48 @@
       const btnSend     = $("send");
 
       // === Try card pause-awareness + cooldown + explorer link ===
-const EXPLORER = "https://sepolia.etherscan.io";
-let lastSendAt = 0;
-const SEND_COOLDOWN_MS = 8000;
+      const EXPLORER = "https://sepolia.etherscan.io";
+      let lastSendAt = 0;
+      const SEND_COOLDOWN_MS = 8000;
 
-const tryEls = {
-  card: $("try"),
-  sendBtn: $("send"),
-  enable: $("enableSend"),
-  status: $("txStatus"),
-};
+      const tryEls = {
+        card: $("try"),
+        sendBtn: $("send"),
+        enable: $("enableSend"),
+        status: $("txStatus"),
+      };
 
-// Grey out/disable the Try card when paused
-function setTryPaused(paused) {
-  if (!tryEls.card) return;
-  tryEls.card.style.opacity = paused ? 0.6 : 1;
+      function setTryPaused(paused) {
+        if (!tryEls.card) return;
+        tryEls.card.style.opacity = paused ? 0.6 : 1;
+        const enabledToggle = tryEls.enable?.checked ?? false;
+        if (tryEls.sendBtn) tryEls.sendBtn.disabled = paused || !enabledToggle;
+        if (tryEls.status) {
+          tryEls.status.textContent = paused ? "Token is paused: transfers are disabled." : "";
+        }
+      }
 
-  const enabledToggle = tryEls.enable?.checked ?? false;
-  if (tryEls.sendBtn) tryEls.sendBtn.disabled = paused || !enabledToggle;
+      async function refreshPaused() {
+        if (!window.ethereum) return;
+        try {
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const c = new ethers.Contract(CONTRACT, ["function paused() view returns (bool)"], provider);
+          const paused = await c.paused();
+          setTryPaused(paused);
+        } catch { /* ignore */ }
+      }
 
-  if (tryEls.status) {
-    tryEls.status.textContent = paused ? "Token is paused: transfers are disabled." : "";
-  }
-}
+      // Toggle wiring (disabled by default)
+      if (tryEls.enable && tryEls.sendBtn) {
+        tryEls.sendBtn.disabled = true;
+        tryEls.enable.addEventListener("change", refreshPaused);
+      }
 
-// Read paused() via the user's provider (no API key)
-async function refreshPaused() {
-  if (!window.ethereum) return;
-  try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const c = new ethers.Contract(CONTRACT, ["function paused() view returns (bool)"], provider);
-    const paused = await c.paused();
-    setTryPaused(paused);
-  } catch { /* ignore */ }
-}
-
-// Wire the toggle to control the Send button together with paused()
-if (tryEls.enable && tryEls.sendBtn) {
-  tryEls.sendBtn.disabled = true;              // default: disabled
-  tryEls.enable.addEventListener("change", refreshPaused);
-}
-
-// Re-check on wallet changes too
-if (window.ethereum?.on) {
-  window.ethereum.on("chainChanged",  refreshPaused);
-  window.ethereum.on("accountsChanged", refreshPaused);
-}
-
-// First paint
-refreshPaused();
-
-
-      // Explorer + cooldown
-const EXPLORER = "https://sepolia.etherscan.io";
-let lastSendAt = 0;
-const SEND_COOLDOWN_MS = 8000;
-
-// Elements used by the Try card
-const tryEls = {
-  card: $("try"),
-  sendBtn: $("send"),
-  enable: $("enableSend"),
-  status: $("txStatus"),
-};
-
-// When paused, grey out the Try card and disable Send
-function setTryPaused(paused) {
-  if (!tryEls.card) return;
-  tryEls.card.style.opacity = paused ? 0.6 : 1;
-  if (tryEls.sendBtn) {
-    const enabledToggle = tryEls.enable?.checked ?? false;
-    tryEls.sendBtn.disabled = paused || !enabledToggle;
-  }
-  if (tryEls.status) {
-    tryEls.status.textContent = paused ? "Token is paused: transfers are disabled." : "";
-  }
-}
-
-// Read paused() using the user’s provider (no API key needed)
-async function refreshPaused() {
-  if (!window.ethereum) return;
-  try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const c = new ethers.Contract(CONTRACT, ["function paused() view returns (bool)"], provider);
-    const paused = await c.paused();
-    setTryPaused(paused);
-  } catch { /* ignore */ }
-}
-
-// Wire the “Enable sending” toggle so it re-checks pause state
-if (tryEls.enable && tryEls.sendBtn) {
-  tryEls.sendBtn.disabled = true;
-  tryEls.enable.addEventListener("change", async () => {
-    await refreshPaused();
-  });
-}
-
-// Re‑check on wallet changes
-if (window.ethereum?.on) {
-  window.ethereum.on("chainChanged", refreshPaused);
-  window.ethereum.on("accountsChanged", refreshPaused);
-}
-// First paint
-refreshPaused();
-
+      if (window.ethereum?.on) {
+        window.ethereum.on("chainChanged",  refreshPaused);
+        window.ethereum.on("accountsChanged", refreshPaused);
+      }
+      refreshPaused();
 
       if (btnConnect) btnConnect.onclick = () => connect().catch(e => note(cleanError(e)));
       if (btnSwitch)  btnSwitch.onclick  = () => {
@@ -391,65 +324,72 @@ refreshPaused();
           });
         } catch (e) { note(cleanError(e)); }
       };
+
+      // SINGLE canonical Send handler
       if (btnSend) btnSend.onclick = async () => {
-       // Disable send until the user checks the box
-const enableSend = $("enableSend");
-if (btnSend) btnSend.disabled = true;
-enableSend?.addEventListener("change", (e) => {
-  if (btnSend) btnSend.disabled = !e.target.checked;
-});
+        try {
+          // Require explicit enable
+          if (!tryEls.enable?.checked) { note("Toggle “Enable sending” first."); return; }
 
-if (btnSend) btnSend.onclick = async () => {
-  try {
-    // Cooldown to prevent double-click
-    if (Date.now() - lastSendAt < SEND_COOLDOWN_MS) {
-      return note("Please wait a few seconds before sending again.");
-    }
+          // Cooldown
+          const now = Date.now();
+          if (now - lastSendAt < SEND_COOLDOWN_MS) {
+            const wait = Math.ceil((SEND_COOLDOWN_MS - (now - lastSendAt)) / 1000);
+            note(`Please wait ${wait}s before sending again.`);
+            return;
+          }
 
-    if (!signer) await connect();
-    const to = ($("to")?.value || "").trim();
-    const amt = ($("amount")?.value || "").trim();
-    if (!ethers.isAddress(to)) throw new Error("Invalid recipient address");
+          if (!signer) await connect();
 
-    // Respect pause
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const pausedReader = new ethers.Contract(CONTRACT, ["function paused() view returns (bool)"], provider);
-    if (await pausedReader.paused()) throw new Error("Token is paused");
+          const to = ($("to")?.value || "").trim();
+          const amtStr = ($("amount")?.value || "").trim();
+          if (!ethers.isAddress(to)) throw new Error("Invalid recipient address");
+          if (!amtStr || Number(amtStr) <= 0) throw new Error("Enter a positive amount");
 
-    const value = ethers.parseUnits(amt || "0", 18);
-    if (value === 0n) throw new Error("Amount must be > 0");
+          // Respect pause
+          const providerRO = new ethers.BrowserProvider(window.ethereum);
+          const pausedReader = new ethers.Contract(CONTRACT, ["function paused() view returns (bool)"], providerRO);
+          if (await pausedReader.paused()) throw new Error("Token is paused");
 
-    // Sender balance check
-    const sender = await signer.getAddress();
-    const bal = await token.balanceOf(sender);
-    if (value > bal) {
-      throw new Error(`Amount exceeds your balance (${ethers.formatUnits(bal, 18)} XALRA)`);
-    }
+          const value = ethers.parseUnits(amtStr, 18);
 
-    note("Sending…");
-    const tx = await token.transfer(to, value);
-    lastSendAt = Date.now();
+          // Optional soft cap confirm
+          const SOFT_CAP = ethers.parseUnits("100", 18);
+          if (value > SOFT_CAP) {
+            const ok = confirm("This is a demo site. Are you sure you want to send more than 100 XALRA?");
+            if (!ok) return;
+          }
 
-    const txUrl = `${EXPLORER}/tx/${tx.hash}`;
-    note(`Pending: ${tx.hash}`);
-    if ($("txStatus")) {
-      $("txStatus").innerHTML = `Pending: <a href="${txUrl}" target="_blank" rel="noopener">${tx.hash}</a>`;
-    }
+          // Balance check
+          const sender = await signer.getAddress();
+          const bal = await token.balanceOf(sender);
+          if (value > bal) throw new Error(`Amount exceeds your balance (${ethers.formatUnits(bal, 18)} XALRA)`);
 
-    const rcpt = await tx.wait();
-    if ($("txStatus")) {
-      $("txStatus").innerHTML = `Confirmed in block ${rcpt.blockNumber}. <a href="${txUrl}" target="_blank" rel="noopener">View on Etherscan ↗</a>`;
-    }
+          note("Sending…");
+          const tx = await token.transfer(to, value);
+          lastSendAt = Date.now();
 
-    // Refresh balance & pause state
-    const newBal = await token.balanceOf(sender);
-    if ($("myBalance")) $("myBalance").textContent = ethers.formatUnits(newBal, 18);
-    await refreshPaused();
-  } catch (e) {
-    note(cleanError(e));
-  }
-};
+          const hash = tx.hash;
+          const el = $("txStatus");
+          if (el && /^0x[0-9a-fA-F]{64}$/.test(hash)) {
+            el.innerHTML = `Pending: <a href="${EXPLORER}/tx/${hash}" target="_blank" rel="noopener">${hash.slice(0,10)}…</a>`;
+          } else {
+            note("Pending: " + hash);
+          }
 
+          const rcpt = await tx.wait();
+          if (el) {
+            el.innerHTML = `Confirmed in block ${rcpt.blockNumber}. <a href="${EXPLORER}/tx/${hash}" target="_blank" rel="noopener">View on Etherscan</a>`;
+          } else {
+            note(`Confirmed in block ${rcpt.blockNumber}. Tx: ${hash}`);
+          }
+
+          const newBal = await token.balanceOf(sender);
+          if ($("myBalance")) $("myBalance").textContent = ethers.formatUnits(newBal, 18);
+          await refreshPaused();
+        } catch (e) {
+          note(cleanError(e));
+        }
       };
 
       // ===== Owner Tools =====
@@ -495,6 +435,8 @@ if (btnSend) btnSend.onclick = async () => {
           const paused = await c.paused();
           ownerEls.status.textContent = paused ? "Paused" : "Active";
           ownerEls.status.style.color = paused ? "#ffd166" : "#a7f3d0";
+          // Keep Try card in sync with Owner status
+          setTryPaused(paused);
         } catch {
           ownerEls.status.textContent = "Error";
           ownerEls.status.style.color = "#ffd166";
@@ -522,6 +464,7 @@ if (btnSend) btnSend.onclick = async () => {
           await tx.wait();
           ownerEls.status.textContent = "Paused";
           ownerEls.status.style.color = "#ffd166";
+          setTryPaused(true);
         } catch (e) { alert(cleanError(e)); await updateOwnerUI(); }
       });
 
@@ -537,6 +480,7 @@ if (btnSend) btnSend.onclick = async () => {
           await tx.wait();
           ownerEls.status.textContent = "Active";
           ownerEls.status.style.color = "#a7f3d0";
+          setTryPaused(false);
         } catch (e) { alert(cleanError(e)); await updateOwnerUI(); }
       });
 
@@ -546,105 +490,99 @@ if (btnSend) btnSend.onclick = async () => {
         window.ethereum.on("chainChanged",   () => { updateOwnerUI(); });
       }
 
-      // First paint
-      updateOwnerUI();
       // === Balances panel (read-only) ===
-(function setupBalancesPanel() {
-  const addrBox   = document.getElementById("addrList");
-  const listEl    = document.getElementById("balancesList");
-  const totalEl   = document.getElementById("balancesTotal");
-  const btnRef    = document.getElementById("refreshBalances");
-  const btnClear  = document.getElementById("clearBalances");
+      (function setupBalancesPanel() {
+        const addrBox   = document.getElementById("addrList");
+        const listEl    = document.getElementById("balancesList");
+        const totalEl   = document.getElementById("balancesTotal");
+        const btnRef    = document.getElementById("refreshBalances");
+        const btnClear  = document.getElementById("clearBalances");
 
-  if (!addrBox || !listEl || !totalEl || !btnRef) return; // panel not present
+        if (!addrBox || !listEl || !totalEl || !btnRef) return;
 
-  const dedupe = (arr) => Array.from(new Set(arr.map(a => a.toLowerCase())));
-  const parseAddrs = (text) =>
-    (text || "")
-      .split(/[\s,;]+/g)
-      .map(s => s.trim())
-      .filter(Boolean)
-      .filter(ethers.isAddress);
+        const dedupe = (arr) => Array.from(new Set(arr.map(a => a.toLowerCase())));
+        const parseAddrs = (text) =>
+          (text || "")
+            .split(/[\s,;]+/g)
+            .map(s => s.trim())
+            .filter(Boolean)
+            .filter(ethers.isAddress);
 
-  function row(addr, text, isErr) {
-    const r = document.createElement("div");
-    r.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1f2737;";
-    const left = document.createElement("code"); left.textContent = addr;
-    const right = document.createElement("strong"); right.textContent = text;
-    if (isErr) right.style.color = "#ffd166";
-    r.append(left, right);
-    listEl.appendChild(r);
-  }
-
-  async function refresh() {
-    try {
-      if (!window.ethereum) { listEl.innerHTML = ""; row("-", "Wallet not detected", true); totalEl.textContent = "–"; return; }
-
-      // Try to be on Sepolia (no-op if already there)
-      try { await ensureSepolia(); } catch {}
-
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const tokenRO  = new ethers.Contract(CONTRACT, TOKEN_ABI, provider);
-
-      // Parse & de-duplicate addresses from textarea
-      const inputAddrs = dedupe(parseAddrs(addrBox.value));
-      if (inputAddrs.length === 0) {
-        listEl.innerHTML = ""; row("-", "No valid addresses", true); totalEl.textContent = "–"; return;
-      }
-
-      listEl.innerHTML = "";
-      let total = 0n;
-
-      const results = await Promise.allSettled(inputAddrs.map(a => tokenRO.balanceOf(a)));
-      results.forEach((res, i) => {
-        const addr = inputAddrs[i];
-        if (res.status === "fulfilled") {
-          const bal = res.value;
-          total += bal;
-          row(addr, ethers.formatUnits(bal, 18), false);
-        } else {
-          row(addr, "Error", true);
+        function row(addr, text, isErr) {
+          const r = document.createElement("div");
+          r.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1f2737;";
+          const left = document.createElement("code"); left.textContent = addr;
+          const right = document.createElement("strong"); right.textContent = text;
+          if (isErr) right.style.color = "#ffd166";
+          r.append(left, right);
+          listEl.appendChild(r);
         }
-      });
 
-      totalEl.textContent = ethers.formatUnits(total, 18);
-    } catch (e) {
-      const msg = (e?.message || String(e));
-      listEl.innerHTML = "";
-      row("-", msg, true);
-      totalEl.textContent = "–";
-    }
-  }
+        async function refresh() {
+          try {
+            if (!window.ethereum) { listEl.innerHTML = ""; row("-", "Wallet not detected", true); totalEl.textContent = "–"; return; }
+            try { await ensureSepolia(); } catch {}
 
-  async function addConnectedOnce() {
-    try {
-      if (!window.ethereum) return;
-      const accounts = await window.ethereum.request({ method: "eth_accounts" });
-      const me = (accounts[0] || "").toLowerCase();
-      if (ethers.isAddress(me)) {
-        const current = dedupe(parseAddrs(addrBox.value));
-        if (!current.includes(me)) {
-          addrBox.value = (addrBox.value.trim() + "\n" + me).trim() + "\n";
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const tokenRO  = new ethers.Contract(CONTRACT, TOKEN_ABI, provider);
+
+            const inputAddrs = dedupe(parseAddrs(addrBox.value));
+            if (inputAddrs.length === 0) { listEl.innerHTML = ""; row("-", "No valid addresses", true); totalEl.textContent = "–"; return; }
+
+            listEl.innerHTML = "";
+            let total = 0n;
+
+            const results = await Promise.allSettled(inputAddrs.map(a => tokenRO.balanceOf(a)));
+            results.forEach((res, i) => {
+              const addr = inputAddrs[i];
+              if (res.status === "fulfilled") {
+                const bal = res.value;
+                total += bal;
+                row(addr, ethers.formatUnits(bal, 18), false);
+              } else {
+                row(addr, "Error", true);
+              }
+            });
+
+            totalEl.textContent = ethers.formatUnits(total, 18);
+          } catch (e) {
+            const msg = (e?.message || String(e));
+            listEl.innerHTML = "";
+            row("-", msg, true);
+            totalEl.textContent = "–";
+          }
         }
-      }
-    } catch {}
-  }
 
-  btnRef.addEventListener("click", refresh);
-  btnClear?.addEventListener("click", () => { addrBox.value = ""; listEl.innerHTML = ""; totalEl.textContent = "–"; });
+        async function addConnectedOnce() {
+          try {
+            if (!window.ethereum) return;
+            const accounts = await window.ethereum.request({ method: "eth_accounts" });
+            const me = (accounts[0] || "").toLowerCase();
+            if (ethers.isAddress(me)) {
+              const current = dedupe(parseAddrs(addrBox.value));
+              if (!current.includes(me)) {
+                addrBox.value = (addrBox.value.trim() + "\n" + me).trim() + "\n";
+              }
+            }
+          } catch {}
+        }
 
-  if (window.ethereum?.on) {
-    window.ethereum.on("accountsChanged", async () => { await addConnectedOnce(); await refresh(); });
-    window.ethereum.on("chainChanged",    async () => { await refresh(); });
-  }
+        btnRef.addEventListener("click", refresh);
+        btnClear?.addEventListener("click", () => { addrBox.value = ""; listEl.innerHTML = ""; totalEl.textContent = "–"; });
 
-  // Initial population
-  addConnectedOnce().then(refresh);
-})();
+        if (window.ethereum?.on) {
+          window.ethereum.on("accountsChanged", async () => { await addConnectedOnce(); await refresh(); });
+          window.ethereum.on("chainChanged",    async () => { await refresh(); });
+        }
 
+        addConnectedOnce().then(refresh);
+      })();
+
+      // First paint for owner UI
+      updateOwnerUI();
     }
 
-    // Start after page load; if ethers doesn't exist, show a note
+    // Start after page load
     window.addEventListener("load", () => {
       if (typeof window.ethers === "undefined") {
         alert("Failed to load ethers.js");

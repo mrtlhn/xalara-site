@@ -384,6 +384,100 @@
 
       // First paint
       updateOwnerUI();
+      // === Balances panel (read-only) ===
+(function setupBalancesPanel() {
+  const addrBox   = document.getElementById("addrList");
+  const listEl    = document.getElementById("balancesList");
+  const totalEl   = document.getElementById("balancesTotal");
+  const btnRef    = document.getElementById("refreshBalances");
+  const btnClear  = document.getElementById("clearBalances");
+
+  if (!addrBox || !listEl || !totalEl || !btnRef) return; // panel not present
+
+  const dedupe = (arr) => Array.from(new Set(arr.map(a => a.toLowerCase())));
+  const parseAddrs = (text) =>
+    (text || "")
+      .split(/[\s,;]+/g)
+      .map(s => s.trim())
+      .filter(Boolean)
+      .filter(ethers.isAddress);
+
+  function row(addr, text, isErr) {
+    const r = document.createElement("div");
+    r.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1f2737;";
+    const left = document.createElement("code"); left.textContent = addr;
+    const right = document.createElement("strong"); right.textContent = text;
+    if (isErr) right.style.color = "#ffd166";
+    r.append(left, right);
+    listEl.appendChild(r);
+  }
+
+  async function refresh() {
+    try {
+      if (!window.ethereum) { listEl.innerHTML = ""; row("-", "Wallet not detected", true); totalEl.textContent = "–"; return; }
+
+      // Try to be on Sepolia (no-op if already there)
+      try { await ensureSepolia(); } catch {}
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const tokenRO  = new ethers.Contract(CONTRACT, TOKEN_ABI, provider);
+
+      // Parse & de-duplicate addresses from textarea
+      const inputAddrs = dedupe(parseAddrs(addrBox.value));
+      if (inputAddrs.length === 0) {
+        listEl.innerHTML = ""; row("-", "No valid addresses", true); totalEl.textContent = "–"; return;
+      }
+
+      listEl.innerHTML = "";
+      let total = 0n;
+
+      const results = await Promise.allSettled(inputAddrs.map(a => tokenRO.balanceOf(a)));
+      results.forEach((res, i) => {
+        const addr = inputAddrs[i];
+        if (res.status === "fulfilled") {
+          const bal = res.value;
+          total += bal;
+          row(addr, ethers.formatUnits(bal, 18), false);
+        } else {
+          row(addr, "Error", true);
+        }
+      });
+
+      totalEl.textContent = ethers.formatUnits(total, 18);
+    } catch (e) {
+      const msg = (e?.message || String(e));
+      listEl.innerHTML = "";
+      row("-", msg, true);
+      totalEl.textContent = "–";
+    }
+  }
+
+  async function addConnectedOnce() {
+    try {
+      if (!window.ethereum) return;
+      const accounts = await window.ethereum.request({ method: "eth_accounts" });
+      const me = (accounts[0] || "").toLowerCase();
+      if (ethers.isAddress(me)) {
+        const current = dedupe(parseAddrs(addrBox.value));
+        if (!current.includes(me)) {
+          addrBox.value = (addrBox.value.trim() + "\n" + me).trim() + "\n";
+        }
+      }
+    } catch {}
+  }
+
+  btnRef.addEventListener("click", refresh);
+  btnClear?.addEventListener("click", () => { addrBox.value = ""; listEl.innerHTML = ""; totalEl.textContent = "–"; });
+
+  if (window.ethereum?.on) {
+    window.ethereum.on("accountsChanged", async () => { await addConnectedOnce(); await refresh(); });
+    window.ethereum.on("chainChanged",    async () => { await refresh(); });
+  }
+
+  // Initial population
+  addConnectedOnce().then(refresh);
+})();
+
     }
 
     // Start after page load; if ethers doesn't exist, show a note

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>Xalara (XALRA) — Official Site</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Xalara (XALRA) — ERC‑20 token on Sepolia. Contract, links, wallet helpers, and Xalara Pass (NFT) mint." />
+  <meta name="description" content="Xalara (XALRA) — ERC‑20 token on Ethereum & Sepolia. Contract, links, wallet helpers, and Xalara Pass (NFT) mint." />
   <link rel="canonical" href="https://xalara.io/" />
   <meta property="og:title" content="Xalara (XALRA)" />
   <meta property="og:description" content="Official token page for Xalara (XALRA). Contract, links, wallet helpers, and Xalara Pass (NFT) mint." />
@@ -35,17 +35,17 @@
   <div class="wrap">
     <header>
       <h1>⚡ Xalara <span class="muted">(XALRA)</span></h1>
-      <p class="subtitle">Official site · ERC‑20 on <strong>Sepolia</strong> (testnet) · xalara.io</p>
+      <p class="subtitle">Official site · ERC‑20 on <strong>Ethereum & Sepolia</strong> · xalara.io</p>
       <div id="networkNote" class="tag">Checking wallet network…</div>
     </header>
 
     <!-- Contract card -->
     <section id="contract" class="card">
       <h2>Contract</h2>
-      <p><strong>Address:</strong> <code id="addr">0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16</code></p>
+      <p><strong>Address:</strong> <code id="addr">—</code></p>
       <div class="btn-row">
         <button id="copy">Copy address</button>
-        <a id="etherscan" class="tag" href="https://sepolia.etherscan.io/address/0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16#code" target="_blank" rel="noopener">View on Etherscan ↗</a>
+        <a id="etherscan" class="tag" href="#" target="_blank" rel="noopener">View on Etherscan ↗</a>
         <button id="add">Add XALRA to MetaMask</button>
       </div>
       <p class="muted" style="margin-top:10px">Symbol: <strong>XALRA</strong> · Decimals: <strong>18</strong> · Total Supply: <strong>1,000,000,000</strong></p>
@@ -58,13 +58,16 @@
         <div>
           <p><strong>Standard:</strong> ERC‑20</p>
           <p><strong>Features:</strong> Burnable, Pausable, Permit (EIP‑2612)</p>
-          <p><strong>Owner:</strong> <code>0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b</code></p>
+          <p><strong>Owner (per chain):</strong></p>
+          <ul class="muted" style="margin:6px 0 0 0; padding-left:18px">
+            <li>Mainnet: <code>0x57cBC130C4556F080C55e54da54bB58CCD9A3e71</code></li>
+            <li>Sepolia: <code>0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b</code></li>
+          </ul>
         </div>
         <div>
           <p><strong>Source:</strong> Verified on Etherscan &amp; Sourcify</p>
           <ul>
-            <li><a href="https://sepolia.etherscan.io/address/0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16#code" target="_blank" rel="noopener">Etherscan (Code)</a></li>
-            <li><a href="https://repo.sourcify.dev/contracts/full_match/11155111/0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16/" target="_blank" rel="noopener">Sourcify</a></li>
+            <li><a id="codeLink" href="#" target="_blank" rel="noopener">Contract Code ↗</a></li>
           </ul>
         </div>
       </div>
@@ -73,21 +76,21 @@
     <!-- Important -->
     <section class="card">
       <h2>Important</h2>
-      <p class="warn">This is a <strong>Sepolia testnet</strong> token for development and demonstration. It has <strong>no financial value</strong> and is <strong>not an investment</strong>.</p>
+      <p class="warn">The Sepolia token is for development and demonstration. It has <strong>no financial value</strong> and is <strong>not an investment</strong>.</p>
     </section>
 
-    <!-- Xalara Pass (NFT) -->
-    <section class="card" id="pass">
+    <!-- Xalara Pass (NFT, Sepolia only) -->
+    <section class="card" id="pass" style="display:none">
       <h2>Xalara Pass</h2>
-      <p>Burn <strong>100 XALRA</strong> to mint a membership pass (ERC‑721, testnet).</p>
+      <p>Burn <strong>100 XALRA</strong> to mint a membership pass (ERC‑721, Sepolia only).</p>
       <div class="btn-row">
         <button id="mintPass">Mint Pass</button>
-        <a class="tag" href="https://sepolia.etherscan.io/address/0x0366Fbc855907e3c089bDFA014FBF3c42CB6aC11#code" target="_blank" rel="noopener">Pass on Etherscan ↗</a>
+        <a id="passScan" class="tag" href="#" target="_blank" rel="noopener">Pass on Etherscan ↗</a>
       </div>
       <p class="muted" id="passStatus"></p>
     </section>
 
-    <!-- Owner Tools (owner-only) -->
+    <!-- Owner Tools (owner-only, per chain) -->
     <section id="ownerCard" class="card" style="display:none">
       <h2>Owner Tools</h2>
       <div class="tag">Status: <strong id="ownerStatus">Checking…</strong></div>
@@ -100,13 +103,13 @@
         <button id="ownerConnectBtn">Connect wallet</button>
       </div>
       <p class="muted" style="margin-top:10px">
-        Visible only to the owner <code>0x3Ba4…b31b</code>. Actions require Sepolia and small gas.
+        Visible only to the owner on the <em>current chain</em>. Actions require gas.
       </p>
     </section>
 
     <!-- Try it panel -->
     <section class="card" id="try">
-      <h2>Try it (Sepolia)</h2>
+      <h2>Try it (Demo — Sepolia)</h2>
       <div class="btn-row">
         <button id="connect">Connect wallet</button>
         <button id="switch">Switch to Sepolia</button>
@@ -151,7 +154,7 @@
     </section>
 
     <footer>
-      © <span id="year"></span> Xalara · Contract: <code>0x6cC3…B5F16</code> · Network: Sepolia (chainId <code>11155111</code>)
+      © <span id="year"></span> Xalara · Network: <span id="footerNet">—</span>
     </footer>
   </div>
 
@@ -161,14 +164,33 @@
   <!-- App logic -->
   <script>
   (function () {
-    // === CONFIG ===
-    const CONTRACT     = "0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16";  // XALRA token (Sepolia)
-    const PASS         = "0x0366Fbc855907e3c089bDFA014FBF3c42CB6aC11";  // XalaraPass (NFT, Sepolia)
-    const CHAIN_ID_HEX = "0xaa36a7"; // 11155111
-    const OWNER        = "0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b".toLowerCase();
+    // === OWNERS PER CHAIN ===
+    const OWNERS = {
+      1:        "0x57cBC130C4556F080C55e54da54bB58CCD9A3e71".toLowerCase(), // Mainnet owner
+      11155111: "0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b".toLowerCase(), // Sepolia owner
+    };
+
+    // === NETWORKS ===
+    const NETS = {
+      1: {
+        name: "Ethereum Mainnet",
+        chainIdHex: "0x1",
+        explorer: "https://etherscan.io",
+        contract: "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3", // XALRA Mainnet
+        pass: null, // no pass on mainnet
+      },
+      11155111: {
+        name: "Sepolia",
+        chainIdHex: "0xaa36a7",
+        explorer: "https://sepolia.etherscan.io",
+        contract: "0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16", // XALRA Sepolia
+        pass: "0x0366Fbc855907e3c089bDFA014FBF3c42CB6aC11", // XalaraPass Sepolia
+      },
+    };
+
+    let CURRENT = NETS[11155111]; // default to Sepolia until wallet is read
 
     // === ABIs ===
-    // (replaces your existing TOKEN_ABI)
     const TOKEN_ABI = [
       "function name() view returns (string)",
       "function symbol() view returns (string)",
@@ -176,7 +198,7 @@
       "function totalSupply() view returns (uint256)",
       "function balanceOf(address) view returns (uint256)",
       "function transfer(address,uint256) returns (bool)",
-      "function approve(address,uint256) returns (bool)"  // added
+      "function approve(address,uint256) returns (bool)"
     ];
     const OWNER_ABI = [
       "function paused() view returns (bool)",
@@ -188,7 +210,7 @@
       "function mintWithBurn() returns (uint256)",
       "function balanceOf(address) view returns (uint256)",
       "function tokenURI(uint256) view returns (string)",
-      "function burnPerPass() view returns (uint256)" // try; fallback to 100 XALRA if not present
+      "function burnPerPass() view returns (uint256)"
     ];
 
     // === HELPERS ===
@@ -197,25 +219,24 @@
     const notePass = (msg) => { const el = $("passStatus"); if (el) el.textContent = msg; console.log("[PASS]", msg); };
     const cleanError = (e) => (e?.error?.message || e?.data?.message || e?.message || String(e)).replace(/^execution reverted:? /i, "");
 
-    async function ensureSepolia() {
+    async function ensureChain(chainIdHex) {
       if (!window.ethereum) throw new Error("Wallet not detected");
       const id = await window.ethereum.request({ method: "eth_chainId" });
-      if (id !== CHAIN_ID_HEX) {
+      if (id !== chainIdHex) {
         try {
-          await window.ethereum.request({
-            method: "wallet_switchEthereumChain",
-            params: [{ chainId: CHAIN_ID_HEX }],
-          });
+          await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: chainIdHex }] });
         } catch (e) {
           if (e && e.code === 4902) {
+            // add then switch
+            const net = Object.values(NETS).find(n => n.chainIdHex === chainIdHex);
             await window.ethereum.request({
               method: "wallet_addEthereumChain",
               params: [{
-                chainId: CHAIN_ID_HEX,
-                chainName: "Sepolia",
-                nativeCurrency: { name: "Sepolia ETH", symbol: "ETH", decimals: 18 },
+                chainId: chainIdHex,
+                chainName: net?.name || "Ethereum",
+                nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
                 rpcUrls: ["https://rpc.sepolia.org"],
-                blockExplorerUrls: ["https://sepolia.etherscan.io"],
+                blockExplorerUrls: [net?.explorer || "https://etherscan.io"],
               }],
             });
           } else { throw e; }
@@ -223,13 +244,67 @@
       }
     }
 
+    // Update CURRENT and UI based on wallet chain
+    async function setCurrentByWallet() {
+      const badge = $("networkNote");
+      const addrEl = $("addr");
+      const escan = $("etherscan");
+      const codeLink = $("codeLink");
+      const footerNet = $("footerNet");
+      const passCard = $("pass");
+      const passScan = $("passScan");
+      const tryCard = $("try");
+      const sendBtn = $("send");
+      const enableCb = $("enableSend");
+      const txStatus = $("txStatus");
+
+      if (!window.ethereum) {
+        CURRENT = NETS[11155111];
+      } else {
+        const idHex = await window.ethereum.request({ method: "eth_chainId" });
+        const id = parseInt(idHex, 16);
+        CURRENT = NETS[id] || NETS[11155111];
+      }
+
+      // Contract card + links
+      if (addrEl) addrEl.textContent = CURRENT.contract;
+      if (escan) escan.href = `${CURRENT.explorer}/address/${CURRENT.contract}#code`;
+      if (codeLink) codeLink.href = `${CURRENT.explorer}/address/${CURRENT.contract}#code`;
+      if (badge) badge.textContent = `Wallet network: ${CURRENT.name} ✓`;
+      if (footerNet) footerNet.textContent = CURRENT.name;
+
+      // Pass card (Sepolia only)
+      if (passCard) {
+        const onSepolia = CURRENT === NETS[11155111];
+        passCard.style.display = onSepolia ? "block" : "none";
+        if (onSepolia && passScan) passScan.href = `${NETS[11155111].explorer}/address/${NETS[11155111].pass}#code`;
+      }
+
+      // Demo Try panel: disabled on mainnet
+      if (tryCard && sendBtn) {
+        const onMainnet = CURRENT === NETS[1];
+        sendBtn.disabled = onMainnet || !(enableCb?.checked);
+        if (txStatus) {
+          txStatus.textContent = onMainnet ? "Demo transfers are only enabled on Sepolia." : "";
+        }
+      }
+    }
+
+    // Re-calc CURRENT on chain change
+    if (window.ethereum?.on) {
+      window.ethereum.on("chainChanged", setCurrentByWallet);
+    }
+
     function onLoad() {
       if ($("year")) $("year").textContent = new Date().getFullYear();
+
+      // Initial network-derived UI
+      setCurrentByWallet();
 
       // Contract card buttons
       $("copy")?.addEventListener("click", async () => {
         try {
-          await navigator.clipboard.writeText(CONTRACT);
+          await navigator.clipboard.writeText(CURRENT.contract);
           const btn = $("copy"); const old = btn.textContent; btn.textContent = "Copied!"; setTimeout(() => btn.textContent = old, 1200);
         } catch {}
       });
@@ -238,33 +313,30 @@
         try {
           await window.ethereum.request({
             method: "wallet_watchAsset",
-            params: { type: "ERC20", options: { address: CONTRACT, symbol: "XALRA", decimals: 18 } }
+            params: { type: "ERC20", options: { address: CURRENT.contract, symbol: "XALRA", decimals: 18 } }
           });
         } catch (e) { alert(cleanError(e)); }
       });
 
-      // Network badge
-      (async () => {
-        const el = $("networkNote");
-        if (!el) return;
-        if (!window.ethereum) { el.textContent = "MetaMask not detected"; return; }
-        try {
-          const id = await window.ethereum.request({ method: "eth_chainId" });
-          el.textContent = (id === CHAIN_ID_HEX) ? "Wallet network: Sepolia ✓"
-            : `Wallet network: not Sepolia (chainId ${parseInt(id,16)})`;
-        } catch { el.textContent = "Could not read wallet network"; }
-      })();
-
-      // ---- Try panel (send) ----
+      // ---- Try panel (send; Sepolia only) ----
       let provider, signer, token;
+      const btnConnect  = $("connect");
+      const btnSwitch   = $("switch");
+      const btnAddToken = $("addToken");
+      const btnSend     = $("send");
+      let lastSendAt = 0;
+      const SEND_COOLDOWN_MS = 8000;
 
       async function connect() {
         if (!window.ethereum) throw new Error("MetaMask not detected");
         provider = new ethers.BrowserProvider(window.ethereum);
         await window.ethereum.request({ method: "eth_requestAccounts" });
-        await ensureSepolia();
+        // For the demo, ensure Sepolia
+        await ensureChain(NETS[11155111].chainIdHex);
+        await setCurrentByWallet(); // refresh CURRENT/UI after switch
+
         signer = await provider.getSigner();
-        token  = new ethers.Contract(CONTRACT, TOKEN_ABI, signer);
+        token  = new ethers.Contract(CURRENT.contract, TOKEN_ABI, signer);
 
         const addr = await signer.getAddress();
         $("walletAddr") && ($("walletAddr").textContent = addr);
@@ -273,18 +345,11 @@
         const bal = await token.balanceOf(addr);
         $("myBalance") && ( $("myBalance").textContent = ethers.formatUnits(bal, 18) );
 
-        note("Connected to Sepolia.");
+        note("Connected.");
         await updateOwnerUI(); // refresh owner card if this is the owner
       }
 
-      const btnConnect  = $("connect");
-      const btnSwitch   = $("switch");
-      const btnAddToken = $("addToken");
-      const btnSend     = $("send");
-      const EXPLORER = "https://sepolia.etherscan.io";
-      let lastSendAt = 0;
-      const SEND_COOLDOWN_MS = 8000;
-
+      // toggle wiring for send enable + paused state
       const tryEls = {
         card: $("try"),
         sendBtn: $("send"),
@@ -296,38 +361,40 @@
         if (!tryEls.card) return;
         tryEls.card.style.opacity = paused ? 0.6 : 1;
         const enabledToggle = tryEls.enable?.checked ?? false;
-        if (tryEls.sendBtn) tryEls.sendBtn.disabled = paused || !enabledToggle;
+        if (tryEls.sendBtn) tryEls.sendBtn.disabled = paused || !enabledToggle || (CURRENT === NETS[1]);
         if (tryEls.status) {
-          tryEls.status.textContent = paused ? "Token is paused: transfers are disabled." : "";
+          if (CURRENT === NETS[1]) {
+            tryEls.status.textContent = "Demo transfers are only enabled on Sepolia.";
+          } else {
+            tryEls.status.textContent = paused ? "Token is paused: transfers are disabled." : "";
+          }
         }
       }
 
       async function refreshPaused() {
         if (!window.ethereum) return;
         try {
-          const providerRO = new ethers.BrowserProvider(window.ethereum);
-          const c = new ethers.Contract(CONTRACT, ["function paused() view returns (bool)"], providerRO);
+          const pro = new ethers.BrowserProvider(window.ethereum);
+          const c = new ethers.Contract(CURRENT.contract, ["function paused() view returns (bool)"], pro);
           const paused = await c.paused();
           setTryPaused(paused);
         } catch { /* ignore */ }
       }
 
-      // toggle wiring
       if (tryEls.enable && tryEls.sendBtn) {
-        tryEls.sendBtn.disabled = true;
+        tryEls.sendBtn.disabled = true; // opt-in required
         tryEls.enable.addEventListener("change", refreshPaused);
       }
-
       if (window.ethereum?.on) {
-        window.ethereum.on("chainChanged",  refreshPaused);
         window.ethereum.on("accountsChanged", refreshPaused);
+        window.ethereum.on("chainChanged",   refreshPaused);
       }
       refreshPaused();
 
       btnConnect && (btnConnect.onclick = () => connect().catch(e => note(cleanError(e))));
       btnSwitch  && (btnSwitch.onclick  = () => {
         if (!window.ethereum) { note("MetaMask not detected"); return; }
-        window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: CHAIN_ID_HEX }] })
+        window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: NETS[11155111].chainIdHex }] })
           .catch(e => note(cleanError(e)));
       });
       btnAddToken && (btnAddToken.onclick = async () => {
@@ -335,23 +402,22 @@
           if (!window.ethereum) throw new Error("MetaMask not detected");
           await window.ethereum.request({
             method: "wallet_watchAsset",
-            params: { type: "ERC20", options: { address: CONTRACT, symbol: "XALRA", decimals: 18 } }
+            params: { type: "ERC20", options: { address: CURRENT.contract, symbol: "XALRA", decimals: 18 } }
           });
         } catch (e) { note(cleanError(e)); }
       });
 
-      // Single canonical Send handler
       btnSend && (btnSend.onclick = async () => {
         try {
+          // Only on Sepolia
+          if (CURRENT !== NETS[11155111]) { note("Demo transfers are only enabled on Sepolia."); return; }
           if (!tryEls.enable?.checked) { note("Toggle “Enable sending” first."); return; }
-
           const now = Date.now();
           if (now - lastSendAt < SEND_COOLDOWN_MS) {
             const wait = Math.ceil((SEND_COOLDOWN_MS - (now - lastSendAt)) / 1000);
             note(`Please wait ${wait}s before sending again.`);
             return;
           }
-
           if (!signer) await connect();
 
           const to = ($("to")?.value || "").trim();
@@ -359,18 +425,21 @@
           if (!ethers.isAddress(to)) throw new Error("Invalid recipient address");
           if (!amtStr || Number(amtStr) <= 0) throw new Error("Enter a positive amount");
 
+          // Respect paused()
           const providerRO = new ethers.BrowserProvider(window.ethereum);
-          const pausedReader = new ethers.Contract(CONTRACT, ["function paused() view returns (bool)"], providerRO);
+          const pausedReader = new ethers.Contract(CURRENT.contract, ["function paused() view returns (bool)"], providerRO);
           if (await pausedReader.paused()) throw new Error("Token is paused");
 
           const value = ethers.parseUnits(amtStr, 18);
 
+          // Optional soft cap confirm
           const SOFT_CAP = ethers.parseUnits("100", 18);
           if (value > SOFT_CAP) {
             const ok = confirm("This is a demo site. Are you sure you want to send more than 100 XALRA?");
             if (!ok) return;
           }
 
+          // Balance check
           const sender = await signer.getAddress();
           const bal = await token.balanceOf(sender);
           if (value > bal) throw new Error(`Amount exceeds your balance (${ethers.formatUnits(bal, 18)} XALRA)`);
@@ -381,15 +450,16 @@
 
           const hash = tx.hash;
           const el = $("txStatus");
+          const txUrl = `${CURRENT.explorer}/tx/${hash}`;
           if (el && /^0x[0-9a-fA-F]{64}$/.test(hash)) {
-            el.innerHTML = `Pending: <a href="${EXPLORER}/tx/${hash}" target="_blank" rel="noopener">${hash.slice(0,10)}…</a>`;
+            el.innerHTML = `Pending: <a href="${txUrl}" target="_blank" rel="noopener">${hash.slice(0,10)}…</a>`;
           } else {
             note("Pending: " + hash);
           }
 
           const rcpt = await tx.wait();
           if (el) {
-            el.innerHTML = `Confirmed in block ${rcpt.blockNumber}. <a href="${EXPLORER}/tx/${hash}" target="_blank" rel="noopener">View on Etherscan</a>`;
+            el.innerHTML = `Confirmed in block ${rcpt.blockNumber}. <a href="${txUrl}" target="_blank" rel="noopener">View on Etherscan</a>`;
           } else {
             note(`Confirmed in block ${rcpt.blockNumber}. Tx: ${hash}`);
           }
@@ -402,7 +472,7 @@
         }
       });
 
-      // ---- Owner Tools ----
+      // ---- Owner Tools (per chain owner) ----
       const ownerEls = {
         card:       $("ownerCard"),
         status:     $("ownerStatus"),
@@ -422,14 +492,14 @@
         if (!ownerEls.card) return;
         if (!window.ethereum) { ownerEls.card.style.display = "none"; ownerEls.connectRow.style.display = "none"; return; }
 
-        let chainOk = false;
-        try { chainOk = (await window.ethereum.request({ method: "eth_chainId" })) === CHAIN_ID_HEX; } catch {}
-
+        let chainId = 11155111;
+        try { chainId = parseInt(await window.ethereum.request({ method: "eth_chainId" }), 16); } catch {}
         const accounts = await getAccounts();
         const acct = (accounts[0] || "").toLowerCase();
-        const isOwner = acct === OWNER;
+        const ownerForChain = OWNERS[chainId] || "";
+        const isOwner = acct === ownerForChain;
 
-        if (!isOwner || !chainOk) {
+        if (!isOwner) {
           ownerEls.card.style.display = "none";
           ownerEls.connectRow.style.display = "block";
           return;
@@ -441,7 +511,7 @@
         try {
           const providerO = new ethers.BrowserProvider(window.ethereum);
           const signerO   = await providerO.getSigner();
-          const c = new ethers.Contract(CONTRACT, OWNER_ABI, signerO);
+          const c = new ethers.Contract(CURRENT.contract, OWNER_ABI, signerO);
           const paused = await c.paused();
           ownerEls.status.textContent = paused ? "Paused" : "Active";
           ownerEls.status.style.color = paused ? "#ffd166" : "#a7f3d0";
@@ -455,7 +525,6 @@
       ownerEls.connectBtn?.addEventListener("click", async () => {
         if (!window.ethereum) { alert("No wallet found"); return; }
         try {
-          await ensureSepolia();
           await window.ethereum.request({ method: "eth_requestAccounts" });
           await updateOwnerUI();
         } catch (e) { alert(cleanError(e)); }
@@ -464,10 +533,9 @@
       ownerEls.pauseBtn?.addEventListener("click", async () => {
         try {
           if (!window.ethereum) return alert("No wallet");
-          await ensureSepolia();
           const providerO = new ethers.BrowserProvider(window.ethereum);
           const signerO   = await providerO.getSigner();
-          const c = new ethers.Contract(CONTRACT, OWNER_ABI, signerO);
+          const c = new ethers.Contract(CURRENT.contract, OWNER_ABI, signerO);
           ownerEls.status.textContent = "Pausing…";
           const tx = await c.pause();
           await tx.wait();
@@ -480,10 +548,9 @@
       ownerEls.unpauseBtn?.addEventListener("click", async () => {
         try {
           if (!window.ethereum) return alert("No wallet");
-          await ensureSepolia();
           const providerO = new ethers.BrowserProvider(window.ethereum);
           const signerO   = await providerO.getSigner();
-          const c = new ethers.Contract(CONTRACT, OWNER_ABI, signerO);
+          const c = new ethers.Contract(CURRENT.contract, OWNER_ABI, signerO);
           ownerEls.status.textContent = "Unpausing…";
           const tx = await c.unpause();
           await tx.wait();
@@ -495,47 +562,50 @@
 
       if (window.ethereum?.on) {
         window.ethereum.on("accountsChanged", () => { updateOwnerUI(); });
-        window.ethereum.on("chainChanged",   () => { updateOwnerUI(); });
+        window.ethereum.on("chainChanged",   () => { updateOwnerUI(); setCurrentByWallet(); });
       }
 
-      // ---- Xalara Pass (mint with burn) ----
+      // ---- Xalara Pass (Sepolia only) ----
       const mintBtn = $("mintPass");
       mintBtn && (mintBtn.onclick = async () => {
         try {
           if (!window.ethereum) throw new Error("Wallet not detected");
-          await ensureSepolia();
+          // Force to Sepolia for mint
+          await ensureChain(NETS[11155111].chainIdHex);
+          await setCurrentByWallet();
 
           const provider = new ethers.BrowserProvider(window.ethereum);
           const signer   = await provider.getSigner();
 
-          const token = new ethers.Contract(CONTRACT, TOKEN_ABI, signer);
-          const pass  = new ethers.Contract(PASS, PASS_ABI, signer);
+          const token = new ethers.Contract(NETS[11155111].contract, TOKEN_ABI, signer);
+          const passAddr = NETS[11155111].pass;
+          const pass  = new ethers.Contract(passAddr, PASS_ABI, signer);
 
-          // Figure out how much to burn (try on-chain, else fallback 100)
+          // How much to burn (fallback 100)
           let burnAmount = ethers.parseUnits("100", 18);
           try { burnAmount = await pass.burnPerPass(); } catch {}
 
-          // Optional: balance check
-          const sender = await signer.getAddress();
-          const bal = await token.balanceOf(sender);
+          // Balance check
+          const me = await signer.getAddress();
+          const bal = await token.balanceOf(me);
           if (bal < burnAmount) {
             throw new Error(`You need ${ethers.formatUnits(burnAmount,18)} XALRA to mint a pass. Your balance is ${ethers.formatUnits(bal,18)}.`);
           }
 
           notePass("Approving XALRA for burn…");
-          let tx = await token.approve(PASS, burnAmount);
+          let tx = await token.approve(passAddr, burnAmount);
           await tx.wait();
 
           notePass("Minting pass…");
           tx = await pass.mintWithBurn();
           const rcpt = await tx.wait();
 
-          const txUrl = `https://sepolia.etherscan.io/tx/${tx.hash}`;
+          const txUrl = `${NETS[11155111].explorer}/tx/${tx.hash}`;
           $("passStatus").innerHTML = `Minted! <a href="${txUrl}" target="_blank" rel="noopener">View transaction ↗</a>`;
 
-          // Refresh displayed token balance if Try panel is connected
+          // Refresh demo balance if visible
           try {
-            const newBal = await token.balanceOf(sender);
+            const newBal = await token.balanceOf(me);
             $("myBalance") && ( $("myBalance").textContent = ethers.formatUnits(newBal, 18) );
           } catch {}
         } catch (e) {
@@ -543,7 +613,7 @@
         }
       });
 
-      // ---- Balances panel (read-only) ----
+      // ---- Balances panel (read-only, current chain) ----
       (function setupBalancesPanel() {
         const addrBox   = $("addrList");
         const listEl    = $("balancesList");
@@ -573,10 +643,10 @@
         async function refresh() {
           try {
             if (!window.ethereum) { listEl.innerHTML = ""; row("-", "Wallet not detected", true); totalEl.textContent = "–"; return; }
-            try { await ensureSepolia(); } catch {}
 
             const provider = new ethers.BrowserProvider(window.ethereum);
-            const tokenRO  = new ethers.Contract(CONTRACT, TOKEN_ABI, provider);
+            // Use CURRENT chain
+            const tokenRO  = new ethers.Contract(CURRENT.contract, TOKEN_ABI, provider);
 
             const inputAddrs = dedupe(parseAddrs(addrBox.value));
             if (inputAddrs.length === 0) { listEl.innerHTML = ""; row("-", "No valid addresses", true); totalEl.textContent = "–"; return; }
@@ -624,13 +694,13 @@
 
         if (window.ethereum?.on) {
           window.ethereum.on("accountsChanged", async () => { await addConnectedOnce(); await refresh(); });
-          window.ethereum.on("chainChanged",    async () => { await refresh(); });
+          window.ethereum.on("chainChanged",    async () => { await setCurrentByWallet(); await refresh(); });
         }
 
         addConnectedOnce().then(refresh);
       })();
 
-      // Initial owner paint
+      // First owner paint
       updateOwnerUI();
     }
 
@@ -646,4 +716,3 @@
   </script>
 </body>
 </html>
-

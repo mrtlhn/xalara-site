@@ -60,7 +60,7 @@
           <p><strong>Features:</strong> Burnable, Pausable, Permit (EIP‑2612)</p>
           <p><strong>Owner (per chain):</strong></p>
           <ul class="muted" style="margin:6px 0 0 0; padding-left:18px">
-            <li>Mainnet: <code>0x57cBC130C4556F080C55e54da54bB58CCD9A3e71</code></li>
+            <li>Mainnet: <code>0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405</code> <!-- Safe --></li>
             <li>Sepolia: <code>0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b</code></li>
           </ul>
         </div>
@@ -107,7 +107,7 @@
       </p>
     </section>
 
-    <!-- Try it panel -->
+    <!-- Try it panel (Sepolia demo) -->
     <section class="card" id="try">
       <h2>Try it (Demo — Sepolia)</h2>
       <div class="btn-row">
@@ -152,30 +152,30 @@
       <div id="balancesList" style="margin-top:8px"></div>
       <p class="muted">Total (listed): <strong id="balancesTotal">–</strong> XALRA</p>
     </section>
-    <!-- Trade (Mainnet) -->
-<section class="card" id="trade">
-  <h2>Trade</h2>
-  <p class="muted">Mainnet links for convenience.</p>
-  <ul style="margin:0; padding-left:18px">
-    <li>
-      <a id="swapLink" target="_blank" rel="noopener">
-        Swap ETH → XALRA on Uniswap ↗
-      </a>
-    </li>
-    <li>
-      <a id="addLiqLink" target="_blank" rel="noopener">
-        Add liquidity (ETH + XALRA) ↗
-      </a>
-    </li>
-    <li>
-      <a id="pairInfoLink" target="_blank" rel="noopener">
-        View pool on a DEX tracker ↗
-      </a>
-      <span class="muted" style="font-size:12px"> (set once you have the pair address)</span>
-    </li>
-  </ul>
-</section>
 
+    <!-- Trade (Mainnet) -->
+    <section class="card" id="trade">
+      <h2>Trade</h2>
+      <p class="muted">Mainnet links for convenience.</p>
+      <ul style="margin:0; padding-left:18px">
+        <li>
+          <a id="swapLink" target="_blank" rel="noopener">
+            Swap ETH → XALRA on Uniswap ↗
+          </a>
+        </li>
+        <li>
+          <a id="addLiqLink" target="_blank" rel="noopener">
+            Add liquidity (ETH + XALRA) ↗
+          </a>
+        </li>
+        <li>
+          <a id="pairInfoLink" target="_blank" rel="noopener">
+            View pool on a DEX tracker ↗
+          </a>
+          <span class="muted" style="font-size:12px"> (set once you have the pair address)</span>
+        </li>
+      </ul>
+    </section>
 
     <footer>
       © <span id="year"></span> Xalara · Network: <span id="footerNet">—</span>
@@ -184,18 +184,19 @@
 
   <!-- ethers.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
-// === MAINNET ADDRESSES ===
-const MAINNET_TOKEN = "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3"; // XALRA (mainnet)
-const UNIV2_ROUTER  = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"; // Uniswap V2 Router (canonical)
-let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool (optional)
 
   <!-- App logic -->
   <script>
   (function () {
-    // === OWNERS PER CHAIN ===
+    // === MAINNET ADDRESSES (for Trade links) ===
+    const MAINNET_TOKEN = "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3"; // XALRA (mainnet)
+    const UNIV2_ROUTER  = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"; // Uniswap V2 Router (canonical)
+    let   MAINNET_PAIR  = ""; // paste your UNI‑V2 pair address when you have it
+
+    // === OWNERS PER CHAIN (EOA for Sepolia demo; Safe for mainnet) ===
     const OWNERS = {
-      1:        "0x57cBC130C4556F080C55e54da54bB58CCD9A3e71".toLowerCase(), // Mainnet owner
-      11155111: "0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b".toLowerCase(), // Sepolia owner
+      1:        "0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405".toLowerCase(), // Mainnet owner (Safe)
+      11155111: "0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b".toLowerCase(), // Sepolia owner (EOA)
     };
 
     // === NETWORKS ===
@@ -205,7 +206,7 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
         chainIdHex: "0x1",
         explorer: "https://etherscan.io",
         contract: "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3", // XALRA Mainnet
-        pass: null, // no pass on mainnet
+        pass: null,
       },
       11155111: {
         name: "Sepolia",
@@ -255,7 +256,6 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
           await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: chainIdHex }] });
         } catch (e) {
           if (e && e.code === 4902) {
-            // add then switch
             const net = Object.values(NETS).find(n => n.chainIdHex === chainIdHex);
             await window.ethereum.request({
               method: "wallet_addEthereumChain",
@@ -318,7 +318,7 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
       }
     }
 
-    // Re-calc CURRENT on chain change
+    // React to wallet chain change
     if (window.ethereum?.on) {
       window.ethereum.on("chainChanged", setCurrentByWallet);
     }
@@ -346,6 +346,35 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
         } catch (e) { alert(cleanError(e)); }
       });
 
+      // === Trade links (mainnet) — exact wiring ===
+      {
+        const swapLink   = $("swapLink");
+        const addLiqLink = $("addLiqLink");
+        const pairInfo   = $("pairInfoLink");
+
+        // Uniswap UI: swap ETH -> XALRA (mainnet)
+        if (swapLink) {
+          swapLink.href = `https://app.uniswap.org/#/swap?outputCurrency=${MAINNET_TOKEN}&chain=mainnet`;
+        }
+
+        // Uniswap UI: add liquidity (ETH + XALRA) on v2 (mainnet)
+        if (addLiqLink) {
+          addLiqLink.href = `https://app.uniswap.org/#/add/v2/ETH/${MAINNET_TOKEN}?chain=mainnet`;
+        }
+
+        // Pool tracker link (fill MAINNET_PAIR once known)
+        if (pairInfo) {
+          if (MAINNET_PAIR) {
+            pairInfo.href = `https://dexscreener.com/ethereum/${MAINNET_PAIR}`;
+            pairInfo.style.opacity = 1;
+          } else {
+            pairInfo.removeAttribute("href");
+            pairInfo.style.opacity = 0.75;
+            pairInfo.textContent = "View pool on a DEX tracker (set pair address after pool is created)";
+          }
+        }
+      }
+
       // ---- Try panel (send; Sepolia only) ----
       let provider, signer, token;
       const btnConnect  = $("connect");
@@ -359,9 +388,9 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
         if (!window.ethereum) throw new Error("MetaMask not detected");
         provider = new ethers.BrowserProvider(window.ethereum);
         await window.ethereum.request({ method: "eth_requestAccounts" });
-        // For the demo, ensure Sepolia
+        // ensure Sepolia for demo
         await ensureChain(NETS[11155111].chainIdHex);
-        await setCurrentByWallet(); // refresh CURRENT/UI after switch
+        await setCurrentByWallet();
 
         signer = await provider.getSigner();
         token  = new ethers.Contract(CURRENT.contract, TOKEN_ABI, signer);
@@ -374,10 +403,9 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
         $("myBalance") && ( $("myBalance").textContent = ethers.formatUnits(bal, 18) );
 
         note("Connected.");
-        await updateOwnerUI(); // refresh owner card if this is the owner
+        await updateOwnerUI();
       }
 
-      // toggle wiring for send enable + paused state
       const tryEls = {
         card: $("try"),
         sendBtn: $("send"),
@@ -410,7 +438,7 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
       }
 
       if (tryEls.enable && tryEls.sendBtn) {
-        tryEls.sendBtn.disabled = true; // opt-in required
+        tryEls.sendBtn.disabled = true; // require explicit toggle
         tryEls.enable.addEventListener("change", refreshPaused);
       }
       if (window.ethereum?.on) {
@@ -437,7 +465,6 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
 
       btnSend && (btnSend.onclick = async () => {
         try {
-          // Only on Sepolia
           if (CURRENT !== NETS[11155111]) { note("Demo transfers are only enabled on Sepolia."); return; }
           if (!tryEls.enable?.checked) { note("Toggle “Enable sending” first."); return; }
           const now = Date.now();
@@ -467,7 +494,6 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
             if (!ok) return;
           }
 
-          // Balance check
           const sender = await signer.getAddress();
           const bal = await token.balanceOf(sender);
           if (value > bal) throw new Error(`Amount exceeds your balance (${ethers.formatUnits(bal, 18)} XALRA)`);
@@ -527,7 +553,8 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
         const ownerForChain = OWNERS[chainId] || "";
         const isOwner = acct === ownerForChain;
 
-        if (!isOwner) {
+        // Note: on mainnet owner is a Safe; direct EOA calls will not succeed.
+        if (!isOwner || chainId === 1) {
           ownerEls.card.style.display = "none";
           ownerEls.connectRow.style.display = "block";
           return;
@@ -598,7 +625,6 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
       mintBtn && (mintBtn.onclick = async () => {
         try {
           if (!window.ethereum) throw new Error("Wallet not detected");
-          // Force to Sepolia for mint
           await ensureChain(NETS[11155111].chainIdHex);
           await setCurrentByWallet();
 
@@ -609,11 +635,9 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
           const passAddr = NETS[11155111].pass;
           const pass  = new ethers.Contract(passAddr, PASS_ABI, signer);
 
-          // How much to burn (fallback 100)
           let burnAmount = ethers.parseUnits("100", 18);
           try { burnAmount = await pass.burnPerPass(); } catch {}
 
-          // Balance check
           const me = await signer.getAddress();
           const bal = await token.balanceOf(me);
           if (bal < burnAmount) {
@@ -631,7 +655,6 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
           const txUrl = `${NETS[11155111].explorer}/tx/${tx.hash}`;
           $("passStatus").innerHTML = `Minted! <a href="${txUrl}" target="_blank" rel="noopener">View transaction ↗</a>`;
 
-          // Refresh demo balance if visible
           try {
             const newBal = await token.balanceOf(me);
             $("myBalance") && ( $("myBalance").textContent = ethers.formatUnits(newBal, 18) );
@@ -673,7 +696,6 @@ let MAINNET_PAIR    = ""; // paste the 0x pair address after you create the pool
             if (!window.ethereum) { listEl.innerHTML = ""; row("-", "Wallet not detected", true); totalEl.textContent = "–"; return; }
 
             const provider = new ethers.BrowserProvider(window.ethereum);
-            // Use CURRENT chain
             const tokenRO  = new ethers.Contract(CURRENT.contract, TOKEN_ABI, provider);
 
             const inputAddrs = dedupe(parseAddrs(addrBox.value));

@@ -1,0 +1,17 @@
+{
+  "name": "Xalara Token List",
+  "logoURI": "https://xalara.io/logo.png",
+  "timestamp": "2025-01-01T00:00:00Z",
+  "tokens": [
+    {
+      "chainId": 1,
+      "address": "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3",
+      "name": "Xalara",
+      "symbol": "XALRA",
+      "decimals": 18,
+      "logoURI": "https://xalara.io/logo.png",
+      "tags": ["utility"]
+    }
+  ],
+  "version": { "major": 0, "minor": 1, "patch": 0 }
+}

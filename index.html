@@ -264,6 +264,27 @@
     const note = (msg) => { const el = $("txStatus"); if (el) el.textContent = msg; console.log("[XALRA]", msg); };
     const notePass = (msg) => { const el = $("passStatus"); if (el) el.textContent = msg; console.log("[PASS]", msg); };
     const cleanError = (e) => (e?.error?.message || e?.data?.message || e?.message || String(e)).replace(/^execution reverted:? /i, "");
+    function updateTradeLinks() {
+  const buyUniswap   = document.getElementById("buyUniswap");
+  const swapLink     = document.getElementById("swapLink");
+  const addLiqLink   = document.getElementById("addLiqLink");
+  const pairInfoLink = document.getElementById("pairInfoLink");
+
+  // Uniswap swap (ETH -> XALRA)
+  const swapUrl = `https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=${MAINNET_TOKEN}&chain=ethereum`;
+  if (buyUniswap)  buyUniswap.href  = swapUrl;
+  if (swapLink)    swapLink.href    = swapUrl;
+
+  // Uniswap V2 add liquidity
+  const addUrl = `https://app.uniswap.org/#/add/v2/ETH/${MAINNET_TOKEN}?chain=ethereum`;
+  if (addLiqLink)  addLiqLink.href  = addUrl;
+
+  // Pool info on a tracker (DexScreener)
+  if (pairInfoLink && MAINNET_PAIR) {
+    pairInfoLink.href = `https://dexscreener.com/ethereum/${MAINNET_PAIR}`;
+  }
+}
+
 
     async function ensureChain(chainIdHex) {
       if (!window.ethereum) throw new Error("Wallet not detected");

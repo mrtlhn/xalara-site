@@ -1,7 +1,9 @@
 {
   "name": "Xalara Token List",
   "logoURI": "https://xalara.io/assets/xalara-256.png",
-  "timestamp": "2025-01-01T00:00:00Z",
+  "keywords": ["xalara", "xalra", "ai", "longevity"],
+  "timestamp": "2025-01-01T00:00:00+00:00",
+  "version": { "major": 1, "minor": 0, "patch": 0 },
   "tokens": [
     {
       "chainId": 1,
@@ -9,9 +11,17 @@
       "name": "Xalara",
       "symbol": "XALRA",
       "decimals": 18,
-      "logoURI": "https://xalara.io/logo.png",
-      "tags": ["utility"]
+      "logoURI": "https://xalara.io/assets/xalara-256.png",
+      "tags": ["mainnet"]
+    },
+    {
+      "chainId": 11155111,
+      "address": "0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16",
+      "name": "Xalara (Sepolia)",
+      "symbol": "XALRA",
+      "decimals": 18,
+      "logoURI": "https://xalara.io/assets/xalara-256.png",
+      "tags": ["testnet"]
     }
-  ],
-  "version": { "major": 0, "minor": 1, "patch": 0 }
+  ]
 }

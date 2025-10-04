@@ -18,7 +18,6 @@
   <!-- Social preview -->
   <meta property="og:image" content="https://xalara.io/assets/xalara-256.png?v=2">
   <meta name="twitter:image" content="https://xalara.io/assets/xalara-256.png?v=2">
-  <!-- (optional but recommended) -->
   <meta name="twitter:card" content="summary_large_image">
 
   <style>
@@ -45,16 +44,15 @@
 </head>
 <body>
   <div class="wrap">
-   <header>
-  <h1>
-    <img src="/assets/xalara-256.png?v=2" alt="XALARA"
-         style="height:40px; vertical-align:middle; border-radius:8px; margin-right:8px">
-    Xalara <span class="muted">(XALRA)</span>
-  </h1>
-  <p class="subtitle">Official site · ERC‑20 on <strong>Ethereum & Sepolia</strong> · xalara.io</p>
-  <div id="networkNote" class="tag">Checking wallet network…</div>
-</header>
-
+    <header>
+      <h1>
+        <img src="/assets/xalara-256.png?v=2" alt="XALARA"
+             style="height:40px; vertical-align:middle; border-radius:8px; margin-right:8px">
+        Xalara <span class="muted">(XALRA)</span>
+      </h1>
+      <p class="subtitle">Official site · ERC‑20 on <strong>Ethereum & Sepolia</strong> · xalara.io</p>
+      <div id="networkNote" class="tag">Checking wallet network…</div>
+    </header>
 
     <!-- Contract card -->
     <section id="contract" class="card">
@@ -69,30 +67,43 @@
     </section>
 
     <!-- About -->
-   <section class="card">
-  <h2>About Xalara</h2>
-  <div class="grid">
-    <div>
-      <p><strong>What it is:</strong> Xalara (XALRA) is an ERC‑20 utility token on Ethereum used to coordinate and fund open work in AI‑assisted longevity and bioinformatics tools.</p>
-      <p><strong>Contract (mainnet):</strong> <code>0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code></p>
-      <p><strong>Owner (Safe):</strong> <code>0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405</code></p>
-      <p><strong>Features:</strong> Burnable · Pausable · Permit (EIP‑2612) · 18 decimals · No transfer taxes</p>
-    </div>
-    <div>
-      <p><strong>Token supply:</strong> 1,000,000,000 XALRA (fixed at deploy)</p>
-      <p><strong>Liquidity:</strong> Uniswap v2 ETH/XALRA<br>
-        Pair: <code>0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91</code></p>
-      <ul>
-        <li><a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan (verified)</a></li>
-        <li><a href="https://dexscreener.com/ethereum/0x87d0f6e909c459b1da253f1a9570ccec8f59bb91" target="_blank" rel="noopener">Pool tracker</a></li>
-      </ul>
-    </div>
-  </div>
-  <p class="muted" style="margin-top:8px">
-    <strong>Important:</strong> XALRA is not an investment and makes no promises of returns. The project does not make medical claims.
-  </p>
-</section>
+    <section class="card">
+      <h2>About Xalara</h2>
+      <div class="grid">
+        <div>
+          <p><strong>What it is:</strong> Xalara (XALRA) is an ERC‑20 utility token on Ethereum used to coordinate and fund open work in AI‑assisted longevity and bioinformatics tools.</p>
+          <p><strong>Contract (mainnet):</strong> <code>0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code></p>
+          <p><strong>Owner (Safe):</strong> <code>0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405</code></p>
+          <p><strong>Features:</strong> Burnable · Pausable · Permit (EIP‑2612) · 18 decimals · No transfer taxes</p>
+        </div>
+        <div>
+          <p><strong>Token supply:</strong> 1,000,000,000 XALRA (fixed at deploy)</p>
+          <p><strong>Liquidity:</strong> Uniswap v2 ETH/XALRA<br>
+            Pair: <code>0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91</code></p>
+          <ul>
+            <li><a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan (verified)</a></li>
+            <li><a href="https://dexscreener.com/ethereum/0x87d0f6e909c459b1da253f1a9570ccec8f59bb91" target="_blank" rel="noopener">Pool tracker</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:8px">
+        <strong>Important:</strong> XALRA is not an investment and makes no promises of returns. The project does not make medical claims.
+      </p>
+    </section>
 
+    <!-- Liquidity status -->
+    <section class="card" id="liqCard">
+      <h2>Liquidity</h2>
+      <p class="muted">
+        Status: <strong id="liqStatus">Unlocked</strong>
+        · Plan: lock/burn on <span id="liqDate">TBD</span><br>
+        Pair: <a id="pairLink" href="#" target="_blank" rel="noopener">Etherscan ↗</a>
+        · LP in Safe: <a id="lpHoldLink" href="#" target="_blank" rel="noopener">view balance ↗</a>
+      </p>
+      <p class="muted" style="margin-top:6px">
+        We will announce the exact time window at least 24h in advance and post the proof link (tx hash / locker page) here and on X.
+      </p>
+    </section>
 
     <!-- Important -->
     <section class="card">
@@ -173,22 +184,22 @@
       <div id="balancesList" style="margin-top:8px"></div>
       <p class="muted">Total (listed): <strong id="balancesTotal">–</strong> XALRA</p>
     </section>
-    <!-- How to Buy (Mainnet) -->
-<section class="card" id="howto">
-  <h2>How to buy XALRA</h2>
-  <ol style="margin:0; padding-left:18px">
-    <li>Open <a id="buyUniswap" target="_blank" rel="noopener">Uniswap on Ethereum</a>.</li>
-    <li>In the token selector, paste the XALRA address:
-      <code>0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code>.
-    </li>
-    <li>Select <strong>ETH → XALRA</strong>, set slippage to <strong>0.5–1%</strong>, and swap.</li>
-  </ol>
-  <p class="muted" style="margin-top:10px">
-    Tip: If Uniswap shows “Unknown token”, click “Import” (normal for new tokens).
-    Always verify the contract address.
-  </p>
-</section>
 
+    <!-- How to Buy (Mainnet) -->
+    <section class="card" id="howto">
+      <h2>How to buy XALRA</h2>
+      <ol style="margin:0; padding-left:18px">
+        <li>Open <a id="buyUniswap" target="_blank" rel="noopener">Uniswap on Ethereum</a>.</li>
+        <li>In the token selector, paste the XALRA address:
+          <code>0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code>.
+        </li>
+        <li>Select <strong>ETH → XALRA</strong>, set slippage to <strong>0.5–1%</strong>, and swap.</li>
+      </ol>
+      <p class="muted" style="margin-top:10px">
+        Tip: If Uniswap shows “Unknown token”, click “Import” (normal for new tokens).
+        Always verify the contract address.
+      </p>
+    </section>
 
     <!-- Trade (Mainnet) -->
     <section class="card" id="trade">
@@ -214,14 +225,16 @@
       </ul>
     </section>
 
-<footer>
-  © <span id="year"></span> Xalara · Network: <span id="footerNet">—</span><br>
-  <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
-  <a href="mailto:xalara.project@gmail.com">Email</a> ·
-  <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a>
-</footer>
-
-
+    <footer>
+      © <span id="year"></span> Xalara · Network: <span id="footerNet">—</span><br>
+      <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
+      <a href="mailto:xalara.project@gmail.com">Email</a> ·
+      <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a>
+      <p class="muted" style="margin-top:8px">
+        Security: owner is a Safe multisig (<code>0x5aBB…1405</code>); liquidity currently <strong>unlocked</strong>. We plan to
+        <strong>lock or burn</strong> LP at the first community milestone and post the proof link here and on X.
+      </p>
+    </footer>
   </div>
 
   <!-- ethers.js CDN -->
@@ -233,13 +246,20 @@
     // === MAINNET ADDRESSES (for Trade links) ===
     const MAINNET_TOKEN = "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3"; // XALRA (mainnet)
     const UNIV2_ROUTER  = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"; // Uniswap V2 Router (canonical)
-    let   MAINNET_PAIR  = "0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91"; 
+    let   MAINNET_PAIR  = "0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91";
+
+    // === LIQUIDITY STATUS (pair/Safe; and optional proof links you can set later) ===
+    const XALRA_PAIR = "0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91"; // XALRA/WETH v2 pair
+    const SAFE_ADDR  = "0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405"; // your Safe (owner)
+    const PLANNED_LIQ_ACTION_DATE = ""; // e.g. "2025-03-01"
+    const LP_BURN_TX = "";              // if you burn later, paste the tx hash here
+    const LP_LOCK_PROOF_URL = "";       // if you lock later, paste the locker page URL
 
     // === OWNERS PER CHAIN (EOA for Sepolia demo; Safe for mainnet) ===
     const OWNERS = {
-  1:        "0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405".toLowerCase(), // Mainnet owner = Safe
-  11155111: "0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b".toLowerCase(), // Sepolia owner
-};
+      1:        "0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405".toLowerCase(), // Mainnet owner = Safe
+      11155111: "0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b".toLowerCase(), // Sepolia owner
+    };
 
     // === NETWORKS ===
     const NETS = {
@@ -289,27 +309,54 @@
     const note = (msg) => { const el = $("txStatus"); if (el) el.textContent = msg; console.log("[XALRA]", msg); };
     const notePass = (msg) => { const el = $("passStatus"); if (el) el.textContent = msg; console.log("[PASS]", msg); };
     const cleanError = (e) => (e?.error?.message || e?.data?.message || e?.message || String(e)).replace(/^execution reverted:? /i, "");
+
+    // Canonical trade-link wiring
     function updateTradeLinks() {
-  const buyUniswap   = document.getElementById("buyUniswap");
-  const swapLink     = document.getElementById("swapLink");
-  const addLiqLink   = document.getElementById("addLiqLink");
-  const pairInfoLink = document.getElementById("pairInfoLink");
+      const buyUniswap   = document.getElementById("buyUniswap");
+      const swapLink     = document.getElementById("swapLink");
+      const addLiqLink   = document.getElementById("addLiqLink");
+      const pairInfoLink = document.getElementById("pairInfoLink");
 
-  // Uniswap swap (ETH -> XALRA)
-  const swapUrl = `https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=${MAINNET_TOKEN}&chain=ethereum`;
-  if (buyUniswap)  buyUniswap.href  = swapUrl;
-  if (swapLink)    swapLink.href    = swapUrl;
+      // Uniswap swap (ETH -> XALRA)
+      const swapUrl = `https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=${MAINNET_TOKEN}&chain=ethereum`;
+      if (buyUniswap)  buyUniswap.href  = swapUrl;
+      if (swapLink)    swapLink.href    = swapUrl;
 
-  // Uniswap V2 add liquidity
-  const addUrl = `https://app.uniswap.org/#/add/v2/ETH/${MAINNET_TOKEN}?chain=ethereum`;
-  if (addLiqLink)  addLiqLink.href  = addUrl;
+      // Uniswap V2 add liquidity
+      const addUrl = `https://app.uniswap.org/#/add/v2/ETH/${MAINNET_TOKEN}?chain=ethereum`;
+      if (addLiqLink)  addLiqLink.href  = addUrl;
 
-  // Pool info on a tracker (DexScreener)
-  if (pairInfoLink && MAINNET_PAIR) {
-    pairInfoLink.href = `https://dexscreener.com/ethereum/${MAINNET_PAIR}`;
-  }
-}
+      // Pool info on a tracker (DexScreener)
+      if (pairInfoLink && MAINNET_PAIR) {
+        pairInfoLink.href = `https://dexscreener.com/ethereum/${MAINNET_PAIR}`;
+      }
+    }
 
+    // Liquidity card wiring
+    function wireLiquiditySection() {
+      const statusEl = $("liqStatus");
+      const dateEl   = $("liqDate");
+      const pairA    = $("pairLink");
+      const lpHoldA  = $("lpHoldLink");
+
+      // Set links
+      if (pairA)   pairA.href   = `https://etherscan.io/address/${XALRA_PAIR}`;
+      if (lpHoldA) lpHoldA.href = `https://etherscan.io/token/${XALRA_PAIR}?a=${SAFE_ADDR}`;
+
+      // Planned date
+      if (dateEl) dateEl.textContent = PLANNED_LIQ_ACTION_DATE || "TBD";
+
+      // Status logic (unlocked by default; flips to Locked if you set a proof)
+      if (statusEl) {
+        if (LP_BURN_TX) {
+          statusEl.innerHTML = `Locked (burn) · <a href="https://etherscan.io/tx/${LP_BURN_TX}" target="_blank" rel="noopener">proof ↗</a>`;
+        } else if (LP_LOCK_PROOF_URL) {
+          statusEl.innerHTML = `Locked (locker) · <a href="${LP_LOCK_PROOF_URL}" target="_blank" rel="noopener">proof ↗</a>`;
+        } else {
+          statusEl.textContent = "Unlocked";
+        }
+      }
+    }
 
     async function ensureChain(chainIdHex) {
       if (!window.ethereum) throw new Error("Wallet not detected");
@@ -389,10 +436,10 @@
     function onLoad() {
       if ($("year")) $("year").textContent = new Date().getFullYear();
 
-      // Initial network-derived UI
+      // Initial UI
       setCurrentByWallet();
-        updateTradeLinks();
-
+      updateTradeLinks();
+      wireLiquiditySection();
 
       // Contract card buttons
       $("copy")?.addEventListener("click", async () => {
@@ -410,35 +457,6 @@
           });
         } catch (e) { alert(cleanError(e)); }
       });
-
-      // === Trade links (mainnet) — exact wiring ===
-      {
-        const swapLink   = $("swapLink");
-        const addLiqLink = $("addLiqLink");
-        const pairInfo   = $("pairInfoLink");
-
-        // Uniswap UI: swap ETH -> XALRA (mainnet)
-        if (swapLink) {
-          swapLink.href = `https://app.uniswap.org/#/swap?outputCurrency=${MAINNET_TOKEN}&chain=mainnet`;
-        }
-
-        // Uniswap UI: add liquidity (ETH + XALRA) on v2 (mainnet)
-        if (addLiqLink) {
-          addLiqLink.href = `https://app.uniswap.org/#/add/v2/ETH/${MAINNET_TOKEN}?chain=mainnet`;
-        }
-
-        // Pool tracker link (fill MAINNET_PAIR once known)
-        if (pairInfo) {
-          if (MAINNET_PAIR) {
-            pairInfo.href = `https://dexscreener.com/ethereum/${MAINNET_PAIR}`;
-            pairInfo.style.opacity = 1;
-          } else {
-            pairInfo.removeAttribute("href");
-            pairInfo.style.opacity = 0.75;
-            pairInfo.textContent = "View pool on a DEX tracker (set pair address after pool is created)";
-          }
-        }
-      }
 
       // ---- Try panel (send; Sepolia only) ----
       let provider, signer, token;

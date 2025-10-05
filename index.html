@@ -6,19 +6,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Xalara (XALRA) — ERC‑20 token for open biotech & longevity tooling, with AI‑assisted research bounties and community grants." />
   <link rel="canonical" href="https://xalara.io/" />
+  <meta name="robots" content="index,follow">
+
+  <!-- Open Graph / Twitter -->
   <meta property="og:title" content="Xalara (XALRA)" />
   <meta property="og:description" content="Open biotech • Longevity • AI‑assisted research. Contract, links, liquidity, and community roadmap." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://xalara.io/" />
+  <meta property="og:site_name" content="Xalara" />
+  <meta property="og:image" content="https://xalara.io/assets/xalara-256.png?v=2">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://xalara.io/assets/xalara-256.png?v=2">
+
+  <!-- Identity / SEO helpers -->
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="keywords" content="Xalara, XALRA, longevity, biotech, bioinformatics, AI, ERC-20, Ethereum">
 
   <!-- Favicon / app icons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/xalara-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="32x32"  href="/assets/xalara-32.png?v=2">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/xalara-256.png?v=2">
-  <link rel="apple-touch-icon" href="/assets/xalara-256.png?v=2">
+  <link rel="apple-touch-icon"                 href="/assets/xalara-256.png?v=2">
 
-  <!-- Social preview -->
-  <meta property="og:image" content="https://xalara.io/assets/xalara-256.png?v=2">
-  <meta name="twitter:image" content="https://xalara.io/assets/xalara-256.png?v=2">
-  <meta name="twitter:card" content="summary_large_image">
+  <!-- Optional: advertise your tokenlist.json to tooling -->
+  <!-- <link rel="alternate" type="application/json" href="/tokenlist.json"> -->
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "WebSite"],
+    "name": "Xalara",
+    "url": "https://xalara.io",
+    "logo": "https://xalara.io/assets/xalara-256.png",
+    "sameAs": ["https://twitter.com/Xalara_Token"],
+    "description": "Open biotech & longevity tools with AI-assisted research bounties.",
+    "keywords": "Xalara, XALRA, longevity, biotech, AI, ERC-20, Ethereum"
+  }
+  </script>
 
   <style>
     :root {
@@ -30,8 +54,7 @@
     body {
       margin:0; color:var(--text);
       font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
-      background:
-        radial-gradient(1200px 600px at 80% -10%, #1b2131 0%, #0b0d12 60%);
+      background: radial-gradient(1200px 600px at 80% -10%, #1b2131 0%, #0b0d12 60%);
     }
     /* subtle lab grid overlay */
     body::before {
@@ -43,6 +66,9 @@
     }
     .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
     header { padding: 24px 0 8px; }
+    nav { display:flex; gap:12px; margin-top:8px; }
+    nav a { color:#bcd1f0; font-size:14px; opacity:.9 }
+    nav a:hover { opacity:1; }
     h1 { margin:0 0 6px; font-size: clamp(28px, 4vw, 40px); letter-spacing:.2px; }
     h2 {
       margin: 0 0 12px; font-size: clamp(20px, 2.5vw, 24px);
@@ -91,7 +117,13 @@
         Xalara <span class="muted">(XALRA)</span>
       </h1>
       <p class="subtitle">Open Biotech • Longevity • AI‑assisted research · ERC‑20 on <strong>Ethereum & Sepolia</strong></p>
-      <div id="networkNote" class="tag">Checking wallet network…</div>
+      <nav>
+        <a href="/about">About</a> ·
+        <a href="/press">Press</a> ·
+        <a id="buyUniswap" target="_blank" rel="noopener">Uniswap</a> ·
+        <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">X (Twitter)</a>
+      </nav>
+      <div id="networkNote" class="tag" style="margin-top:8px">Checking wallet network…</div>
     </header>
 
     <!-- Contract -->
@@ -165,7 +197,7 @@
       <p class="muted" style="margin-top:6px">Indicative; computed from pair reserves (ETH per XALRA). Not price advice.</p>
     </section>
 
-    <!-- About / Provenance -->
+    <!-- Provenance -->
     <section class="card">
       <h2>Provenance</h2>
       <div class="grid">
@@ -237,7 +269,7 @@
       <h2>Trade</h2>
       <p class="muted">Mainnet links for convenience.</p>
       <ul style="margin:0; padding-left:18px">
-        <li><a id="swapLink" target="_blank" rel="noopener">Swap ETH → XALRA on Uniswap ↗</a></li>
+        <li><a id="swapLink"   target="_blank" rel="noopener">Swap ETH → XALRA on Uniswap ↗</a></li>
         <li><a id="addLiqLink" target="_blank" rel="noopener">Add liquidity (ETH + XALRA) ↗</a></li>
         <li><a id="pairInfoLink" target="_blank" rel="noopener">View pool on a DEX tracker ↗</a>
           <span class="muted" style="font-size:12px"> (set once you have the pair address)</span></li>
@@ -311,7 +343,8 @@
       © <span id="year"></span> Xalara · Network: <span id="footerNet">—</span><br>
       <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
       <a href="mailto:xalara.project@gmail.com">Email</a> ·
-      <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a>
+      <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a> ·
+      <a href="/about">About</a> · <a href="/press">Press</a>
       <p class="muted" style="margin-top:8px">
         Security: owner is a Safe multisig (<code>0x5aBB…1405</code>); liquidity currently <strong>unlocked</strong>. We plan to
         <strong>lock or burn</strong> LP at the first community milestone and post the proof link here and on X.
@@ -503,7 +536,7 @@
       if (badge) badge.textContent = `Wallet network: ${CURRENT.name} ✓`;
       if (footerNet) footerNet.textContent = CURRENT.name;
 
-      // Pass card (Sepolia only)
+      // Pass card (Sepolia only) — safe if the element doesn't exist
       if (passCard) {
         const onSepolia = CURRENT === NETS[11155111];
         passCard.style.display = onSepolia ? "block" : "none";
@@ -531,7 +564,6 @@
       updateTradeLinks();
       wireLiquiditySection();
       updatePoolSnapshot();
-      // (optional) refresh pool snapshot periodically
       setInterval(updatePoolSnapshot, 60_000);
 
       // Contract card buttons
@@ -787,4 +819,3 @@
   </script>
 </body>
 </html>
-

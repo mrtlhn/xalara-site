@@ -502,39 +502,27 @@
     }
 
     // --- Pool snapshot (no wallet needed) ---
-    async function updatePoolSnapshot() {
-      try {
-        const provider = new ethers.JsonRpcProvider(MAINNET_RPC);
-        const pair = new ethers.Contract(MAINNET_PAIR, PAIR_ABI, provider);
-        const [t0, t1] = await Promise.all([pair.token0(), pair.token1()]);
-        const [r0, r1] = await pair.getReserves();
-        const ts = await pair.totalSupply();
-        const lp = await pair.balanceOf(SAFE_ADDR);
+   async function updatePoolSnapshot() {
+    try {
+      const res = await fetch("/api/pool?format=human", { cache: "no-store" });
+      if (!res.ok) throw new Error("API error");
+      const d = await res.json();
 
-        const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".toLowerCase();
-        let xRes, eRes;
-        if (t0.toLowerCase() === MAINNET_TOKEN.toLowerCase() && t1.toLowerCase() === WETH) {
-          xRes = r0; eRes = r1;
-        } else if (t1.toLowerCase() === MAINNET_TOKEN.toLowerCase() && t0.toLowerCase() === WETH) {
-          xRes = r1; eRes = r0;
-        } else { throw new Error("Unexpected pair ordering"); }
+      const fmt = (x) => Number(x).toLocaleString(undefined, { maximumFractionDigits: 6 });
 
-        const x = Number(ethers.formatUnits(xRes, 18));
-        const e = Number(ethers.formatUnits(eRes, 18));
-        const priceEth = e / x;
-
-        $("resXalra").textContent = x.toLocaleString(undefined, { maximumFractionDigits: 6 });
-        $("resEth").textContent   = e.toLocaleString(undefined, { maximumFractionDigits: 6 });
-        $("midPrice").textContent = `${priceEth.toPrecision(6)} ETH / XALRA`;
-        $("lpSafe").textContent   = `${ethers.formatUnits(lp, 18)} / ${ethers.formatUnits(ts, 18)}`;
-      } catch (err) {
-        console.warn("Pool snapshot failed:", err);
-        $("resXalra").textContent = "—";
-        $("resEth").textContent   = "—";
-        $("midPrice").textContent = "—";
-        $("lpSafe").textContent   = "—";
-      }
+      document.getElementById("resXalra").textContent = fmt(d.reserveXalra);
+      document.getElementById("resEth").textContent   = fmt(d.reserveEth);
+      document.getElementById("midPrice").textContent = `${Number(d.priceEthPerXalra).toPrecision(6)} ETH / XALRA`;
+      document.getElementById("lpSafe").textContent   = `${d.lpSafe} / ${d.lpTotal}`;
+    } catch (err) {
+      console.warn("Pool snapshot failed:", err);
+      ["resXalra","resEth","midPrice","lpSafe"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = "—";
+      });
     }
+  }
+
 
     async function ensureChain(chainIdHex) {
       if (!window.ethereum) throw new Error("Wallet not detected");

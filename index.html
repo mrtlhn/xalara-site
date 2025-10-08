@@ -1,21 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- Structured data: basic project -->
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Project",
-  "name": "Xalara (XALRA)",
-  "description": "ERC‑20 token funding open biotech & longevity tooling with AI‑assisted research bounties and community grants.",
-  "url": "https://xalara.io/",
-  "logo": "https://xalara.io/assets/xalara-256.png",
-  "sameAs": [
-    "https://twitter.com/Xalara_Token",
-    "https://etherscan.io/token/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3",
-    "https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum"
-  ]
-}
-</script>
+  {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "WebSite"],
+    "name": "Xalara (XALRA)",
+    "url": "https://xalara.io",
+    "logo": "https://xalara.io/assets/xalara-256.png",
+    "sameAs": [
+      "https://twitter.com/Xalara_Token",
+      "https://etherscan.io/token/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3",
+      "https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum"
+    ],
+    "description": "ERC‑20 token funding open biotech & longevity tooling with AI‑assisted research bounties and community grants."
+  }
+  </script>
 
   <meta charset="utf-8" />
   <title>Xalara (XALRA) — Official Site</title>
@@ -45,20 +46,6 @@
 
   <!-- Optional: advertise your tokenlist.json to tooling -->
   <!-- <link rel="alternate" type="application/json" href="/tokenlist.json"> -->
-
-  <!-- Structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": ["Organization", "WebSite"],
-    "name": "Xalara",
-    "url": "https://xalara.io",
-    "logo": "https://xalara.io/assets/xalara-256.png",
-    "sameAs": ["https://twitter.com/Xalara_Token"],
-    "description": "Open biotech & longevity tools with AI-assisted research bounties.",
-    "keywords": "Xalara, XALRA, longevity, biotech, AI, ERC-20, Ethereum"
-  }
-  </script>
 
   <style>
     .topnav { margin-top: 6px; font-size: 14px; }
@@ -135,13 +122,13 @@
         Xalara <span class="muted">(XALRA)</span>
       </h1>
       <p class="subtitle">Open Biotech • Longevity • AI‑assisted research · ERC‑20 on <strong>Ethereum & Sepolia</strong></p>
-      
-     <nav class="topnav">
-  <a href="/about.html">About</a> ·
-  <a href="/press.html">Press</a> ·
-  <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum" target="_blank" rel="noopener">Uniswap</a> ·
-  <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">X (Twitter)</a>
-</nav>
+
+      <nav class="topnav">
+        <a href="/about.html">About</a> ·
+        <a href="/press.html">Press</a> ·
+        <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum" target="_blank" rel="noopener">Uniswap</a> ·
+        <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">X (Twitter)</a>
+      </nav>
 
       <div id="networkNote" class="tag" style="margin-top:8px">Checking wallet network…</div>
     </header>
@@ -205,20 +192,20 @@
       </p>
     </section>
 
+    <!-- Supply (from API) -->
+    <section class="card" id="supplyCard">
+      <h2>Supply</h2>
+      <div class="kpis">
+        <div class="kpi"><div class="label">Circulating</div><div class="value" id="circNow">—</div></div>
+        <div class="kpi"><div class="label">Excluded (Safe)</div><div class="value" id="exSafe">—</div></div>
+        <div class="kpi"><div class="label">Excluded (Deployer)</div><div class="value" id="exEoa">—</div></div>
+      </div>
+      <p class="muted" style="margin-top:6px">Source: <code>/api/circulating</code></p>
+    </section>
+
     <!-- Pool snapshot (reads on-chain) -->
     <section class="card" id="pool">
       <h2>Pool Snapshot (Uniswap v2)</h2>
-      <!-- Supply (from API) -->
-<section class="card" id="supplyCard">
-  <h2>Supply</h2>
-  <div class="kpis">
-    <div class="kpi"><div class="label">Circulating</div><div class="value" id="circNow">—</div></div>
-    <div class="kpi"><div class="label">Excluded (Safe)</div><div class="value" id="exSafe">—</div></div>
-    <div class="kpi"><div class="label">Excluded (Deployer)</div><div class="value" id="exEoa">—</div></div>
-  </div>
-  <p class="muted" style="margin-top:6px">Source: <code>/api/circulating</code></p>
-</section>
-
       <div class="kpis">
         <div class="kpi"><div class="label">Reserve (XALRA)</div><div class="value" id="resXalra">—</div></div>
         <div class="kpi"><div class="label">Reserve (ETH)</div><div class="value" id="resEth">—</div></div>
@@ -371,18 +358,17 @@
     </section>
 
     <footer>
-  © <span id="year"></span> Xalara · Network: <span id="footerNet">—</span><br>
-  <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
-  <a href="mailto:xalara.project@gmail.com">Email</a> ·
-  <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a> ·
-  <a href="/about.html">About</a> ·
-  <a href="/press.html">Press</a>
-  <p class="muted" style="margin-top:8px">
-    Security: owner is a Safe multisig (<code>0x5aBB…1405</code>); liquidity currently <strong>unlocked</strong>.
-    We plan to <strong>lock or burn</strong> LP at the first community milestone and post the proof link here and on X.
-  </p>
-</footer>
-
+      © <span id="year"></span> Xalara · Network: <span id="footerNet">—</span><br>
+      <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
+      <a href="mailto:xalara.project@gmail.com">Email</a> ·
+      <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a> ·
+      <a href="/about.html">About</a> ·
+      <a href="/press.html">Press</a>
+      <p class="muted" style="margin-top:8px">
+        Security: owner is a Safe multisig (<code>0x5aBB…1405</code>); liquidity currently <strong>unlocked</strong>.
+        We plan to <strong>lock or burn</strong> LP at the first community milestone and post the proof link here and on X.
+      </p>
+    </footer>
   </div>
 
   <!-- ethers.js CDN -->
@@ -490,7 +476,32 @@
       }
     }
 
-    // Light read-only pool snapshot (no wallet needed)
+    // --- Supply (from API) ---
+    async function updateSupply() {
+      try {
+        const res = await fetch("/api/circulating?format=human", { cache: "no-store" });
+        if (!res.ok) throw new Error("API error");
+        const data = await res.json();
+        const num = (s) => Number(s);
+
+        const circ = num(data.circulating);
+        const safe = num(data.excluded?.safe?.balance ?? 0);
+        const eoa  = num(data.excluded?.deployer?.balance ?? 0);
+
+        const fmt = (x) => x.toLocaleString(undefined, { maximumFractionDigits: 6 });
+
+        $("circNow").textContent = fmt(circ);
+        $("exSafe").textContent  = fmt(safe);
+        $("exEoa").textContent   = fmt(eoa);
+      } catch (e) {
+        console.warn("Supply fetch failed:", e);
+        $("circNow").textContent = "—";
+        $("exSafe").textContent  = "—";
+        $("exEoa").textContent   = "—";
+      }
+    }
+
+    // --- Pool snapshot (no wallet needed) ---
     async function updatePoolSnapshot() {
       try {
         const provider = new ethers.JsonRpcProvider(MAINNET_RPC);
@@ -500,7 +511,6 @@
         const ts = await pair.totalSupply();
         const lp = await pair.balanceOf(SAFE_ADDR);
 
-        // map XALRA/WETH by address
         const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".toLowerCase();
         let xRes, eRes;
         if (t0.toLowerCase() === MAINNET_TOKEN.toLowerCase() && t1.toLowerCase() === WETH) {
@@ -596,7 +606,11 @@
       setCurrentByWallet();
       updateTradeLinks();
       wireLiquiditySection();
+
+      // Initial data pulls + periodic refresh
+      updateSupply();
       updatePoolSnapshot();
+      setInterval(updateSupply,       60_000);
       setInterval(updatePoolSnapshot, 60_000);
 
       // Contract card buttons
@@ -852,3 +866,4 @@
   </script>
 </body>
 </html>
+

@@ -208,6 +208,17 @@
     <!-- Pool snapshot (reads on-chain) -->
     <section class="card" id="pool">
       <h2>Pool Snapshot (Uniswap v2)</h2>
+      <!-- Supply (from API) -->
+<section class="card" id="supplyCard">
+  <h2>Supply</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="label">Circulating</div><div class="value" id="circNow">—</div></div>
+    <div class="kpi"><div class="label">Excluded (Safe)</div><div class="value" id="exSafe">—</div></div>
+    <div class="kpi"><div class="label">Excluded (Deployer)</div><div class="value" id="exEoa">—</div></div>
+  </div>
+  <p class="muted" style="margin-top:6px">Source: <code>/api/circulating</code></p>
+</section>
+
       <div class="kpis">
         <div class="kpi"><div class="label">Reserve (XALRA)</div><div class="value" id="resXalra">—</div></div>
         <div class="kpi"><div class="label">Reserve (ETH)</div><div class="value" id="resEth">—</div></div>

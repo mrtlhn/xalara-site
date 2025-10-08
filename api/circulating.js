@@ -2,43 +2,45 @@
 import { ethers } from "ethers";
 
 /**
- * XALARA mainnet addresses
+ * Addresses (allow env override; fall back to hardcoded)
  */
-const TOKEN = "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3";
-const SAFE  = "0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405"; // multisig owner
-const EOA   = "0x57cBC130C4556F080C55e54da54bB58CCD9A3e71"; // deployer EOA (excluded)
+const TOKEN = (process.env.TOKEN_ADDRESS    || "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3").trim();
+const SAFE  = (process.env.SAFE_ADDRESS     || "0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405").trim(); // multisig owner
+const EOA   = (process.env.DEPLOYER_ADDRESS || "0x57cBC130C4556F080C55e54da54bB58CCD9A3e71").trim(); // deployer EOA (excluded)
 
 /**
- * RPCs to try, in order. Add ETHEREUM_RPC_URL in Vercel → Settings → Environment Variables
- * if you have a dedicated provider (Alchemy/Infura/etc.)
+ * RPCs to try, in order. Prefer ETHEREUM_RPC_URL (Alchemy/Infura/etc.).
  */
 const RPCS = [
-  process.env.ETHEREUM_RPC_URL,           // optional, preferred if set
+  process.env.ETHEREUM_RPC_URL,           // preferred if set
   "https://cloudflare-eth.com",
   "https://eth.llamarpc.com",
   "https://rpc.ankr.com/eth",
 ].filter(Boolean);
 
 /**
- * Try each RPC until one works, and ensure we are on MAINNET with real code at TOKEN.
+ * Validate hex address quickly
+ */
+function isAddress(x) {
+  try { return ethers.isAddress(x); } catch { return false; }
+}
+
+/**
+ * Try each RPC until one works, and ensure MAINNET + code at TOKEN.
  */
 async function withMainnetProvider(run) {
   let lastErr;
   for (const url of RPCS) {
     try {
-      // Pin to mainnet (chainId 1) to avoid accidental wrong networks
       const provider = new ethers.JsonRpcProvider(url, 1);
-      // Validate the token has bytecode on this RPC (guards against wrong networks)
+      // Check token bytecode exists (guards wrong network)
       const code = await provider.getCode(TOKEN);
       if (code === "0x") {
-        throw new Error(
-          `No contract code at ${TOKEN} on RPC ${url}. This usually means the RPC is not mainnet.`
-        );
+        throw new Error(`No contract code at ${TOKEN} on ${url} (likely not mainnet).`);
       }
       return await run(provider);
     } catch (e) {
       lastErr = e;
-      // try next RPC
     }
   }
   throw lastErr || new Error("All RPCs failed");
@@ -46,6 +48,15 @@ async function withMainnetProvider(run) {
 
 export default async function handler(req, res) {
   try {
+    if (req.method !== "GET") {
+      res.setHeader("Allow", "GET");
+      return res.status(405).json({ error: "Method Not Allowed" });
+    }
+
+    if (!isAddress(TOKEN) || !isAddress(SAFE) || !isAddress(EOA)) {
+      return res.status(500).json({ error: "Invalid address configuration" });
+    }
+
     const format = String(req.query.format || "").toLowerCase();
     const pretty = "pretty" in req.query;
 
@@ -77,8 +88,7 @@ export default async function handler(req, res) {
     if (format === "wei") {
       // Plain text integer for aggregators like Coinranking
       res.setHeader("Content-Type", "text/plain; charset=utf-8");
-      res.status(200).send(circ.toString());
-      return;
+      return res.status(200).send(circ.toString());
     }
 
     const human = {
@@ -94,22 +104,23 @@ export default async function handler(req, res) {
     };
 
     if (format === "human") {
-      res.status(200).json(human);
-    } else {
-      res.status(200).json({
-        ...human,
-        raw: {
-          total:       total.toString(),
-          safe:        balSafe.toString(),
-          deployer:    balEoa.toString(),
-          circulating: circ.toString(),
-        },
-      });
+      return res.status(200).json(human);
     }
+
+    // Default: full object with raw integers too
+    return res.status(200).json({
+      ...human,
+      raw: {
+        total:       total.toString(),
+        safe:        balSafe.toString(),
+        deployer:    balEoa.toString(),
+        circulating: circ.toString(),
+      },
+    });
+
   } catch (err) {
     res.status(500).json({
       error: err?.message || String(err),
-      // Hide stack traces in production by default
       // stack: process.env.VERCEL_ENV === "development" ? (err?.stack || "") : undefined,
     });
   }

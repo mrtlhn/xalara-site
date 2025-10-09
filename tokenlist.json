@@ -2,8 +2,17 @@
   "name": "Xalara Token List",
   "logoURI": "https://xalara.io/assets/xalara-256.png",
   "keywords": ["xalara", "xalra", "ai", "longevity"],
-  "timestamp": "2025-01-01T00:00:00+00:00",
-  "version": { "major": 1, "minor": 0, "patch": 0 },
+  "timestamp": "2025-10-09T00:00:00Z",
+  "version": { "major": 1, "minor": 1, "patch": 0 },
+
+  "tags": {
+    "mainnet":  { "name": "Mainnet", "description": "Ethereum mainnet token" },
+    "testnet":  { "name": "Sepolia", "description": "Sepolia test token (development/demo only)" },
+    "desci":    { "name": "DeSci", "description": "Decentralized science" },
+    "ai":       { "name": "AI", "description": "Artificial intelligence tooling" },
+    "longevity":{ "name": "Longevity", "description": "Healthspan & aging research focus" }
+  },
+
   "tokens": [
     {
       "chainId": 1,
@@ -12,7 +21,15 @@
       "symbol": "XALRA",
       "decimals": 18,
       "logoURI": "https://xalara.io/assets/xalara-256.png",
-      "tags": ["mainnet"]
+      "tags": ["mainnet", "desci", "ai", "longevity"],
+      "extensions": {
+        "website": "https://xalara.io",
+        "twitter": "https://twitter.com/Xalara_Token",
+        "telegramAnnouncements": "https://t.me/Xalara_Token",
+        "telegramCommunity": "https://t.me/Xalara_Community",
+        "litepaper": "https://xalara.io/assets/xalara-litepaper-v1.pdf",
+        "pairAddress": "0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91"
+      }
     },
     {
       "chainId": 11155111,

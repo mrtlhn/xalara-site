@@ -1,29 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "Xalara (XALRA) — Litepaper v1",
-  "datePublished": "2025-10-08",
-  "inLanguage": "en",
-  "author": { "@type": "Organization", "name": "Xalara" },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Xalara",
-    "logo": { "@type": "ImageObject", "url": "https://xalara.io/assets/xalara-256.png" }
-  },
-  "about": ["biotechnology", "longevity", "AI", "ERC-20"],
-  "url": "https://xalara.io/assets/xalara-litepaper-v1.pdf",
-  "mainEntityOfPage": "https://xalara.io/press.html"
-}
-</script>
-
+  <!-- SEO & structured data -->
   <meta charset="utf-8" />
   <title>Press & Brand — Xalara (XALRA)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Press & brand resources for Xalara (XALRA): logos, token quick facts, documents, and usage guidelines." />
+  <meta name="description" content="Press & brand resources for Xalara (XALRA): logos, token quick facts, documents (Litepaper PDF), and usage guidelines." />
   <link rel="canonical" href="https://xalara.io/press.html" />
   <meta name="robots" content="index,follow">
 
@@ -42,6 +24,23 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/xalara-256.png?v=2">
   <link rel="apple-touch-icon"                 href="/assets/xalara-256.png?v=2">
 
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["Organization","WebPage"],
+    "name": "Xalara",
+    "url": "https://xalara.io/press.html",
+    "logo": "https://xalara.io/assets/xalara-256.png",
+    "sameAs": [
+      "https://twitter.com/Xalara_Token",
+      "https://t.me/Xalara_Token",
+      "https://etherscan.io/token/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3"
+    ],
+    "about": "Press & brand resources for Xalara (XALRA)."
+  }
+  </script>
+
   <style>
     :root {
       --bg:#0b0d12; --card:#111826; --text:#e7edf5; --muted:#9fb0c5;
@@ -57,9 +56,12 @@
     header { padding: 24px 0 8px; }
     h1 { margin:0 0 6px; font-size: clamp(28px, 4vw, 40px); letter-spacing:.2px; }
     .subtitle { color:var(--muted); margin:0 0 18px; }
-    nav.topnav { display:flex; gap:12px; margin-top:8px; font-size:14px; }
+
+    nav.topnav { display:flex; flex-wrap:wrap; gap:12px; margin-top:8px; font-size:14px; }
     nav a { color:#bcd1f0; opacity:.9; text-decoration:none; }
+    nav a[aria-current="page"] { font-weight:600; opacity:1; }
     nav a:hover { opacity:1; text-decoration:underline; }
+
     h2 {
       margin: 0 0 12px; font-size: clamp(20px, 2.5vw, 24px);
       position: relative; padding-left: 10px;
@@ -88,15 +90,15 @@
     <header>
       <h1>Press & Brand</h1>
       <p class="subtitle">Official media kit for Xalara (XALRA): logos, quick facts, documents, and usage guidelines.</p>
-     <nav class="topnav">
-  <a href="/">Home</a> ·
-  <a href="/about.html">About</a> ·
-  <a href="/press.html">Press</a> ·
-  <a href="/assets/xalara-litepaper-v1.pdf" target="_blank" rel="noopener">Litepaper (PDF)</a> ·
-  <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum" target="_blank" rel="noopener">Uniswap</a> ·
-  <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">X (Twitter)</a>
-</nav>
-
+      <nav class="topnav">
+        <a href="/">Home</a> ·
+        <a href="/about.html">About</a> ·
+        <a href="/press.html" aria-current="page">Press</a> ·
+        <a href="/assets/xalara-litepaper-v1.pdf" target="_blank" rel="noopener">Litepaper (PDF)</a> ·
+        <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum" target="_blank" rel="noopener">Uniswap</a> ·
+        <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">X (Twitter)</a> ·
+        <a href="https://t.me/Xalara_Token" target="_blank" rel="noopener">Telegram</a>
+      </nav>
     </header>
 
     <!-- Brand assets -->
@@ -108,7 +110,7 @@
           <ul class="clean">
             <li><a href="/assets/xalara-256.png" download>Logo PNG (256×256)</a></li>
             <li><a href="/assets/xalara-64.png"  download>Logo PNG (64×64)</a></li>
-            <li><a href="/assets/xalara-32.svg"  download>Icon SVG (32×32)</a></li>
+            <li><a href="/assets/xalara-32.svg" download>Icon SVG (32×32)</a></li>
           </ul>
         </div>
         <div>
@@ -116,13 +118,15 @@
           <ul class="clean">
             <li><a href="/tokenlist.json" target="_blank" rel="noopener">/tokenlist.json</a></li>
           </ul>
-          <p class="subtitle" style="margin-top:8px">Contract: <code>0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code></p>
+          <p class="subtitle" style="margin-top:8px">
+            Contract: <code>0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code>
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ▼▼▼ INSERTED DOCUMENTS SECTION HERE ▼▼▼ -->
-    <section class="card">
+    <!-- Documents (Litepaper etc.) -->
+    <section class="card" id="documents">
       <h2>Documents</h2>
       <ul class="clean">
         <li>
@@ -132,7 +136,19 @@
         </li>
       </ul>
     </section>
-    <!-- ▲▲▲ INSERTED DOCUMENTS SECTION HERE ▲▲▲ -->
+
+    <!-- Contact & Links (adds Telegram clearly) -->
+    <section class="card" id="contacts">
+      <h2>Contact & Links</h2>
+      <ul class="clean">
+        <li><a href="mailto:xalara.project@gmail.com">Email — xalara.project@gmail.com</a></li>
+        <li><a href="https://x.com/Xalara_Token" target="_blank" rel="noopener">X (Twitter) — @Xalara_Token</a></li>
+        <li><a href="https://t.me/Xalara_Token" target="_blank" rel="noopener">Telegram — Announcements</a></li>
+        <li><a href="https://etherscan.io/token/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3" target="_blank" rel="noopener">Etherscan — XALRA</a></li>
+        <li><a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum" target="_blank" rel="noopener">Uniswap — Swap ETH→XALRA</a></li>
+        <li><a href="/tokenlist.json" target="_blank" rel="noopener">Tokenlist JSON</a></li>
+      </ul>
+    </section>
 
     <!-- Quick facts -->
     <section class="card" id="facts">
@@ -161,7 +177,9 @@
 
     <footer>
       © <span id="year"></span> Xalara · <a href="/">xalara.io</a> ·
-      <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">@Xalara_Token</a>
+      <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">@Xalara_Token</a> ·
+      <a href="https://t.me/Xalara_Token" target="_blank" rel="noopener">Telegram</a> ·
+      <a href="mailto:xalara.project@gmail.com">Email</a>
     </footer>
   </div>
 
@@ -171,3 +189,4 @@
   </script>
 </body>
 </html>
+

@@ -1,20 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Structured data -->
+  <!-- Schema for search engines -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": ["Organization", "WebSite"],
-    "name": "Xalara",
-    "url": "https://xalara.io",
+    "@type": "Project",
+    "name": "Xalara (XALRA)",
+    "description": "ERC‑20 token funding open biotech & longevity tooling with AI‑assisted research bounties and community grants.",
+    "url": "https://xalara.io/",
     "logo": "https://xalara.io/assets/xalara-256.png",
     "sameAs": [
       "https://twitter.com/Xalara_Token",
       "https://etherscan.io/token/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3",
-      "https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum"
-    ],
-    "description": "ERC‑20 token for open biotech & longevity tooling with AI‑assisted research bounties and community grants."
+      "https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum",
+      "https://t.me/Xalara_Community",
+      "https://t.me/Xalara_Token"
+    ]
   }
   </script>
 
@@ -44,7 +46,12 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/xalara-256.png?v=2">
   <link rel="apple-touch-icon"                 href="/assets/xalara-256.png?v=2">
 
+  <!-- Optional: advertise your tokenlist.json to tooling -->
+  <!-- <link rel="alternate" type="application/json" href="/tokenlist.json"> -->
+
   <style>
+    .topnav { margin-top: 6px; font-size: 14px; }
+
     :root {
       --bg:#0b0d12; --card:#111826; --text:#e7edf5; --muted:#9fb0c5;
       --accent:#6ee7ff; --accent2:#a78bfa; --ok:#a7f3d0; --warn:#ffd166;
@@ -56,18 +63,19 @@
       font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
       background: radial-gradient(1200px 600px at 80% -10%, #1b2131 0%, #0b0d12 60%);
     }
+    /* subtle lab grid overlay */
     body::before {
       content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
       background:
         repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 120px),
-        repeating-linear-gradient(0deg,  rgba(255,255,255,.02) 0 1px, transparent 1px 120px);
+       .repeating-linear-gradient(0deg,  rgba(255,255,255,.02) 0 1px, transparent 1px 120px);
       mask-image: radial-gradient(1200px 600px at 80% -10%, rgba(0,0,0,.6) 0, rgba(0,0,0,1) 60%);
     }
     .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
     header { padding: 24px 0 8px; }
-    nav { display:flex; gap:12px; margin-top:8px; font-size:14px; flex-wrap:wrap; }
-    nav a { color:#bcd1f0; opacity:.9; text-decoration:none; }
-    nav a:hover { opacity:1; text-decoration:underline; }
+    nav { display:flex; gap:12px; margin-top:8px; }
+    nav a { color:#bcd1f0; font-size:14px; opacity:.9 }
+    nav a:hover { opacity:1; }
     h1 { margin:0 0 6px; font-size: clamp(28px, 4vw, 40px); letter-spacing:.2px; }
     h2 {
       margin: 0 0 12px; font-size: clamp(20px, 2.5vw, 24px);
@@ -85,20 +93,26 @@
     }
     .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
     .kpis { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-    .kpi { background:#0f1725; border:1px solid #1a2436; border-radius:12px; padding:12px; }
+    .kpi {
+      background:#0f1725; border:1px solid #1a2436; border-radius:12px; padding:12px;
+    }
     .kpi .label { color:var(--muted); font-size:12px; text-transform: uppercase; letter-spacing:.08em; }
     .kpi .value { font-weight:700; font-size:18px; margin-top:4px; }
+    code { background:#0e1320; border:1px solid #1b2233; padding:4px 8px; border-radius:8px;
+           font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace; color:#cfe1ff; word-break: break-all; }
+    button { cursor: pointer; border:1px solid #2a3550; background:#141a29; color:#eaf2ff; padding:10px 14px; border-radius:10px; font-weight:600; transition:.15s ease; }
+    button:hover { border-color:#3b4670; transform: translateY(-1px); }
     .btn-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
     .tag { display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:999px; background:#0e1320; border:1px solid #1b2233; color:#cde0ff; font-size:13px; }
     .muted { color: var(--muted); }
     .warn  { color:var(--warn); }
-    code { background:#0e1320; border:1px solid #1b2233; padding:4px 8px; border-radius:8px; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace; color:#cfe1ff; word-break: break-all; }
-    button { cursor: pointer; border:1px solid #2a3550; background:#141a29; color:#eaf2ff; padding:10px 14px; border-radius:10px; font-weight:600; transition:.15s ease; }
-    button:hover { border-color:#3b4670; transform: translateY(-1px); }
+    .ok    { color:var(--ok); }
+    footer { color: var(--muted); font-size: 13px; padding: 18px 6px 36px; }
+    a { color: #84c5ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
     ul.clean { margin:0; padding-left:18px; }
     .phase li { margin:6px 0; }
     .chip { display:inline-block; padding:2px 8px; border:1px solid #22304a; border-radius:999px; background:#0e1524; font-size:12px; color:#bcd1f0; }
-    footer { color: var(--muted); font-size: 13px; padding: 18px 6px 36px; }
   </style>
 </head>
 <body>
@@ -109,25 +123,21 @@
              style="height:40px; vertical-align:middle; border-radius:8px; margin-right:8px">
         Xalara <span class="muted">(XALRA)</span>
       </h1>
-      <p class="subtitle">Open Biotech • Longevity • AI‑assisted research · ERC‑20 on <strong>Ethereum (Mainnet)</strong></p>
+      <p class="subtitle">Open Biotech • Longevity • AI‑assisted research · ERC‑20 on <strong>Ethereum</strong></p>
 
       <nav class="topnav">
         <a href="/about.html">About</a> ·
-        <a href="/press.html">Press & Brand</a> ·
+        <a href="/press.html">Press</a> ·
         <a href="/assets/xalara-whitepaper-v1.pdf" target="_blank" rel="noopener">Whitepaper (PDF)</a> ·
         <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum" target="_blank" rel="noopener">Uniswap</a> ·
         <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">X (Twitter)</a> ·
-        <a href="https://t.me/Xalara_Token" target="_blank" rel="noopener">Telegram (Announcements)</a> ·
-        <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram (Community)</a>
+        <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram</a>
       </nav>
 
-      <div style="display:flex; gap:10px; align-items:center; margin-top:8px">
-        <div id="networkNote" class="tag">Mainnet data (no wallet required)</div>
-        <button id="switchMainnet" class="tag" style="display:none">Switch wallet to Mainnet</button>
-      </div>
+      <div id="networkNote" class="tag" style="margin-top:8px">Checking wallet network…</div>
     </header>
 
-    <!-- Contract (mainnet only) -->
+    <!-- Contract -->
     <section id="contract" class="card">
       <h2>Contract</h2>
       <div class="kpis">
@@ -152,30 +162,27 @@
       <p class="muted" style="margin-top:10px">Standard: ERC‑20 · Features: Burnable · Pausable · EIP‑2612 Permit · 18 decimals</p>
     </section>
 
-    <!-- Mission -->
+    <!-- Mission & Focus Areas -->
     <section class="card">
       <h2>Mission & Focus Areas</h2>
-      <p class="muted">Xalara funds open tools and micro‑grants at the intersection of <strong>biotechnology</strong>, <strong>longevity</strong>, and <strong>AI</strong>. We prioritize transparent, reproducible work.</p>
+      <p class="muted">Xalara funds open tools and small grants at the intersection of <strong>biotechnology</strong>, <strong>longevity</strong>, and <strong>AI</strong>. We prioritize transparent, reproducible work.</p>
       <div class="grid">
-        <div><p>🧬 <strong>Longevity R&D</strong><br>Community‑driven datasets, biomarker curation, and assay standardization.</p></div>
-        <div><p>🤖 <strong>AI for Bioinformatics</strong><br>Reproducible ML pipelines, simple notebooks, and synthetic data when helpful.</p></div>
-        <div><p>🤝 <strong>Open Grants & Bounties</strong><br>Small grants for practical tools (data cleaning, viz, literature triage).</p></div>
+        <div>
+          <p>🧬 <strong>Longevity R&D</strong><br>
+          Community‑driven experiments and datasets for healthspan — from assay curation to biomarker exploration.</p>
+        </div>
+        <div>
+          <p>🤖 <strong>AI for Bioinformatics</strong><br>
+          Lightweight pipelines to help non‑experts run analyses, with reproducible notebooks and synthetic data where needed.</p>
+        </div>
+        <div>
+          <p>🤝 <strong>Open Grants & Bounties</strong><br>
+          Micro‑grants for useful tools (data cleaning, viz, literature triage) and reproducibility rewards.</p>
+        </div>
       </div>
     </section>
 
-    <!-- Liquidity -->
-    <section class="card" id="liqCard">
-      <h2>Liquidity</h2>
-      <p class="muted">
-        Status: <strong id="liqStatus">Unlocked</strong>
-        · Plan: lock/burn on <span id="liqDate">TBD</span><br>
-        Pair: <a id="pairLink" href="https://etherscan.io/address/0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91" target="_blank" rel="noopener">Etherscan ↗</a>
-        · LP in Safe: <a id="lpHoldLink" href="https://etherscan.io/token/0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91?a=0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405" target="_blank" rel="noopener">view balance ↗</a>
-      </p>
-      <p class="muted" style="margin-top:6px">We’ll announce the exact time window ≥24h in advance and post a proof link here and on X after the action.</p>
-    </section>
-
-    <!-- Supply (API) -->
+    <!-- Supply (from API) -->
     <section class="card" id="supplyCard">
       <h2>Supply</h2>
       <div class="kpis">
@@ -186,7 +193,21 @@
       <p class="muted" style="margin-top:6px">Source: <code>/api/circulating</code></p>
     </section>
 
-    <!-- Pool snapshot -->
+    <!-- Liquidity status -->
+    <section class="card" id="liqCard">
+      <h2>Liquidity</h2>
+      <p class="muted">
+        Status: <strong id="liqStatus">Unlocked</strong>
+        · Plan: lock/burn on <span id="liqDate">TBD</span><br>
+        Pair: <a id="pairLink" href="https://etherscan.io/address/0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91" target="_blank" rel="noopener">Etherscan ↗</a>
+        · LP in Safe: <a id="lpHoldLink" href="https://etherscan.io/token/0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91?a=0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405" target="_blank" rel="noopener">view balance ↗</a>
+      </p>
+      <p class="muted" style="margin-top:6px">
+        We’ll announce the exact time window ≥24h in advance and post a proof link here and on X after the action.
+      </p>
+    </section>
+
+    <!-- Pool snapshot (reads from API) -->
     <section class="card" id="pool">
       <h2>Pool Snapshot (Uniswap v2)</h2>
       <div class="kpis">
@@ -205,7 +226,7 @@
         <div>
           <ul class="clean">
             <li>Contract verified: <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a></li>
-            <li>Uniswap v2 Pair: <code>0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91</code></li>
+            <li>Liquidity pair: <code>0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91</code></li>
             <li>Router: <code>UniswapV2Router02</code></li>
           </ul>
         </div>
@@ -220,7 +241,41 @@
       <p class="muted" style="margin-top:8px"><strong>Note:</strong> XALRA is not an investment and makes no promises of returns or medical outcomes.</p>
     </section>
 
-    <!-- How to buy -->
+    <!-- Roadmap & Community targets -->
+    <section class="card" id="roadmap">
+      <h2>Roadmap & Community Targets</h2>
+      <ul class="phase">
+        <li>✅ <strong>Phase 0</strong>: Deploy, verify, Safe owner, initial Uniswap v2 pool.</li>
+        <li>🧪 <strong>Phase 1</strong> — <span class="chip">100 X followers</span> or <span class="chip">50 holders</span>:
+          publish a 4‑page litepaper + first demo notebook.</li>
+        <li>🔭 <strong>Phase 2</strong> — <span class="chip">250 X followers</span> or <span class="chip">150 holders</span>:
+          open first micro‑grants (tooling / data curation); announce LP lock schedule.</li>
+        <li>🧬 <strong>Phase 3</strong> — <span class="chip">500 X followers</span> or <span class="chip">300 holders</span>:
+          lock a portion of LP (eg. 3 months) and ship two reproducible examples.</li>
+        <li>🌐 <strong>Phase 4</strong> — <span class="chip">1k X followers</span> or <span class="chip">500 holders</span>:
+          scale grants; community voting on the next research bounties.</li>
+      </ul>
+      <p class="muted" style="margin-top:8px">Targets are directional; timing subject to gas & operational constraints. We’ll announce each step publicly with links and proofs.</p>
+    </section>
+
+    <!-- Grants & Bounties -->
+    <section class="card" id="grants">
+      <h2>Grants & Bounties</h2>
+      <p>We prioritize useful, reproducible outputs over speculation. Examples:</p>
+      <ul class="clean">
+        <li>🛠️ A script to normalize publicly available aging biomarker datasets</li>
+        <li>📊 A compact dashboard rendering key pool/holder on‑chain stats</li>
+        <li>🧠 A tutorial notebook comparing 2–3 ML methods on a longevity dataset</li>
+      </ul>
+      <p class="muted" style="margin-top:8px">
+        Propose a bounty or apply:
+        <a href="mailto:xalara.project@gmail.com">xalara.project@gmail.com</a> ·
+        <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
+        <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram</a>
+      </p>
+    </section>
+
+    <!-- How to Buy (Mainnet) -->
     <section class="card" id="howto">
       <h2>How to buy XALRA</h2>
       <ol style="margin:0; padding-left:18px">
@@ -230,80 +285,118 @@
         </li>
         <li>Select <strong>ETH → XALRA</strong>, set slippage to <strong>0.5–1%</strong>, and swap.</li>
       </ol>
-      <p class="muted" style="margin-top:10px">If Uniswap shows “Unknown token”, click “Import” (normal for new tokens). Always verify the contract address.</p>
+      <p class="muted" style="margin-top:10px">
+        Tip: If Uniswap shows “Unknown token”, click “Import” (normal for new tokens).
+        Always verify the contract address.
+      </p>
     </section>
 
-    <!-- Trade links -->
+    <!-- Trade (Mainnet) -->
     <section class="card" id="trade">
       <h2>Trade</h2>
       <p class="muted">Mainnet links for convenience.</p>
-      <ul class="clean">
+      <ul style="margin:0; padding-left:18px">
         <li><a id="swapLink"   target="_blank" rel="noopener">Swap ETH → XALRA on Uniswap ↗</a></li>
         <li><a id="addLiqLink" target="_blank" rel="noopener">Add liquidity (ETH + XALRA) ↗</a></li>
-        <li><a id="pairInfoLink" target="_blank" rel="noopener">View pool on Dexscreener ↗</a></li>
+        <li><a id="pairInfoLink" target="_blank" rel="noopener">View pool on a DEX tracker ↗</a></li>
       </ul>
     </section>
 
+    <!-- Balances (read-only via wallet provider) -->
+    <section class="card" id="balancesCard">
+      <h2>Balances</h2>
+      <p class="muted">
+        Read‑only via your wallet provider. Enter addresses (one per line or separated by commas),
+        then click <strong>Refresh</strong>. Your connected wallet (if any) will be added automatically.
+      </p>
+
+      <textarea id="addrList" rows="4" style="width:100%; background:#0e1320; color:#cfe1ff;
+        border:1px solid #1b2233; border-radius:8px; padding:8px;"></textarea>
+
+      <div class="btn-row">
+        <button id="refreshBalances">Refresh</button>
+        <button id="clearBalances" style="opacity:.85">Clear</button>
+      </div>
+
+      <div id="balancesList" style="margin-top:8px"></div>
+      <p class="muted">Total (listed): <strong id="balancesTotal">–</strong> XALRA</p>
+    </section>
+
     <footer>
-      © <span id="year"></span> Xalara · Network: <span id="footerNet">Ethereum Mainnet</span><br>
+      © <span id="year"></span> Xalara · Network: <span id="footerNet">—</span><br>
       <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
+      <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram</a> ·
       <a href="mailto:xalara.project@gmail.com">Email</a> ·
-      <a href="https://t.me/Xalara_Token" target="_blank" rel="noopener">Telegram (Announcements)</a> ·
-      <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram (Community)</a> ·
       <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a>
       <p class="muted" style="margin-top:8px">
         Security: owner is a Safe multisig (<code>0x5aBB…1405</code>); liquidity currently <strong>unlocked</strong>.
-        We plan to <strong>lock or burn</strong> LP at the first community milestone and post the proof here and on X.
+        We plan to <strong>lock or burn</strong> LP at the first community milestone and post the proof link here and on X.
       </p>
     </footer>
   </div>
 
-  <!-- ethers.js CDN -->
+  <!-- ethers.js (needed for the Balances panel only) -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
 
-  <!-- App logic (mainnet-only) -->
+  <!-- App logic -->
   <script>
   (function () {
-    // === MAINNET ADDRESSES ===
+    // === MAINNET CONSTANTS ===
     const MAINNET_TOKEN = "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3";
     const MAINNET_PAIR  = "0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91";
     const SAFE_ADDR     = "0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405";
-    const MAINNET_RPC   = "https://cloudflare-eth.com";
 
-    // Optional: set these when you lock/burn LP
-    const PLANNED_LIQ_ACTION_DATE = "";  // e.g., "2025-11-01"
+    // Optional: if you later lock/burn LP, put proof here to flip the badge
+    const PLANNED_LIQ_ACTION_DATE = "";  // e.g., "2025-03-01"
     const LP_BURN_TX = "";               // e.g., "0xabc..."
     const LP_LOCK_PROOF_URL = "";        // e.g., "https://app.unicrypt.network/lock/..."
 
-    // ABIs for read-only
-    const PAIR_ABI = [
-      "function token0() view returns (address)",
-      "function token1() view returns (address)",
-      "function getReserves() view returns (uint112,uint112,uint32)",
-      "function totalSupply() view returns (uint256)",
-      "function balanceOf(address) view returns (uint256)"
-    ];
-
+    // Helpers
     const $ = (id) => document.getElementById(id);
     const fmt = (n, max=6) => Number(n).toLocaleString(undefined, { maximumFractionDigits: max });
 
+    function setNetworkBadge() {
+      const badge = $("networkNote");
+      const footerNet = $("footerNet");
+      if (!window.ethereum) {
+        if (badge) badge.textContent = "Wallet not detected (showing mainnet data)";
+        if (footerNet) footerNet.textContent = "Ethereum Mainnet";
+        return;
+      }
+      window.ethereum.request({ method: "eth_chainId" })
+        .then(idHex => {
+          const isMainnet = idHex === "0x1";
+          if (badge) badge.textContent = isMainnet
+            ? "Wallet network: Ethereum Mainnet ✓"
+            : `Wallet network: ${parseInt(idHex,16)} (not mainnet) — site shows mainnet data`;
+          if (footerNet) footerNet.textContent = isMainnet ? "Ethereum Mainnet" : "Other";
+        })
+        .catch(() => {
+          if (badge) badge.textContent = "Wallet network: unknown";
+          if (footerNet) footerNet.textContent = "Ethereum";
+        });
+    }
+
     function updateTradeLinks() {
-      const swapUrl = `https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=${MAINNET_TOKEN}&chain=ethereum`;
-      const addUrl  = `https://app.uniswap.org/#/add/v2/ETH/${MAINNET_TOKEN}?chain=ethereum`;
-      const pairUrl = `https://dexscreener.com/ethereum/${MAINNET_PAIR}`;
       const buyUniswap   = $("buyUniswap");
       const swapLink     = $("swapLink");
       const addLiqLink   = $("addLiqLink");
       const pairInfoLink = $("pairInfoLink");
-      if (buyUniswap)  buyUniswap.href  = swapUrl;
-      if (swapLink)    swapLink.href    = swapUrl;
-      if (addLiqLink)  addLiqLink.href  = addUrl;
-      if (pairInfoLink) pairInfoLink.href = pairUrl;
+
+      const swapUrl = `https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=${MAINNET_TOKEN}&chain=ethereum`;
+      const addUrl  = `https://app.uniswap.org/#/add/v2/ETH/${MAINNET_TOKEN}?chain=ethereum`;
+
+      if (buyUniswap) buyUniswap.href = swapUrl;
+      if (swapLink)   swapLink.href   = swapUrl;
+      if (addLiqLink) addLiqLink.href = addUrl;
+      if (pairInfoLink) pairInfoLink.href = `https://dexscreener.com/ethereum/${MAINNET_PAIR}`;
     }
 
     function wireLiquiditySection() {
-      const statusEl = $("liqStatus"), dateEl = $("liqDate");
-      if (dateEl)  dateEl.textContent = PLANNED_LIQ_ACTION_DATE || "TBD";
+      const statusEl = $("liqStatus");
+      const dateEl   = $("liqDate");
+      if (dateEl) dateEl.textContent = PLANNED_LIQ_ACTION_DATE || "TBD";
+
       if (statusEl) {
         if (LP_BURN_TX) {
           statusEl.innerHTML = `Locked (burn) · <a href="https://etherscan.io/tx/${LP_BURN_TX}" target="_blank" rel="noopener">proof ↗</a>`;
@@ -315,79 +408,38 @@
       }
     }
 
+    // --- API readers (server-side endpoints) ---
     async function updateSupply() {
       try {
         const r = await fetch("/api/circulating?format=human");
+        if (!r.ok) throw new Error("HTTP " + r.status);
         const j = await r.json();
-        $("circNow").textContent = fmt(j.circulating);
-        $("exSafe").textContent  = fmt(j.excluded?.safe?.balance || 0);
-        $("exEoa").textContent   = fmt(j.excluded?.deployer?.balance || 0);
+        $("circNow").textContent = fmt(j.circulating, 6);
+        $("exSafe").textContent  = fmt(j.excluded.safe.balance, 6);
+        $("exEoa").textContent   = fmt(j.excluded.deployer.balance, 6);
       } catch (e) {
-        $("circNow").textContent = $("exSafe").textContent = $("exEoa").textContent = "—";
         console.warn("Supply fetch failed:", e);
+        ["circNow","exSafe","exEoa"].forEach(id => { const el = $(id); if (el) el.textContent = "—"; });
       }
     }
 
     async function updatePoolSnapshot() {
       try {
-        const provider = new ethers.JsonRpcProvider(MAINNET_RPC);
-        const pair = new ethers.Contract(MAINNET_PAIR, PAIR_ABI, provider);
-        const [t0, t1] = await Promise.all([pair.token0(), pair.token1()]);
-        const [r0, r1] = await pair.getReserves();
-        const ts = await pair.totalSupply();
-        const lp = await pair.balanceOf(SAFE_ADDR);
-        const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".toLowerCase();
-
-        let xRes, eRes;
-        if (t0.toLowerCase() === MAINNET_TOKEN.toLowerCase() && t1.toLowerCase() === WETH) {
-          xRes = r0; eRes = r1;
-        } else if (t1.toLowerCase() === MAINNET_TOKEN.toLowerCase() && t0.toLowerCase() === WETH) {
-          xRes = r1; eRes = r0;
-        } else {
-          throw new Error("Unexpected pair ordering");
-        }
-
-        const x = Number(ethers.formatUnits(xRes, 18));
-        const e = Number(ethers.formatUnits(eRes, 18));
-        const priceEth = e / x;
-
-        $("resXalra").textContent = fmt(x);
-        $("resEth").textContent   = fmt(e);
-        $("midPrice").textContent = `${priceEth.toPrecision(6)} ETH / XALRA`;
-        $("lpSafe").textContent   = `${ethers.formatUnits(lp, 18)} / ${ethers.formatUnits(ts, 18)}`;
-      } catch (err) {
-        console.warn("Pool snapshot failed:", err);
-        $("resXalra").textContent = $("resEth").textContent = $("midPrice").textContent = $("lpSafe").textContent = "—";
+        const r = await fetch("/api/pool?format=human");
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        const j = await r.json();
+        $("resXalra").textContent = fmt(j.reserveXalara);
+        $("resEth").textContent   = fmt(j.reserveEth);
+        $("midPrice").textContent = `${Number(j.priceEthPerXalara).toPrecision(6)} ETH / XALRA`;
+        $("lpSafe").textContent   = `${j.lp.safe} / ${j.lp.total}`;
+      } catch (e) {
+        console.warn("Pool snapshot failed:", e);
+        ["resXalra","resEth","midPrice","lpSafe"].forEach(id => { const el = $(id); if (el) el.textContent = "—"; });
       }
     }
 
-    async function detectWalletNetwork() {
-      const note = $("networkNote");
-      const btn  = $("switchMainnet");
-      if (!window.ethereum) {
-        note.textContent = "Mainnet data (no wallet required)";
-        btn.style.display = "none";
-        return;
-      }
-      try {
-        const id = await window.ethereum.request({ method: "eth_chainId" });
-        if (id === "0x1") {
-          note.textContent = "Wallet network: Ethereum Mainnet ✓";
-          btn.style.display = "none";
-        } else {
-          note.textContent = "Wallet network: not Mainnet";
-          btn.style.display = "inline-flex";
-        }
-      } catch {
-        note.textContent = "Mainnet data (no wallet required)";
-        btn.style.display = "none";
-      }
-    }
-
-    function onLoad() {
-      const y = $("year"); if (y) y.textContent = new Date().getFullYear();
-
-      // Wire buttons
+    // Contract card buttons
+    function wireBasicButtons() {
       $("copy")?.addEventListener("click", async () => {
         try {
           await navigator.clipboard.writeText(MAINNET_TOKEN);
@@ -403,36 +455,113 @@
           });
         } catch (e) { alert(e?.message || String(e)); }
       });
-      $("switchMainnet")?.addEventListener("click", async () => {
-        try {
-          await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x1" }] });
-        } catch (e) {
-          alert(e?.message || String(e));
-        }
-      });
-
-      // Static links
-      updateTradeLinks();
-      wireLiquiditySection();
-
-      // Live data
-      updateSupply();
-      updatePoolSnapshot();
-      setInterval(updateSupply,      5 * 60 * 1000);
-      setInterval(updatePoolSnapshot, 60 * 1000);
-
-      // Wallet network hint
-      detectWalletNetwork();
-      if (window.ethereum?.on) {
-        window.ethereum.on("chainChanged", detectWalletNetwork);
-        window.ethereum.on("accountsChanged", detectWalletNetwork);
-      }
     }
 
+    // --- Optional: Balances panel (uses wallet provider) ---
+    function wireBalancesPanel() {
+      const addrBox   = $("addrList");
+      const listEl    = $("balancesList");
+      const totalEl   = $("balancesTotal");
+      const btnRef    = $("refreshBalances");
+      const btnClear  = $("clearBalances");
+      if (!addrBox || !listEl || !totalEl || !btnRef) return;
+
+      const TOKEN_ABI = ["function balanceOf(address) view returns (uint256)"];
+      const dedupe = (arr) => Array.from(new Set(arr.map(a => a.toLowerCase())));
+      const parseAddrs = (text) =>
+        (text || "")
+          .split(/[\s,;]+/g)
+          .map(s => s.trim())
+          .filter(Boolean)
+          .filter(ethers.isAddress);
+
+      function row(addr, text, isErr) {
+        const r = document.createElement("div");
+        r.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1f2737;";
+        const left = document.createElement("code"); left.textContent = addr;
+        const right = document.createElement("strong"); right.textContent = text;
+        if (isErr) right.style.color = "#ffd166";
+        r.append(left, right);
+        listEl.appendChild(r);
+      }
+
+      async function refresh() {
+        try {
+          if (!window.ethereum) { listEl.innerHTML = ""; row("-", "Wallet not detected", true); totalEl.textContent = "–"; return; }
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const tokenRO  = new ethers.Contract(MAINNET_TOKEN, TOKEN_ABI, provider);
+
+          const inputAddrs = dedupe(parseAddrs(addrBox.value));
+          if (inputAddrs.length === 0) { listEl.innerHTML = ""; row("-", "No valid addresses", true); totalEl.textContent = "–"; return; }
+
+          listEl.innerHTML = "";
+          let total = 0n;
+          const results = await Promise.allSettled(inputAddrs.map(a => tokenRO.balanceOf(a)));
+          results.forEach((res, i) => {
+            const addr = inputAddrs[i];
+            if (res.status === "fulfilled") {
+              const bal = res.value;
+              total += bal;
+              row(addr, ethers.formatUnits(bal, 18), false);
+            } else {
+              row(addr, "Error", true);
+            }
+          });
+          totalEl.textContent = ethers.formatUnits(total, 18);
+        } catch (e) {
+          listEl.innerHTML = ""; row("-", (e?.message || String(e)), true); totalEl.textContent = "–";
+        }
+      }
+
+      async function addConnectedOnce() {
+        try {
+          if (!window.ethereum) return;
+          const accounts = await window.ethereum.request({ method: "eth_accounts" });
+          const me = (accounts[0] || "").toLowerCase();
+          if (ethers.isAddress(me)) {
+            const current = dedupe(parseAddrs(addrBox.value));
+            if (!current.includes(me)) {
+              addrBox.value = (addrBox.value.trim() + "\n" + me).trim() + "\n";
+            }
+          }
+        } catch {}
+      }
+
+      btnRef.addEventListener("click", refresh);
+      btnClear?.addEventListener("click", () => { addrBox.value = ""; listEl.innerHTML = ""; totalEl.textContent = "–"; });
+
+      if (window.ethereum?.on) {
+        window.ethereum.on("accountsChanged", async () => { await addConnectedOnce(); await refresh(); });
+        window.ethereum.on("chainChanged",    async () => { setNetworkBadge(); await refresh(); });
+      }
+
+      addConnectedOnce().then(refresh);
+    }
+
+    function onLoad() {
+      // small helpers
+      const y = $("year"); if (y) y.textContent = new Date().getFullYear();
+      setNetworkBadge();
+      updateTradeLinks();
+      wireLiquiditySection();
+      wireBasicButtons();
+
+      // API-driven sections
+      updateSupply();
+      updatePoolSnapshot();
+      setInterval(updateSupply,       60_000); // refresh every minute
+      setInterval(updatePoolSnapshot, 60_000);
+
+      // Optional balances panel
+      wireBalancesPanel();
+    }
+
+    // kick off
     window.addEventListener("load", onLoad);
   })();
   </script>
 </body>
 </html>
+
 
 

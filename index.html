@@ -1,21 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Structured data: basic project -->
+  <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": ["Organization", "WebSite"],
-    "name": "Xalara (XALRA)",
+    "name": "Xalara",
     "url": "https://xalara.io",
     "logo": "https://xalara.io/assets/xalara-256.png",
-  "sameAs": [
-  "https://twitter.com/Xalara_Token",
-  "https://t.me/Xalara_Token",
-  "https://t.me/Xalara_Community",
-  "https://etherscan.io/token/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3"
-],
-    "description": "ERC‑20 token funding open biotech & longevity tooling with AI‑assisted research bounties and community grants."
+    "sameAs": [
+      "https://twitter.com/Xalara_Token",
+      "https://etherscan.io/token/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3",
+      "https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum"
+    ],
+    "description": "ERC‑20 token for open biotech & longevity tooling with AI‑assisted research bounties and community grants."
   }
   </script>
 
@@ -40,17 +39,12 @@
   <meta name="theme-color" content="#0b0d12">
   <meta name="keywords" content="Xalara, XALRA, longevity, biotech, bioinformatics, AI, ERC-20, Ethereum">
 
-  <!-- Favicon / app icons -->
+  <!-- Favicons / app icons -->
   <link rel="icon" type="image/png" sizes="32x32"  href="/assets/xalara-32.png?v=2">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/xalara-256.png?v=2">
   <link rel="apple-touch-icon"                 href="/assets/xalara-256.png?v=2">
 
-  <!-- Optional: advertise your tokenlist.json to tooling -->
-  <!-- <link rel="alternate" type="application/json" href="/tokenlist.json"> -->
-
   <style>
-    .topnav { margin-top: 6px; font-size: 14px; }
-
     :root {
       --bg:#0b0d12; --card:#111826; --text:#e7edf5; --muted:#9fb0c5;
       --accent:#6ee7ff; --accent2:#a78bfa; --ok:#a7f3d0; --warn:#ffd166;
@@ -62,7 +56,6 @@
       font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
       background: radial-gradient(1200px 600px at 80% -10%, #1b2131 0%, #0b0d12 60%);
     }
-    /* subtle lab grid overlay */
     body::before {
       content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
       background:
@@ -72,9 +65,9 @@
     }
     .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
     header { padding: 24px 0 8px; }
-    nav { display:flex; gap:12px; margin-top:8px; }
-    nav a { color:#bcd1f0; font-size:14px; opacity:.9 }
-    nav a:hover { opacity:1; }
+    nav { display:flex; gap:12px; margin-top:8px; font-size:14px; flex-wrap:wrap; }
+    nav a { color:#bcd1f0; opacity:.9; text-decoration:none; }
+    nav a:hover { opacity:1; text-decoration:underline; }
     h1 { margin:0 0 6px; font-size: clamp(28px, 4vw, 40px); letter-spacing:.2px; }
     h2 {
       margin: 0 0 12px; font-size: clamp(20px, 2.5vw, 24px);
@@ -92,26 +85,20 @@
     }
     .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
     .kpis { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-    .kpi {
-      background:#0f1725; border:1px solid #1a2436; border-radius:12px; padding:12px;
-    }
+    .kpi { background:#0f1725; border:1px solid #1a2436; border-radius:12px; padding:12px; }
     .kpi .label { color:var(--muted); font-size:12px; text-transform: uppercase; letter-spacing:.08em; }
     .kpi .value { font-weight:700; font-size:18px; margin-top:4px; }
-    code { background:#0e1320; border:1px solid #1b2233; padding:4px 8px; border-radius:8px;
-           font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace; color:#cfe1ff; word-break: break-all; }
-    button { cursor: pointer; border:1px solid #2a3550; background:#141a29; color:#eaf2ff; padding:10px 14px; border-radius:10px; font-weight:600; transition:.15s ease; }
-    button:hover { border-color:#3b4670; transform: translateY(-1px); }
     .btn-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
     .tag { display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:999px; background:#0e1320; border:1px solid #1b2233; color:#cde0ff; font-size:13px; }
     .muted { color: var(--muted); }
     .warn  { color:var(--warn); }
-    .ok    { color:var(--ok); }
-    footer { color: var(--muted); font-size: 13px; padding: 18px 6px 36px; }
-    a { color: #84c5ff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    code { background:#0e1320; border:1px solid #1b2233; padding:4px 8px; border-radius:8px; font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace; color:#cfe1ff; word-break: break-all; }
+    button { cursor: pointer; border:1px solid #2a3550; background:#141a29; color:#eaf2ff; padding:10px 14px; border-radius:10px; font-weight:600; transition:.15s ease; }
+    button:hover { border-color:#3b4670; transform: translateY(-1px); }
     ul.clean { margin:0; padding-left:18px; }
     .phase li { margin:6px 0; }
     .chip { display:inline-block; padding:2px 8px; border:1px solid #22304a; border-radius:999px; background:#0e1524; font-size:12px; color:#bcd1f0; }
+    footer { color: var(--muted); font-size: 13px; padding: 18px 6px 36px; }
   </style>
 </head>
 <body>
@@ -122,32 +109,31 @@
              style="height:40px; vertical-align:middle; border-radius:8px; margin-right:8px">
         Xalara <span class="muted">(XALRA)</span>
       </h1>
-      <p class="subtitle">Open Biotech • Longevity • AI‑assisted research · ERC‑20 on <strong>Ethereum & Sepolia</strong></p>
+      <p class="subtitle">Open Biotech • Longevity • AI‑assisted research · ERC‑20 on <strong>Ethereum (Mainnet)</strong></p>
 
-<nav class="topnav">
-  <a href="/about.html">About</a> ·
-  <a href="/press.html">Press</a> ·
-  <a href="/assets/xalara-whitepaper-v1.pdf" target="_blank" rel="noopener">Whitepaper (PDF)</a> ·
-  <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum" target="_blank" rel="noopener">Uniswap</a> ·
-  <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">X (Twitter)</a> ·
-  <a href="https://t.me/Xalara_Token" target="_blank" rel="noopener">Telegram (Announcements)</a> ·
-  <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram (Community)</a>
-</nav>
+      <nav class="topnav">
+        <a href="/about.html">About</a> ·
+        <a href="/press.html">Press & Brand</a> ·
+        <a href="/assets/xalara-whitepaper-v1.pdf" target="_blank" rel="noopener">Whitepaper (PDF)</a> ·
+        <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum" target="_blank" rel="noopener">Uniswap</a> ·
+        <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">X (Twitter)</a> ·
+        <a href="https://t.me/Xalara_Token" target="_blank" rel="noopener">Telegram (Announcements)</a> ·
+        <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram (Community)</a>
+      </nav>
 
-
-
-
-
-      <div id="networkNote" class="tag" style="margin-top:8px">Checking wallet network…</div>
+      <div style="display:flex; gap:10px; align-items:center; margin-top:8px">
+        <div id="networkNote" class="tag">Mainnet data (no wallet required)</div>
+        <button id="switchMainnet" class="tag" style="display:none">Switch wallet to Mainnet</button>
+      </div>
     </header>
 
-    <!-- Contract -->
+    <!-- Contract (mainnet only) -->
     <section id="contract" class="card">
       <h2>Contract</h2>
       <div class="kpis">
         <div class="kpi">
           <div class="label">Mainnet address</div>
-          <div class="value"><code id="addr">—</code></div>
+          <div class="value"><code id="addr">0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code></div>
         </div>
         <div class="kpi">
           <div class="label">Owner (Safe)</div>
@@ -160,60 +146,36 @@
       </div>
       <div class="btn-row">
         <button id="copy">Copy address</button>
-        <a id="etherscan" class="tag" href="#" target="_blank" rel="noopener">View on Etherscan ↗</a>
+        <a id="etherscan" class="tag" href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">View on Etherscan ↗</a>
         <button id="add">Add XALRA to MetaMask</button>
       </div>
       <p class="muted" style="margin-top:10px">Standard: ERC‑20 · Features: Burnable · Pausable · EIP‑2612 Permit · 18 decimals</p>
     </section>
 
-    <!-- Mission & Focus Areas -->
+    <!-- Mission -->
     <section class="card">
       <h2>Mission & Focus Areas</h2>
-      <p class="muted">Xalara funds open tools and small grants at the intersection of <strong>biotechnology</strong>, <strong>longevity</strong>, and <strong>AI</strong>. We prioritize transparent, reproducible work.</p>
+      <p class="muted">Xalara funds open tools and micro‑grants at the intersection of <strong>biotechnology</strong>, <strong>longevity</strong>, and <strong>AI</strong>. We prioritize transparent, reproducible work.</p>
       <div class="grid">
-        <div>
-          <p>🧬 <strong>Longevity R&D</strong><br>
-          Community‑driven experiments and datasets for healthspan — from assay curation to biomarker exploration.</p>
-        </div>
-        <div>
-          <p>🤖 <strong>AI for Bioinformatics</strong><br>
-          Lightweight pipelines to help non‑experts run analyses, with reproducible notebooks and synthetic data where needed.</p>
-        </div>
-        <div>
-          <p>🤝 <strong>Open Grants & Bounties</strong><br>
-          Micro‑grants for useful tools (data cleaning, viz, literature triage) and reproducibility rewards.</p>
-        </div>
+        <div><p>🧬 <strong>Longevity R&D</strong><br>Community‑driven datasets, biomarker curation, and assay standardization.</p></div>
+        <div><p>🤖 <strong>AI for Bioinformatics</strong><br>Reproducible ML pipelines, simple notebooks, and synthetic data when helpful.</p></div>
+        <div><p>🤝 <strong>Open Grants & Bounties</strong><br>Small grants for practical tools (data cleaning, viz, literature triage).</p></div>
       </div>
     </section>
-    <!-- Documents -->
-<section class="card" id="documents">
-  <h2>Documents</h2>
-  <ul class="clean">
-    <li>
-      <a href="/assets/xalara-whitepaper-v1.pdf" target="_blank" rel="noopener">
-        Xalara Whitepaper v1 (PDF)
-      </a> — 2025‑10‑08
-    </li>
-  </ul>
-</section>
 
-
-
-    <!-- Liquidity status -->
+    <!-- Liquidity -->
     <section class="card" id="liqCard">
       <h2>Liquidity</h2>
       <p class="muted">
         Status: <strong id="liqStatus">Unlocked</strong>
         · Plan: lock/burn on <span id="liqDate">TBD</span><br>
-        Pair: <a id="pairLink" href="#" target="_blank" rel="noopener">Etherscan ↗</a>
-        · LP in Safe: <a id="lpHoldLink" href="#" target="_blank" rel="noopener">view balance ↗</a>
+        Pair: <a id="pairLink" href="https://etherscan.io/address/0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91" target="_blank" rel="noopener">Etherscan ↗</a>
+        · LP in Safe: <a id="lpHoldLink" href="https://etherscan.io/token/0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91?a=0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405" target="_blank" rel="noopener">view balance ↗</a>
       </p>
-      <p class="muted" style="margin-top:6px">
-        We’ll announce the exact time window ≥24h in advance and post a proof link here and on X after the action.
-      </p>
+      <p class="muted" style="margin-top:6px">We’ll announce the exact time window ≥24h in advance and post a proof link here and on X after the action.</p>
     </section>
 
-    <!-- Supply (from API) -->
+    <!-- Supply (API) -->
     <section class="card" id="supplyCard">
       <h2>Supply</h2>
       <div class="kpis">
@@ -224,7 +186,7 @@
       <p class="muted" style="margin-top:6px">Source: <code>/api/circulating</code></p>
     </section>
 
-    <!-- Pool snapshot (reads on-chain) -->
+    <!-- Pool snapshot -->
     <section class="card" id="pool">
       <h2>Pool Snapshot (Uniswap v2)</h2>
       <div class="kpis">
@@ -243,7 +205,7 @@
         <div>
           <ul class="clean">
             <li>Contract verified: <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a></li>
-            <li>Liquidity pair: <code>0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91</code></li>
+            <li>Uniswap v2 Pair: <code>0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91</code></li>
             <li>Router: <code>UniswapV2Router02</code></li>
           </ul>
         </div>
@@ -258,36 +220,7 @@
       <p class="muted" style="margin-top:8px"><strong>Note:</strong> XALRA is not an investment and makes no promises of returns or medical outcomes.</p>
     </section>
 
-    <!-- Roadmap & Community targets -->
-    <section class="card" id="roadmap">
-      <h2>Roadmap & Community Targets</h2>
-      <ul class="phase">
-        <li>✅ <strong>Phase 0</strong>: Deploy, verify, Safe owner, initial Uniswap v2 pool.</li>
-        <li>🧪 <strong>Phase 1</strong> — <span class="chip">100 X followers</span> or <span class="chip">50 holders</span>:
-          publish a 4‑page litepaper + first demo notebook.</li>
-        <li>🔭 <strong>Phase 2</strong> — <span class="chip">250 X followers</span> or <span class="chip">150 holders</span>:
-          open first micro‑grants (tooling / data curation); announce LP lock schedule.</li>
-        <li>🧬 <strong>Phase 3</strong> — <span class="chip">500 X followers</span> or <span class="chip">300 holders</span>:
-          lock a portion of LP (eg. 3 months) and ship two reproducible examples.</li>
-        <li>🌐 <strong>Phase 4</strong> — <span class="chip">1k X followers</span> or <span class="chip">500 holders</span>:
-          scale grants; community voting on the next research bounties.</li>
-      </ul>
-      <p class="muted" style="margin-top:8px">Targets are directional; timing subject to gas & operational constraints. We’ll announce each step publicly with links and proofs.</p>
-    </section>
-
-    <!-- Grants & Bounties -->
-    <section class="card" id="grants">
-      <h2>Grants & Bounties</h2>
-      <p>We prioritize useful, reproducible outputs over speculation. Examples:</p>
-      <ul class="clean">
-        <li>🛠️ A script to normalize publicly available aging biomarker datasets</li>
-        <li>📊 A compact dashboard rendering key pool/holder on‑chain stats</li>
-        <li>🧠 A tutorial notebook comparing 2–3 ML methods on a longevity dataset</li>
-      </ul>
-      <p class="muted" style="margin-top:8px">Propose a bounty or apply: <a href="mailto:xalara.project@gmail.com">xalara.project@gmail.com</a> · <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a></p>
-    </section>
-
-    <!-- How to Buy (Mainnet) -->
+    <!-- How to buy -->
     <section class="card" id="howto">
       <h2>How to buy XALRA</h2>
       <ol style="margin:0; padding-left:18px">
@@ -297,163 +230,52 @@
         </li>
         <li>Select <strong>ETH → XALRA</strong>, set slippage to <strong>0.5–1%</strong>, and swap.</li>
       </ol>
-      <p class="muted" style="margin-top:10px">
-        Tip: If Uniswap shows “Unknown token”, click “Import” (normal for new tokens).
-        Always verify the contract address.
-      </p>
+      <p class="muted" style="margin-top:10px">If Uniswap shows “Unknown token”, click “Import” (normal for new tokens). Always verify the contract address.</p>
     </section>
 
-    <!-- Trade (Mainnet) -->
+    <!-- Trade links -->
     <section class="card" id="trade">
       <h2>Trade</h2>
       <p class="muted">Mainnet links for convenience.</p>
-      <ul style="margin:0; padding-left:18px">
+      <ul class="clean">
         <li><a id="swapLink"   target="_blank" rel="noopener">Swap ETH → XALRA on Uniswap ↗</a></li>
         <li><a id="addLiqLink" target="_blank" rel="noopener">Add liquidity (ETH + XALRA) ↗</a></li>
-        <li><a id="pairInfoLink" target="_blank" rel="noopener">View pool on a DEX tracker ↗</a>
-          <span class="muted" style="font-size:12px"> (set once you have the pair address)</span></li>
+        <li><a id="pairInfoLink" target="_blank" rel="noopener">View pool on Dexscreener ↗</a></li>
       </ul>
     </section>
 
-    <!-- Sepolia demo -->
-    <section class="card" id="try">
-      <h2>Try it (Demo — Sepolia)</h2>
-      <div class="btn-row">
-        <button id="connect">Connect wallet</button>
-        <button id="switch">Switch to Sepolia</button>
-        <button id="addToken">Add XALRA to MetaMask</button>
-      </div>
-      <p id="addrRow" class="muted" style="display:none">Wallet: <code id="walletAddr">–</code></p>
-      <p>My XALRA balance: <strong id="myBalance">–</strong></p>
-      <div style="margin-top:12px">
-        <label>Send to: <input id="to" placeholder="0x..." style="width:340px"></label>
-        <label style="margin-left:10px">Amount (XALRA): <input id="amount" type="number" step="0.0001" min="0" style="width:140px"></label>
-        <label class="tag" style="margin-top:8px; display:inline-flex; gap:8px; align-items:center;">
-          <input type="checkbox" id="enableSend"> Enable sending
-        </label>
-        <button id="send">Send</button>
-        <p class="muted" style="margin-top:6px">
-          Safety: if you enter more than 100 XALRA, you’ll be asked to confirm.
-        </p>
-      </div>
-      <p class="muted" id="txStatus"></p>
-    </section>
-
-    <!-- Balances (read-only) -->
-    <section class="card" id="balancesCard">
-      <h2>Balances</h2>
-      <p class="muted">
-        Read-only via your wallet provider. Enter addresses (one per line or separated by commas),
-        then click <strong>Refresh</strong>. Your connected wallet will be added automatically.
+    <footer>
+      © <span id="year"></span> Xalara · Network: <span id="footerNet">Ethereum Mainnet</span><br>
+      <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
+      <a href="mailto:xalara.project@gmail.com">Email</a> ·
+      <a href="https://t.me/Xalara_Token" target="_blank" rel="noopener">Telegram (Announcements)</a> ·
+      <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram (Community)</a> ·
+      <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a>
+      <p class="muted" style="margin-top:8px">
+        Security: owner is a Safe multisig (<code>0x5aBB…1405</code>); liquidity currently <strong>unlocked</strong>.
+        We plan to <strong>lock or burn</strong> LP at the first community milestone and post the proof here and on X.
       </p>
-
-      <textarea id="addrList" rows="4" style="width:100%; background:#0e1320; color:#cfe1ff;
-        border:1px solid #1b2233; border-radius:8px; padding:8px;">
-0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b
-      </textarea>
-
-      <div class="btn-row">
-        <button id="refreshBalances">Refresh</button>
-        <button id="clearBalances" style="opacity:.85">Clear</button>
-      </div>
-
-      <div id="balancesList" style="margin-top:8px"></div>
-      <p class="muted">Total (listed): <strong id="balancesTotal">–</strong> XALRA</p>
-    </section>
-
-    <!-- Owner tools -->
-    <section id="ownerCard" class="card" style="display:none">
-      <h2>Owner Tools</h2>
-      <div class="tag">Status: <strong id="ownerStatus">Checking…</strong></div>
-      <div class="btn-row" style="margin-top:12px">
-        <button id="pauseBtn">Pause transfers</button>
-        <button id="unpauseBtn">Unpause transfers</button>
-        <button id="renounceBtn" disabled title="Disabled for safety">Renounce ownership (disabled)</button>
-      </div>
-      <div id="ownerConnect" class="btn-row" style="display:none; margin-top:12px">
-        <button id="ownerConnectBtn">Connect wallet</button>
-      </div>
-      <p class="muted" style="margin-top:10px">
-        Visible only to the owner on the <em>current chain</em>. Actions require gas.
-      </p>
-    </section>
-
-  <footer>
-  © <span id="year"></span> Xalara · Network: <span id="footerNet">—</span><br>
-  <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
-  <a href="mailto:xalara.project@gmail.com">Email</a> ·
-  <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a> ·
-  <a href="/about.html">About</a> ·
-  <a href="/press.html">Press</a> ·
-  <a href="https://t.me/Xalara_Token" target="_blank" rel="noopener">Telegram (Announcements)</a> ·
-  <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram (Community)</a>
-  <p class="muted" style="margin-top:8px">
-    Security: owner is a Safe multisig (<code>0x5aBB…1405</code>); liquidity currently <strong>unlocked</strong>.
-    We plan to <strong>lock or burn</strong> LP at the first community milestone and post the proof link here and on X.
-  </p>
-</footer>
-
-
-
+    </footer>
   </div>
 
   <!-- ethers.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
 
-  <!-- App logic -->
+  <!-- App logic (mainnet-only) -->
   <script>
   (function () {
-    // === MAINNET ADDRESSES / LINKS ===
+    // === MAINNET ADDRESSES ===
     const MAINNET_TOKEN = "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3";
-    const UNIV2_ROUTER  = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
     const MAINNET_PAIR  = "0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91";
     const SAFE_ADDR     = "0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405";
+    const MAINNET_RPC   = "https://cloudflare-eth.com";
 
-    // Optional: flip Liquidity status automatically when you have proof
-    const PLANNED_LIQ_ACTION_DATE = "";  // e.g., "2025-03-01"
+    // Optional: set these when you lock/burn LP
+    const PLANNED_LIQ_ACTION_DATE = "";  // e.g., "2025-11-01"
     const LP_BURN_TX = "";               // e.g., "0xabc..."
     const LP_LOCK_PROOF_URL = "";        // e.g., "https://app.unicrypt.network/lock/..."
 
-    // Public mainnet RPC for read-only snapshot
-    const MAINNET_RPC = "https://cloudflare-eth.com";
-
-    // === OWNERS PER CHAIN ===
-    const OWNERS = {
-      1:        SAFE_ADDR.toLowerCase(),
-      11155111: "0x3Ba4a3CeDAA7f10791BEA807eA03Ef808Fb3b31b".toLowerCase(),
-    };
-
-    // === NETWORKS ===
-    const NETS = {
-      1: { name: "Ethereum Mainnet", chainIdHex: "0x1", explorer: "https://etherscan.io",
-           contract: MAINNET_TOKEN, pass: null },
-      11155111: { name: "Sepolia", chainIdHex: "0xaa36a7", explorer: "https://sepolia.etherscan.io",
-           contract: "0x6cC3acc5A3AA8988C67285fb7954Cd51EC9B5F16",
-           pass: "0x0366Fbc855907e3c089bDFA014FBF3c42CB6aC11" },
-    };
-
-    let CURRENT = NETS[11155111]; // default to Sepolia until wallet is read
-
-    // === ABIs ===
-    const TOKEN_ABI = [
-      "function name() view returns (string)",
-      "function symbol() view returns (string)",
-      "function decimals() view returns (uint8)",
-      "function totalSupply() view returns (uint256)",
-      "function balanceOf(address) view returns (uint256)",
-      "function transfer(address,uint256) returns (bool)",
-      "function approve(address,uint256) returns (bool)"
-    ];
-    const OWNER_ABI = [
-      "function paused() view returns (bool)",
-      "function pause()", "function unpause()", "function owner() view returns (address)"
-    ];
-    const PASS_ABI = [
-      "function mintWithBurn() returns (uint256)",
-      "function balanceOf(address) view returns (uint256)",
-      "function tokenURI(uint256) view returns (string)",
-      "function burnPerPass() view returns (uint256)"
-    ];
+    // ABIs for read-only
     const PAIR_ABI = [
       "function token0() view returns (address)",
       "function token1() view returns (address)",
@@ -462,35 +284,26 @@
       "function balanceOf(address) view returns (uint256)"
     ];
 
-    // === HELPERS ===
     const $ = (id) => document.getElementById(id);
-    const note = (msg) => { const el = $("txStatus"); if (el) el.textContent = msg; console.log("[XALRA]", msg); };
-    const notePass = (msg) => { const el = $("passStatus"); if (el) el.textContent = msg; console.log("[PASS]", msg); };
-    const cleanError = (e) => (e?.error?.message || e?.data?.message || e?.message || String(e)).replace(/^execution reverted:? /i, "");
+    const fmt = (n, max=6) => Number(n).toLocaleString(undefined, { maximumFractionDigits: max });
 
     function updateTradeLinks() {
+      const swapUrl = `https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=${MAINNET_TOKEN}&chain=ethereum`;
+      const addUrl  = `https://app.uniswap.org/#/add/v2/ETH/${MAINNET_TOKEN}?chain=ethereum`;
+      const pairUrl = `https://dexscreener.com/ethereum/${MAINNET_PAIR}`;
       const buyUniswap   = $("buyUniswap");
       const swapLink     = $("swapLink");
       const addLiqLink   = $("addLiqLink");
       const pairInfoLink = $("pairInfoLink");
-
-      const swapUrl = `https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=${MAINNET_TOKEN}&chain=ethereum`;
-      const addUrl  = `https://app.uniswap.org/#/add/v2/ETH/${MAINNET_TOKEN}?chain=ethereum`;
-
-      if (buyUniswap) buyUniswap.href = swapUrl;
-      if (swapLink)   swapLink.href   = swapUrl;
-      if (addLiqLink) addLiqLink.href = addUrl;
-      if (pairInfoLink && MAINNET_PAIR) pairInfoLink.href = `https://dexscreener.com/ethereum/${MAINNET_PAIR}`;
+      if (buyUniswap)  buyUniswap.href  = swapUrl;
+      if (swapLink)    swapLink.href    = swapUrl;
+      if (addLiqLink)  addLiqLink.href  = addUrl;
+      if (pairInfoLink) pairInfoLink.href = pairUrl;
     }
 
     function wireLiquiditySection() {
       const statusEl = $("liqStatus"), dateEl = $("liqDate");
-      const pairA = $("pairLink"), lpHoldA = $("lpHoldLink");
-
-      if (pairA)   pairA.href   = `https://etherscan.io/address/${MAINNET_PAIR}`;
-      if (lpHoldA) lpHoldA.href = `https://etherscan.io/token/${MAINNET_PAIR}?a=${SAFE_ADDR}`;
       if (dateEl)  dateEl.textContent = PLANNED_LIQ_ACTION_DATE || "TBD";
-
       if (statusEl) {
         if (LP_BURN_TX) {
           statusEl.innerHTML = `Locked (burn) · <a href="https://etherscan.io/tx/${LP_BURN_TX}" target="_blank" rel="noopener">proof ↗</a>`;
@@ -502,135 +315,82 @@
       }
     }
 
-    // --- Supply (from API) ---
     async function updateSupply() {
       try {
-        const res = await fetch("/api/circulating?format=human", { cache: "no-store" });
-        if (!res.ok) throw new Error("API error");
-        const data = await res.json();
-        const num = (s) => Number(s);
-
-        const circ = num(data.circulating);
-        const safe = num(data.excluded?.safe?.balance ?? 0);
-        const eoa  = num(data.excluded?.deployer?.balance ?? 0);
-
-        const fmt = (x) => x.toLocaleString(undefined, { maximumFractionDigits: 6 });
-
-        $("circNow").textContent = fmt(circ);
-        $("exSafe").textContent  = fmt(safe);
-        $("exEoa").textContent   = fmt(eoa);
+        const r = await fetch("/api/circulating?format=human");
+        const j = await r.json();
+        $("circNow").textContent = fmt(j.circulating);
+        $("exSafe").textContent  = fmt(j.excluded?.safe?.balance || 0);
+        $("exEoa").textContent   = fmt(j.excluded?.deployer?.balance || 0);
       } catch (e) {
+        $("circNow").textContent = $("exSafe").textContent = $("exEoa").textContent = "—";
         console.warn("Supply fetch failed:", e);
-        $("circNow").textContent = "—";
-        $("exSafe").textContent  = "—";
-        $("exEoa").textContent   = "—";
       }
     }
 
-    // --- Pool snapshot (no wallet needed) ---
-   async function updatePoolSnapshot() {
-    try {
-      const res = await fetch("/api/pool?format=human", { cache: "no-store" });
-      if (!res.ok) throw new Error("API error");
-      const d = await res.json();
+    async function updatePoolSnapshot() {
+      try {
+        const provider = new ethers.JsonRpcProvider(MAINNET_RPC);
+        const pair = new ethers.Contract(MAINNET_PAIR, PAIR_ABI, provider);
+        const [t0, t1] = await Promise.all([pair.token0(), pair.token1()]);
+        const [r0, r1] = await pair.getReserves();
+        const ts = await pair.totalSupply();
+        const lp = await pair.balanceOf(SAFE_ADDR);
+        const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".toLowerCase();
 
-      const fmt = (x) => Number(x).toLocaleString(undefined, { maximumFractionDigits: 6 });
-
-      document.getElementById("resXalra").textContent = fmt(d.reserveXalra);
-      document.getElementById("resEth").textContent   = fmt(d.reserveEth);
-      document.getElementById("midPrice").textContent = `${Number(d.priceEthPerXalra).toPrecision(6)} ETH / XALRA`;
-      document.getElementById("lpSafe").textContent   = `${d.lpSafe} / ${d.lpTotal}`;
-    } catch (err) {
-      console.warn("Pool snapshot failed:", err);
-      ["resXalra","resEth","midPrice","lpSafe"].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = "—";
-      });
-    }
-  }
-
-
-    async function ensureChain(chainIdHex) {
-      if (!window.ethereum) throw new Error("Wallet not detected");
-      const id = await window.ethereum.request({ method: "eth_chainId" });
-      if (id !== chainIdHex) {
-        try {
-          await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: chainIdHex }] });
-        } catch (e) {
-          if (e && e.code === 4902) {
-            const net = Object.values(NETS).find(n => n.chainIdHex === chainIdHex);
-            await window.ethereum.request({
-              method: "wallet_addEthereumChain",
-              params: [{
-                chainId: chainIdHex,
-                chainName: net?.name || "Ethereum",
-                nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
-                rpcUrls: ["https://rpc.sepolia.org"],
-                blockExplorerUrls: [net?.explorer || "https://etherscan.io"],
-              }],
-            });
-          } else { throw e; }
+        let xRes, eRes;
+        if (t0.toLowerCase() === MAINNET_TOKEN.toLowerCase() && t1.toLowerCase() === WETH) {
+          xRes = r0; eRes = r1;
+        } else if (t1.toLowerCase() === MAINNET_TOKEN.toLowerCase() && t0.toLowerCase() === WETH) {
+          xRes = r1; eRes = r0;
+        } else {
+          throw new Error("Unexpected pair ordering");
         }
+
+        const x = Number(ethers.formatUnits(xRes, 18));
+        const e = Number(ethers.formatUnits(eRes, 18));
+        const priceEth = e / x;
+
+        $("resXalra").textContent = fmt(x);
+        $("resEth").textContent   = fmt(e);
+        $("midPrice").textContent = `${priceEth.toPrecision(6)} ETH / XALRA`;
+        $("lpSafe").textContent   = `${ethers.formatUnits(lp, 18)} / ${ethers.formatUnits(ts, 18)}`;
+      } catch (err) {
+        console.warn("Pool snapshot failed:", err);
+        $("resXalra").textContent = $("resEth").textContent = $("midPrice").textContent = $("lpSafe").textContent = "—";
       }
     }
 
-    // Update CURRENT and UI based on wallet chain
-    async function setCurrentByWallet() {
-      const badge = $("networkNote"), addrEl = $("addr"), escan = $("etherscan"), footerNet = $("footerNet");
-      const passCard = $("pass"), passScan = $("passScan");
-      const tryCard = $("try"), sendBtn = $("send"), enableCb = $("enableSend"), txStatus = $("txStatus");
-
+    async function detectWalletNetwork() {
+      const note = $("networkNote");
+      const btn  = $("switchMainnet");
       if (!window.ethereum) {
-        CURRENT = NETS[11155111];
-      } else {
-        const idHex = await window.ethereum.request({ method: "eth_chainId" });
-        const id = parseInt(idHex, 16);
-        CURRENT = NETS[id] || NETS[11155111];
+        note.textContent = "Mainnet data (no wallet required)";
+        btn.style.display = "none";
+        return;
       }
-
-      if (addrEl) addrEl.textContent = CURRENT.contract;
-      if (escan) escan.href = `${CURRENT.explorer}/address/${CURRENT.contract}#code`;
-      if (badge) badge.textContent = `Wallet network: ${CURRENT.name} ✓`;
-      if (footerNet) footerNet.textContent = CURRENT.name;
-
-      // Pass card (Sepolia only) — safe if the element doesn't exist
-      if (passCard) {
-        const onSepolia = CURRENT === NETS[11155111];
-        passCard.style.display = onSepolia ? "block" : "none";
-        if (onSepolia && passScan) passScan.href = `${NETS[11155111].explorer}/address/${NETS[11155111].pass}#code`;
-      }
-
-      // Demo Try panel: disabled on mainnet
-      if (tryCard && sendBtn) {
-        const onMainnet = CURRENT === NETS[1];
-        sendBtn.disabled = onMainnet || !(enableCb?.checked);
-        if (txStatus) {
-          txStatus.textContent = onMainnet ? "Demo transfers are only enabled on Sepolia." : "";
+      try {
+        const id = await window.ethereum.request({ method: "eth_chainId" });
+        if (id === "0x1") {
+          note.textContent = "Wallet network: Ethereum Mainnet ✓";
+          btn.style.display = "none";
+        } else {
+          note.textContent = "Wallet network: not Mainnet";
+          btn.style.display = "inline-flex";
         }
+      } catch {
+        note.textContent = "Mainnet data (no wallet required)";
+        btn.style.display = "none";
       }
-    }
-
-    if (window.ethereum?.on) {
-      window.ethereum.on("chainChanged", setCurrentByWallet);
     }
 
     function onLoad() {
-      if ($("year")) $("year").textContent = new Date().getFullYear();
+      const y = $("year"); if (y) y.textContent = new Date().getFullYear();
 
-      setCurrentByWallet();
-      updateTradeLinks();
-      wireLiquiditySection();
-
-      // Initial data pulls + periodic refresh
-      updateSupply();
-      updatePoolSnapshot();
-      setInterval(updateSupply,       60_000);
-      setInterval(updatePoolSnapshot, 60_000);
-
-      // Contract card buttons
+      // Wire buttons
       $("copy")?.addEventListener("click", async () => {
         try {
-          await navigator.clipboard.writeText(CURRENT.contract);
+          await navigator.clipboard.writeText(MAINNET_TOKEN);
           const btn = $("copy"); const old = btn.textContent; btn.textContent = "Copied!"; setTimeout(() => btn.textContent = old, 1200);
         } catch {}
       });
@@ -639,245 +399,40 @@
         try {
           await window.ethereum.request({
             method: "wallet_watchAsset",
-            params: { type: "ERC20", options: { address: CURRENT.contract, symbol: "XALRA", decimals: 18 } }
+            params: { type: "ERC20", options: { address: MAINNET_TOKEN, symbol: "XALRA", decimals: 18 } }
           });
-        } catch (e) { alert(cleanError(e)); }
+        } catch (e) { alert(e?.message || String(e)); }
       });
-
-      // ---- Sepolia demo (send) ----
-      let provider, signer, token;
-      const btnConnect  = $("connect");
-      const btnSwitch   = $("switch");
-      const btnAddToken = $("addToken");
-      const btnSend     = $("send");
-      let lastSendAt = 0;
-      const SEND_COOLDOWN_MS = 8000;
-
-      async function connect() {
-        if (!window.ethereum) throw new Error("MetaMask not detected");
-        provider = new ethers.BrowserProvider(window.ethereum);
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        await ensureChain(NETS[11155111].chainIdHex);
-        await setCurrentByWallet();
-
-        signer = await provider.getSigner();
-        token  = new ethers.Contract(CURRENT.contract, TOKEN_ABI, signer);
-
-        const addr = await signer.getAddress();
-        $("walletAddr") && ($("walletAddr").textContent = addr);
-        $("addrRow") && ( $("addrRow").style.display = "block" );
-
-        const bal = await token.balanceOf(addr);
-        $("myBalance") && ( $("myBalance").textContent = ethers.formatUnits(bal, 18) );
-
-        note("Connected.");
-        await updateOwnerUI();
-      }
-
-      const tryEls = { card:$("try"), sendBtn:$("send"), enable:$("enableSend"), status:$("txStatus") };
-
-      async function refreshPaused() {
-        if (!window.ethereum) return;
+      $("switchMainnet")?.addEventListener("click", async () => {
         try {
-          const pro = new ethers.BrowserProvider(window.ethereum);
-          const c = new ethers.Contract(CURRENT.contract, ["function paused() view returns (bool)"], pro);
-          const paused = await c.paused();
-          setTryPaused(paused);
-        } catch {}
-      }
-      function setTryPaused(paused) {
-        if (!tryEls.card) return;
-        tryEls.card.style.opacity = paused ? 0.6 : 1;
-        const enabledToggle = tryEls.enable?.checked ?? false;
-        if (tryEls.sendBtn) tryEls.sendBtn.disabled = paused || !enabledToggle || (CURRENT === NETS[1]);
-        if (tryEls.status) {
-          tryEls.status.textContent = (CURRENT === NETS[1])
-            ? "Demo transfers are only enabled on Sepolia."
-            : (paused ? "Token is paused: transfers are disabled." : "");
-        }
-      }
-
-      if (tryEls.enable && tryEls.sendBtn) {
-        tryEls.sendBtn.disabled = true;
-        tryEls.enable.addEventListener("change", refreshPaused);
-      }
-      if (window.ethereum?.on) {
-        window.ethereum.on("accountsChanged", refreshPaused);
-        window.ethereum.on("chainChanged",   refreshPaused);
-      }
-      refreshPaused();
-
-      btnConnect && (btnConnect.onclick = () => connect().catch(e => note(cleanError(e))));
-      btnSwitch  && (btnSwitch.onclick  = () => {
-        if (!window.ethereum) { note("MetaMask not detected"); return; }
-        window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: NETS[11155111].chainIdHex }] })
-          .catch(e => note(cleanError(e)));
-      });
-      btnAddToken && (btnAddToken.onclick = async () => {
-        try {
-          if (!window.ethereum) throw new Error("MetaMask not detected");
-          await window.ethereum.request({
-            method: "wallet_watchAsset",
-            params: { type: "ERC20", options: { address: CURRENT.contract, symbol: "XALRA", decimals: 18 } }
-          });
-        } catch (e) { note(cleanError(e)); }
-      });
-
-      btnSend && (btnSend.onclick = async () => {
-        try {
-          if (CURRENT !== NETS[11155111]) { note("Demo transfers are only enabled on Sepolia."); return; }
-          if (!tryEls.enable?.checked) { note("Toggle “Enable sending” first."); return; }
-          const now = Date.now();
-          if (now - lastSendAt < SEND_COOLDOWN_MS) {
-            const wait = Math.ceil((SEND_COOLDOWN_MS - (now - lastSendAt)) / 1000);
-            note(`Please wait ${wait}s before sending again.`); return;
-          }
-          if (!signer) await connect();
-
-          const to = ($("to")?.value || "").trim();
-          const amtStr = ($("amount")?.value || "").trim();
-          if (!ethers.isAddress(to)) throw new Error("Invalid recipient address");
-          if (!amtStr || Number(amtStr) <= 0) throw new Error("Enter a positive amount");
-
-          const providerRO = new ethers.BrowserProvider(window.ethereum);
-          const pausedReader = new ethers.Contract(CURRENT.contract, ["function paused() view returns (bool)"], providerRO);
-          if (await pausedReader.paused()) throw new Error("Token is paused");
-
-          const value = ethers.parseUnits(amtStr, 18);
-
-          const SOFT_CAP = ethers.parseUnits("100", 18);
-          if (value > SOFT_CAP) {
-            const ok = confirm("This is a demo site. Are you sure you want to send more than 100 XALRA?");
-            if (!ok) return;
-          }
-
-          const sender = await signer.getAddress();
-          const bal = await token.balanceOf(sender);
-          if (value > bal) throw new Error(`Amount exceeds your balance (${ethers.formatUnits(bal, 18)} XALRA)`);
-
-          note("Sending…");
-          const tx = await token.transfer(to, value);
-          lastSendAt = Date.now();
-
-          const hash = tx.hash;
-          const el = $("txStatus");
-          const txUrl = `${CURRENT.explorer}/tx/${hash}`;
-          if (el && /^0x[0-9a-fA-F]{64}$/.test(hash)) {
-            el.innerHTML = `Pending: <a href="${txUrl}" target="_blank" rel="noopener">${hash.slice(0,10)}…</a>`;
-          } else {
-            note("Pending: " + hash);
-          }
-
-          const rcpt = await tx.wait();
-          if (el) {
-            el.innerHTML = `Confirmed in block ${rcpt.blockNumber}. <a href="${txUrl}" target="_blank" rel="noopener">View on Etherscan</a>`;
-          } else {
-            note(`Confirmed in block ${rcpt.blockNumber}. Tx: ${hash}`);
-          }
-
-          const newBal = await token.balanceOf(sender);
-          $("myBalance") && ( $("myBalance").textContent = ethers.formatUnits(newBal, 18) );
-          await refreshPaused();
+          await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0x1" }] });
         } catch (e) {
-          note(cleanError(e));
+          alert(e?.message || String(e));
         }
       });
 
-      // Owner tools (Sepolia only for direct calls)
-      const ownerEls = { card:$("ownerCard"), status:$("ownerStatus"), connectRow:$("ownerConnect"),
-                         connectBtn:$("ownerConnectBtn"), pauseBtn:$("pauseBtn"), unpauseBtn:$("unpauseBtn") };
+      // Static links
+      updateTradeLinks();
+      wireLiquiditySection();
 
-      async function getAccounts() {
-        if (!window.ethereum) return [];
-        try { return await window.ethereum.request({ method: "eth_accounts" }); }
-        catch { return []; }
-      }
+      // Live data
+      updateSupply();
+      updatePoolSnapshot();
+      setInterval(updateSupply,      5 * 60 * 1000);
+      setInterval(updatePoolSnapshot, 60 * 1000);
 
-      async function updateOwnerUI() {
-        if (!ownerEls.card) return;
-        if (!window.ethereum) { ownerEls.card.style.display = "none"; ownerEls.connectRow.style.display = "none"; return; }
-
-        let chainId = 11155111;
-        try { chainId = parseInt(await window.ethereum.request({ method: "eth_chainId" }), 16); } catch {}
-        const accounts = await getAccounts();
-        const acct = (accounts[0] || "").toLowerCase();
-        const ownerForChain = OWNERS[chainId] || "";
-        const isOwner = acct === ownerForChain;
-
-        if (!isOwner || chainId === 1) {
-          ownerEls.card.style.display = "none";
-          ownerEls.connectRow.style.display = "block";
-          return;
-        }
-
-        ownerEls.card.style.display = "block";
-        ownerEls.connectRow.style.display = "none";
-
-        try {
-          const providerO = new ethers.BrowserProvider(window.ethereum);
-          const signerO   = await providerO.getSigner();
-          const c = new ethers.Contract(CURRENT.contract, OWNER_ABI, signerO);
-          const paused = await c.paused();
-          ownerEls.status.textContent = paused ? "Paused" : "Active";
-          ownerEls.status.style.color = paused ? "#ffd166" : "#a7f3d0";
-        } catch {
-          ownerEls.status.textContent = "Error";
-          ownerEls.status.style.color = "#ffd166";
-        }
-      }
-
-      ownerEls.connectBtn?.addEventListener("click", async () => {
-        if (!window.ethereum) { alert("No wallet found"); return; }
-        try {
-          await window.ethereum.request({ method: "eth_requestAccounts" });
-          await updateOwnerUI();
-        } catch (e) { alert(cleanError(e)); }
-      });
-
-      ownerEls.pauseBtn?.addEventListener("click", async () => {
-        try {
-          if (!window.ethereum) return alert("No wallet");
-          const providerO = new ethers.BrowserProvider(window.ethereum);
-          const signerO   = await providerO.getSigner();
-          const c = new ethers.Contract(CURRENT.contract, OWNER_ABI, signerO);
-          ownerEls.status.textContent = "Pausing…";
-          const tx = await c.pause();
-          await tx.wait();
-          ownerEls.status.textContent = "Paused";
-          ownerEls.status.style.color = "#ffd166";
-        } catch (e) { alert(cleanError(e)); await updateOwnerUI(); }
-      });
-
-      ownerEls.unpauseBtn?.addEventListener("click", async () => {
-        try {
-          if (!window.ethereum) return alert("No wallet");
-          const providerO = new ethers.BrowserProvider(window.ethereum);
-          const signerO   = await providerO.getSigner();
-          const c = new ethers.Contract(CURRENT.contract, OWNER_ABI, signerO);
-          ownerEls.status.textContent = "Unpausing…";
-          const tx = await c.unpause();
-          await tx.wait();
-          ownerEls.status.textContent = "Active";
-          ownerEls.status.style.color = "#a7f3d0";
-        } catch (e) { alert(cleanError(e)); await updateOwnerUI(); }
-      });
-
+      // Wallet network hint
+      detectWalletNetwork();
       if (window.ethereum?.on) {
-        window.ethereum.on("accountsChanged", () => { updateOwnerUI(); });
-        window.ethereum.on("chainChanged",   () => { updateOwnerUI(); setCurrentByWallet(); });
+        window.ethereum.on("chainChanged", detectWalletNetwork);
+        window.ethereum.on("accountsChanged", detectWalletNetwork);
       }
-      updateOwnerUI();
     }
 
-    window.addEventListener("load", () => {
-      if (typeof window.ethers === "undefined") {
-        alert("Failed to load ethers.js");
-      } else {
-        onLoad();
-      }
-    });
+    window.addEventListener("load", onLoad);
   })();
   </script>
 </body>
 </html>
+
 

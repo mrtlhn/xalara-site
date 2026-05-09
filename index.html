@@ -1,567 +1,1058 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Schema for search engines -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Project",
-    "name": "Xalara (XALRA)",
-    "description": "ERC‑20 token funding open biotech & longevity tooling with AI‑assisted research bounties and community grants.",
-    "url": "https://xalara.io/",
-    "logo": "https://xalara.io/assets/xalara-256.png",
-    "sameAs": [
-      "https://twitter.com/Xalara_Token",
-      "https://etherscan.io/token/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3",
-      "https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum",
-      "https://t.me/Xalara_Community",
-      "https://t.me/Xalara_Token"
-    ]
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xalara — Open Biotech · Longevity · AI Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080B0F;
+    --bg2: #0D1117;
+    --bg3: #111820;
+    --accent: #00FFB2;
+    --accent2: #00C4FF;
+    --text: #F0F4F8;
+    --muted: #6B7A8D;
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(0,255,178,0.2);
+    --card: rgba(255,255,255,0.03);
+    --card-hover: rgba(0,255,178,0.04);
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
   }
-  </script>
 
-  <meta charset="utf-8" />
-  <title>Xalara (XALRA) — Official Site</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Xalara (XALRA) — ERC‑20 token for open biotech & longevity tooling, with AI‑assisted research bounties and community grants." />
-  <link rel="canonical" href="https://xalara.io/" />
-  <meta name="robots" content="index,follow">
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <!-- Open Graph / Twitter -->
-  <meta property="og:title" content="Xalara (XALRA)" />
-  <meta property="og:description" content="Open biotech • Longevity • AI‑assisted research. Contract, links, liquidity, and community roadmap." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://xalara.io/" />
-  <meta property="og:site_name" content="Xalara" />
-  <meta property="og:image" content="https://xalara.io/assets/xalara-256.png?v=2">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://xalara.io/assets/xalara-256.png?v=2">
+  html { scroll-behavior: smooth; }
 
-  <!-- Identity / SEO helpers -->
-  <meta name="theme-color" content="#0b0d12">
-  <meta name="keywords" content="Xalara, XALRA, longevity, biotech, bioinformatics, AI, ERC-20, Ethereum">
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
 
-  <!-- Favicons / app icons -->
-  <link rel="icon" type="image/png" sizes="32x32"  href="/assets/xalara-32.png?v=2">
-  <link rel="icon" type="image/png" sizes="192x192" href="/assets/xalara-256.png?v=2">
-  <link rel="apple-touch-icon"                 href="/assets/xalara-256.png?v=2">
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    background: rgba(8,11,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: #080B0F;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.85rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
 
-  <!-- Optional: advertise your tokenlist.json to tooling -->
-  <!-- <link rel="alternate" type="application/json" href="/tokenlist.json"> -->
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 2.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,178,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,178,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 100%);
+  }
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(ellipse, rgba(0,255,178,0.07) 0%, transparent 70%);
+    top: -100px; left: -100px;
+    pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(ellipse, rgba(0,196,255,0.06) 0%, transparent 70%);
+    bottom: 0; right: 0;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; max-width: 900px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    border: 1px solid var(--border-accent);
+    padding: 0.35rem 0.75rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.75rem;
+  }
+  .hero h1 .line2 { color: var(--accent); display: block; }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 400; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: #080B0F;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.8rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    font-weight: 400;
+    font-size: 0.9rem;
+    padding: 0.8rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-contract {
+    margin-top: 3rem;
+    display: flex; align-items: center; gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .contract-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .contract-addr {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    background: rgba(0,255,178,0.05);
+    border: 1px solid var(--border-accent);
+    padding: 0.4rem 0.85rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: all;
+  }
+  .contract-addr:hover { background: rgba(0,255,178,0.1); }
+  .copy-hint { font-size: 0.7rem; color: var(--muted); }
 
-  <style>
-    .topnav { margin-top: 6px; font-size: 14px; }
+  /* LIVE DATA BAR */
+  .data-bar {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 2.5rem;
+    display: flex; gap: 3rem; align-items: center;
+    overflow-x: auto;
+  }
+  .data-item { display: flex; flex-direction: column; gap: 0.15rem; white-space: nowrap; }
+  .data-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .data-value {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .data-value.green { color: var(--accent); }
+  .data-value.loading { color: var(--muted); animation: flicker 1.5s infinite; }
+  @keyframes flicker { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-    :root {
-      --bg:#0b0d12; --card:#111826; --text:#e7edf5; --muted:#9fb0c5;
-      --accent:#6ee7ff; --accent2:#a78bfa; --ok:#a7f3d0; --warn:#ffd166;
-      --line:#1b2535;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin:0; color:var(--text);
-      font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;
-      background: radial-gradient(1200px 600px at 80% -10%, #1b2131 0%, #0b0d12 60%);
-    }
-    /* subtle lab grid overlay */
-    body::before {
-      content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
-      background:
-        repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0 1px, transparent 1px 120px),
-       .repeating-linear-gradient(0deg,  rgba(255,255,255,.02) 0 1px, transparent 1px 120px);
-      mask-image: radial-gradient(1200px 600px at 80% -10%, rgba(0,0,0,.6) 0, rgba(0,0,0,1) 60%);
-    }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
-    header { padding: 24px 0 8px; }
-    nav { display:flex; gap:12px; margin-top:8px; }
-    nav a { color:#bcd1f0; font-size:14px; opacity:.9 }
-    nav a:hover { opacity:1; }
-    h1 { margin:0 0 6px; font-size: clamp(28px, 4vw, 40px); letter-spacing:.2px; }
-    h2 {
-      margin: 0 0 12px; font-size: clamp(20px, 2.5vw, 24px);
-      position: relative; padding-left: 10px;
-    }
-    h2::before {
-      content:""; position:absolute; left:0; top:6px; bottom:6px; width:4px;
-      background: linear-gradient(180deg, var(--accent), var(--accent2));
-      border-radius: 999px;
-    }
-    .subtitle { color:var(--muted); margin:0 0 18px; }
-    .card {
-      background:var(--card); border:1px solid var(--line); border-radius:14px;
-      padding:18px; margin:16px 0; box-shadow: 0 10px 28px rgba(0,0,0,.35);
-    }
-    .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-    .kpis { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
-    .kpi {
-      background:#0f1725; border:1px solid #1a2436; border-radius:12px; padding:12px;
-    }
-    .kpi .label { color:var(--muted); font-size:12px; text-transform: uppercase; letter-spacing:.08em; }
-    .kpi .value { font-weight:700; font-size:18px; margin-top:4px; }
-    code { background:#0e1320; border:1px solid #1b2233; padding:4px 8px; border-radius:8px;
-           font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace; color:#cfe1ff; word-break: break-all; }
-    button { cursor: pointer; border:1px solid #2a3550; background:#141a29; color:#eaf2ff; padding:10px 14px; border-radius:10px; font-weight:600; transition:.15s ease; }
-    button:hover { border-color:#3b4670; transform: translateY(-1px); }
-    .btn-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
-    .tag { display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:999px; background:#0e1320; border:1px solid #1b2233; color:#cde0ff; font-size:13px; }
-    .muted { color: var(--muted); }
-    .warn  { color:var(--warn); }
-    .ok    { color:var(--ok); }
-    footer { color: var(--muted); font-size: 13px; padding: 18px 6px 36px; }
-    a { color: #84c5ff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    ul.clean { margin:0; padding-left:18px; }
-    .phase li { margin:6px 0; }
-    .chip { display:inline-block; padding:2px 8px; border:1px solid #22304a; border-radius:999px; background:#0e1524; font-size:12px; color:#bcd1f0; }
-  </style>
+  /* SECTIONS */
+  section { padding: 6rem 2.5rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-tag::after {
+    content: '';
+    flex: 1; max-width: 60px;
+    height: 1px;
+    background: var(--border-accent);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 1.25rem;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 560px;
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 3.5rem;
+  }
+
+  /* MISSION CARDS */
+  .mission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .mission-card {
+    background: var(--bg);
+    padding: 2.5rem;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .mission-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .mission-card:hover { background: var(--card-hover); }
+  .mission-card:hover::before { transform: scaleX(1); }
+  .mission-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+  .mission-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .mission-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; font-weight: 300; }
+
+  /* TOKENOMICS */
+  .tokenomics-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  @media (max-width: 768px) { .tokenomics-layout { grid-template-columns: 1fr; } }
+  .token-stats { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .token-stat {
+    background: var(--bg);
+    padding: 1.25rem 1.75rem;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.2s;
+  }
+  .token-stat:hover { background: var(--card-hover); }
+  .token-stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+  .token-stat-value { font-family: var(--font-mono); font-size: 0.9rem; color: var(--text); font-weight: 500; }
+  .token-stat-value.accent { color: var(--accent); }
+  .token-features { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+  .token-feature {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+  }
+  .token-feature-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .token-feature-title { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.2rem; }
+  .token-feature-desc { font-size: 0.8rem; color: var(--muted); font-weight: 300; line-height: 1.5; }
+
+  /* SUPPLY VIZ */
+  .supply-viz { margin-top: 2rem; }
+  .supply-bar {
+    height: 8px;
+    background: var(--bg3);
+    border-radius: 0;
+    overflow: hidden;
+    margin: 0.75rem 0;
+  }
+  .supply-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+  .supply-label { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+
+  /* ROADMAP */
+  .roadmap { background: var(--bg2); }
+  .roadmap-list { display: flex; flex-direction: column; gap: 0; }
+  .roadmap-item {
+    display: grid;
+    grid-template-columns: 140px 1px 1fr;
+    gap: 0 2rem;
+    padding: 2rem 0;
+  }
+  .roadmap-item:not(:last-child) { border-bottom: 1px solid var(--border); }
+  .roadmap-phase {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding-top: 0.2rem;
+    align-self: start;
+  }
+  .roadmap-line { background: var(--border); position: relative; }
+  .roadmap-line::before {
+    content: '';
+    position: absolute;
+    top: 0.3rem; left: 50%;
+    transform: translateX(-50%);
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: 2px solid var(--muted);
+  }
+  .roadmap-item.done .roadmap-line::before { background: var(--accent); border-color: var(--accent); }
+  .roadmap-item.active .roadmap-line::before { background: var(--accent2); border-color: var(--accent2); animation: pulse 2s infinite; }
+  .roadmap-content { padding-left: 1rem; }
+  .roadmap-milestone {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .roadmap-item.done .roadmap-milestone { color: var(--accent); }
+  .roadmap-item.active .roadmap-milestone { color: var(--accent2); }
+  .roadmap-item.upcoming .roadmap-milestone { color: var(--muted); }
+  .roadmap-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .roadmap-desc { font-size: 0.85rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+
+  /* HOW TO BUY */
+  .buy-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  .buy-step {
+    background: var(--bg);
+    padding: 2rem;
+    position: relative;
+  }
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(0,255,178,0.08);
+    line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.04em;
+  }
+  .buy-step h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .buy-step p { font-size: 0.82rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+  .buy-step code {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    background: rgba(0,255,178,0.06);
+    color: var(--accent);
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    word-break: break-all;
+  }
+  .buy-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    align-items: center; justify-content: space-between;
+  }
+  .buy-cta-text h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .buy-cta-text p { font-size: 0.82rem; color: var(--muted); font-weight: 300; }
+
+  /* GRANTS */
+  .grants { background: var(--bg2); }
+  .bounties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  .bounty-card {
+    background: var(--bg2);
+    padding: 2rem;
+    transition: background 0.3s;
+  }
+  .bounty-card:hover { background: var(--card-hover); }
+  .bounty-icon { font-size: 1.5rem; margin-bottom: 1rem; display: block; }
+  .bounty-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .bounty-card p { font-size: 0.82rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+
+  /* TEAM */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+  .team-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: border-color 0.3s;
+  }
+  .team-card:hover { border-color: var(--border-accent); }
+  .team-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: rgba(0,255,178,0.1);
+    border: 1px solid var(--border-accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+  .team-name { font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .team-role { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+  .team-desc { font-size: 0.82rem; color: var(--muted); font-weight: 300; line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2.5rem;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-brand { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; }
+  .footer-brand span { color: var(--accent); }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a {
+    font-size: 0.8rem; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-disclaimer {
+    max-width: 1100px; margin: 1.5rem auto 0;
+    font-size: 0.72rem; color: var(--muted);
+    font-weight: 300; line-height: 1.6;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+    margin: 0;
+  }
+
+  /* LIVE DATA SECTION */
+  .live-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 2.5rem;
+  }
+  .live-card {
+    background: var(--bg);
+    padding: 1.75rem;
+  }
+  .live-card-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .live-card-value { font-family: var(--font-mono); font-size: 1.3rem; font-weight: 500; color: var(--text); }
+  .live-card-value.accent { color: var(--accent); }
+  .live-card-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.3rem; font-weight: 300; }
+
+  /* SCROLL ANIMATION */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.25rem; }
+    .hero { padding: 7rem 1.25rem 4rem; }
+    .data-bar { padding: 0.75rem 1.25rem; gap: 1.5rem; }
+    .roadmap-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .roadmap-line { display: none; }
+    footer { padding: 2rem 1.25rem; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>
-        <img src="/assets/xalara-256.png?v=2" alt="XALARA"
-             style="height:40px; vertical-align:middle; border-radius:8px; margin-right:8px">
-        Xalara <span class="muted">(XALRA)</span>
-      </h1>
-      <p class="subtitle">Open Biotech • Longevity • AI‑assisted research · ERC‑20 on <strong>Ethereum</strong></p>
 
-      <nav class="topnav">
-        <a href="/about.html">About</a> ·
-        <a href="/press.html">Press</a> ·
-        <a href="/assets/xalara-whitepaper-v1.pdf" target="_blank" rel="noopener">Whitepaper (PDF)</a> ·
-        <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3&chain=ethereum" target="_blank" rel="noopener">Uniswap</a> ·
-        <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">X (Twitter)</a> ·
-        <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram</a>
-      </nav>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">XALA<span>RA</span></a>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#tokenomics">Tokenomics</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#buy">Buy</a></li>
+    <li><a href="#grants">Grants</a></li>
+  </ul>
+  <a href="https://app.uniswap.org/#/swap?outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3" target="_blank" class="nav-cta">Buy XALRA ↗</a>
+</nav>
 
-      <div id="networkNote" class="tag" style="margin-top:8px">Checking wallet network…</div>
-    </header>
-
-    <!-- Contract -->
-    <section id="contract" class="card">
-      <h2>Contract</h2>
-      <div class="kpis">
-        <div class="kpi">
-          <div class="label">Mainnet address</div>
-          <div class="value"><code id="addr">0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code></div>
-        </div>
-        <div class="kpi">
-          <div class="label">Owner (Safe)</div>
-          <div class="value"><code>0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405</code></div>
-        </div>
-        <div class="kpi">
-          <div class="label">Total supply</div>
-          <div class="value">1,000,000,000 XALRA</div>
-        </div>
-      </div>
-      <div class="btn-row">
-        <button id="copy">Copy address</button>
-        <a id="etherscan" class="tag" href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">View on Etherscan ↗</a>
-        <button id="add">Add XALRA to MetaMask</button>
-      </div>
-      <p class="muted" style="margin-top:10px">Standard: ERC‑20 · Features: Burnable · Pausable · EIP‑2612 Permit · 18 decimals</p>
-    </section>
-
-    <!-- Mission & Focus Areas -->
-    <section class="card">
-      <h2>Mission & Focus Areas</h2>
-      <p class="muted">Xalara funds open tools and small grants at the intersection of <strong>biotechnology</strong>, <strong>longevity</strong>, and <strong>AI</strong>. We prioritize transparent, reproducible work.</p>
-      <div class="grid">
-        <div>
-          <p>🧬 <strong>Longevity R&D</strong><br>
-          Community‑driven experiments and datasets for healthspan — from assay curation to biomarker exploration.</p>
-        </div>
-        <div>
-          <p>🤖 <strong>AI for Bioinformatics</strong><br>
-          Lightweight pipelines to help non‑experts run analyses, with reproducible notebooks and synthetic data where needed.</p>
-        </div>
-        <div>
-          <p>🤝 <strong>Open Grants & Bounties</strong><br>
-          Micro‑grants for useful tools (data cleaning, viz, literature triage) and reproducibility rewards.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Supply (from API) -->
-    <section class="card" id="supplyCard">
-      <h2>Supply</h2>
-      <div class="kpis">
-        <div class="kpi"><div class="label">Circulating</div><div class="value" id="circNow">—</div></div>
-        <div class="kpi"><div class="label">Excluded (Safe)</div><div class="value" id="exSafe">—</div></div>
-        <div class="kpi"><div class="label">Excluded (Deployer)</div><div class="value" id="exEoa">—</div></div>
-      </div>
-      <p class="muted" style="margin-top:6px">Source: <code>/api/circulating</code></p>
-    </section>
-
-    <!-- Liquidity status -->
-    <section class="card" id="liqCard">
-      <h2>Liquidity</h2>
-      <p class="muted">
-        Status: <strong id="liqStatus">Unlocked</strong>
-        · Plan: lock/burn on <span id="liqDate">TBD</span><br>
-        Pair: <a id="pairLink" href="https://etherscan.io/address/0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91" target="_blank" rel="noopener">Etherscan ↗</a>
-        · LP in Safe: <a id="lpHoldLink" href="https://etherscan.io/token/0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91?a=0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405" target="_blank" rel="noopener">view balance ↗</a>
-      </p>
-      <p class="muted" style="margin-top:6px">
-        We’ll announce the exact time window ≥24h in advance and post a proof link here and on X after the action.
-      </p>
-    </section>
-
-    <!-- Pool snapshot (reads from API) -->
-    <section class="card" id="pool">
-      <h2>Pool Snapshot (Uniswap v2)</h2>
-      <div class="kpis">
-        <div class="kpi"><div class="label">Reserve (XALRA)</div><div class="value" id="resXalra">—</div></div>
-        <div class="kpi"><div class="label">Reserve (ETH)</div><div class="value" id="resEth">—</div></div>
-        <div class="kpi"><div class="label">Mid price</div><div class="value" id="midPrice">—</div></div>
-        <div class="kpi"><div class="label">LP in Safe</div><div class="value" id="lpSafe">—</div></div>
-      </div>
-      <p class="muted" style="margin-top:6px">Indicative; computed from pair reserves (ETH per XALRA). Not price advice.</p>
-    </section>
-
-    <!-- Provenance -->
-    <section class="card">
-      <h2>Provenance</h2>
-      <div class="grid">
-        <div>
-          <ul class="clean">
-            <li>Contract verified: <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a></li>
-            <li>Liquidity pair: <code>0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91</code></li>
-            <li>Router: <code>UniswapV2Router02</code></li>
-          </ul>
-        </div>
-        <div>
-          <ul class="clean">
-            <li>Owner (mainnet): Safe multisig <code>0x5aBB…1405</code></li>
-            <li>No transfer taxes; fixed supply at deploy</li>
-            <li>Open data ethos; reproducible notebooks</li>
-          </ul>
-        </div>
-      </div>
-      <p class="muted" style="margin-top:8px"><strong>Note:</strong> XALRA is not an investment and makes no promises of returns or medical outcomes.</p>
-    </section>
-
-    <!-- Roadmap & Community targets -->
-    <section class="card" id="roadmap">
-      <h2>Roadmap & Community Targets</h2>
-      <ul class="phase">
-        <li>✅ <strong>Phase 0</strong>: Deploy, verify, Safe owner, initial Uniswap v2 pool.</li>
-        <li>🧪 <strong>Phase 1</strong> — <span class="chip">100 X followers</span> or <span class="chip">50 holders</span>:
-          publish a 4‑page litepaper + first demo notebook.</li>
-        <li>🔭 <strong>Phase 2</strong> — <span class="chip">250 X followers</span> or <span class="chip">150 holders</span>:
-          open first micro‑grants (tooling / data curation); announce LP lock schedule.</li>
-        <li>🧬 <strong>Phase 3</strong> — <span class="chip">500 X followers</span> or <span class="chip">300 holders</span>:
-          lock a portion of LP (eg. 3 months) and ship two reproducible examples.</li>
-        <li>🌐 <strong>Phase 4</strong> — <span class="chip">1k X followers</span> or <span class="chip">500 holders</span>:
-          scale grants; community voting on the next research bounties.</li>
-      </ul>
-      <p class="muted" style="margin-top:8px">Targets are directional; timing subject to gas & operational constraints. We’ll announce each step publicly with links and proofs.</p>
-    </section>
-
-    <!-- Grants & Bounties -->
-    <section class="card" id="grants">
-      <h2>Grants & Bounties</h2>
-      <p>We prioritize useful, reproducible outputs over speculation. Examples:</p>
-      <ul class="clean">
-        <li>🛠️ A script to normalize publicly available aging biomarker datasets</li>
-        <li>📊 A compact dashboard rendering key pool/holder on‑chain stats</li>
-        <li>🧠 A tutorial notebook comparing 2–3 ML methods on a longevity dataset</li>
-      </ul>
-      <p class="muted" style="margin-top:8px">
-        Propose a bounty or apply:
-        <a href="mailto:xalara.project@gmail.com">xalara.project@gmail.com</a> ·
-        <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
-        <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram</a>
-      </p>
-    </section>
-
-    <!-- How to Buy (Mainnet) -->
-    <section class="card" id="howto">
-      <h2>How to buy XALRA</h2>
-      <ol style="margin:0; padding-left:18px">
-        <li>Open <a id="buyUniswap" target="_blank" rel="noopener">Uniswap on Ethereum</a>.</li>
-        <li>In the token selector, paste the XALRA address:
-          <code>0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code>.
-        </li>
-        <li>Select <strong>ETH → XALRA</strong>, set slippage to <strong>0.5–1%</strong>, and swap.</li>
-      </ol>
-      <p class="muted" style="margin-top:10px">
-        Tip: If Uniswap shows “Unknown token”, click “Import” (normal for new tokens).
-        Always verify the contract address.
-      </p>
-    </section>
-
-    <!-- Trade (Mainnet) -->
-    <section class="card" id="trade">
-      <h2>Trade</h2>
-      <p class="muted">Mainnet links for convenience.</p>
-      <ul style="margin:0; padding-left:18px">
-        <li><a id="swapLink"   target="_blank" rel="noopener">Swap ETH → XALRA on Uniswap ↗</a></li>
-        <li><a id="addLiqLink" target="_blank" rel="noopener">Add liquidity (ETH + XALRA) ↗</a></li>
-        <li><a id="pairInfoLink" target="_blank" rel="noopener">View pool on a DEX tracker ↗</a></li>
-      </ul>
-    </section>
-
-    <!-- Balances (read-only via wallet provider) -->
-    <section class="card" id="balancesCard">
-      <h2>Balances</h2>
-      <p class="muted">
-        Read‑only via your wallet provider. Enter addresses (one per line or separated by commas),
-        then click <strong>Refresh</strong>. Your connected wallet (if any) will be added automatically.
-      </p>
-
-      <textarea id="addrList" rows="4" style="width:100%; background:#0e1320; color:#cfe1ff;
-        border:1px solid #1b2233; border-radius:8px; padding:8px;"></textarea>
-
-      <div class="btn-row">
-        <button id="refreshBalances">Refresh</button>
-        <button id="clearBalances" style="opacity:.85">Clear</button>
-      </div>
-
-      <div id="balancesList" style="margin-top:8px"></div>
-      <p class="muted">Total (listed): <strong id="balancesTotal">–</strong> XALRA</p>
-    </section>
-
-    <footer>
-      © <span id="year"></span> Xalara · Network: <span id="footerNet">—</span><br>
-      <a href="https://twitter.com/Xalara_Token" target="_blank" rel="noopener">Twitter</a> ·
-      <a href="https://t.me/Xalara_Community" target="_blank" rel="noopener">Telegram</a> ·
-      <a href="mailto:xalara.project@gmail.com">Email</a> ·
-      <a href="https://etherscan.io/address/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3#code" target="_blank" rel="noopener">Etherscan</a>
-      <p class="muted" style="margin-top:8px">
-        Security: owner is a Safe multisig (<code>0x5aBB…1405</code>); liquidity currently <strong>unlocked</strong>.
-        We plan to <strong>lock or burn</strong> LP at the first community milestone and post the proof link here and on X.
-      </p>
-    </footer>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">ERC-20 · Ethereum Mainnet · Live</div>
+    <h1>
+      Open Science.<br>
+      <span class="line2">Longer Lives.</span>
+    </h1>
+    <p class="hero-sub">
+      Xalara funds <strong>open-source biotech, longevity research, and AI-assisted bioinformatics</strong> — community-driven, reproducible, transparent.
+    </p>
+    <div class="hero-actions">
+      <a href="https://app.uniswap.org/#/swap?outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3" target="_blank" class="btn-primary">Buy XALRA on Uniswap</a>
+      <a href="#" target="_blank" class="btn-ghost">Read Whitepaper</a>
+    </div>
+    <div class="hero-contract">
+      <span class="contract-label">Contract</span>
+      <span class="contract-addr" onclick="copyAddress(this)" title="Click to copy">0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</span>
+      <span class="copy-hint" id="copyHint">click to copy</span>
+    </div>
   </div>
+</section>
 
-  <!-- ethers.js (needed for the Balances panel only) -->
-  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
+<!-- LIVE DATA BAR -->
+<div class="data-bar" id="dataBar">
+  <div class="data-item">
+    <span class="data-label">Price (ETH)</span>
+    <span class="data-value green loading" id="barPrice">—</span>
+  </div>
+  <div class="data-item">
+    <span class="data-label">ETH Reserve</span>
+    <span class="data-value loading" id="barEth">—</span>
+  </div>
+  <div class="data-item">
+    <span class="data-label">XALRA Reserve</span>
+    <span class="data-value loading" id="barXalra">—</span>
+  </div>
+  <div class="data-item">
+    <span class="data-label">Total Supply</span>
+    <span class="data-value">1,000,000,000</span>
+  </div>
+  <div class="data-item">
+    <span class="data-label">Network</span>
+    <span class="data-value green">Ethereum</span>
+  </div>
+  <div class="data-item">
+    <span class="data-label">Standard</span>
+    <span class="data-value">ERC-20</span>
+  </div>
+</div>
 
-  <!-- App logic -->
-  <script>
-  (function () {
-    // === MAINNET CONSTANTS ===
-    const MAINNET_TOKEN = "0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3";
-    const MAINNET_PAIR  = "0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91";
-    const SAFE_ADDR     = "0x5aBB817aaE8C17fBc97D2E2b4f08B35457aA1405";
+<!-- MISSION -->
+<section id="mission">
+  <div class="section-inner">
+    <div class="section-tag reveal">Mission</div>
+    <h2 class="section-title reveal">Built for<br>real research.</h2>
+    <p class="section-desc reveal">Xalara funds open tools and micro-grants at the intersection of biotechnology, longevity, and artificial intelligence. We prioritise transparent, reproducible work over speculation.</p>
+    <div class="mission-grid reveal">
+      <div class="mission-card">
+        <span class="mission-icon">🧬</span>
+        <h3>Longevity R&D</h3>
+        <p>Community-driven experiments and datasets for healthspan extension — from assay curation to biomarker exploration and open data repositories.</p>
+      </div>
+      <div class="mission-card">
+        <span class="mission-icon">🤖</span>
+        <h3>AI for Bioinformatics</h3>
+        <p>Lightweight pipelines that help non-experts run analyses. Reproducible notebooks, synthetic datasets, and accessible tooling for the research community.</p>
+      </div>
+      <div class="mission-card">
+        <span class="mission-icon">🤝</span>
+        <h3>Open Grants & Bounties</h3>
+        <p>Micro-grants for useful tools — data cleaning, visualisation, literature triage — and reproducibility rewards for the community that ships real work.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // Optional: if you later lock/burn LP, put proof here to flip the badge
-    const PLANNED_LIQ_ACTION_DATE = "";  // e.g., "2025-03-01"
-    const LP_BURN_TX = "";               // e.g., "0xabc..."
-    const LP_LOCK_PROOF_URL = "";        // e.g., "https://app.unicrypt.network/lock/..."
+<div class="divider"></div>
 
-    // Helpers
-    const $ = (id) => document.getElementById(id);
-    const fmt = (n, max=6) => Number(n).toLocaleString(undefined, { maximumFractionDigits: max });
+<!-- TOKENOMICS -->
+<section id="tokenomics">
+  <div class="section-inner">
+    <div class="section-tag reveal">Tokenomics</div>
+    <h2 class="section-title reveal">Simple.<br>Transparent.</h2>
+    <p class="section-desc reveal">Fixed supply, no transfer taxes, verified contract. No hidden allocations — all parameters public on Etherscan from block zero.</p>
+    <div class="tokenomics-layout">
+      <div>
+        <div class="token-stats reveal">
+          <div class="token-stat">
+            <span class="token-stat-label">Total Supply</span>
+            <span class="token-stat-value accent">1,000,000,000 XALRA</span>
+          </div>
+          <div class="token-stat">
+            <span class="token-stat-label">Standard</span>
+            <span class="token-stat-value">ERC-20 · Ethereum</span>
+          </div>
+          <div class="token-stat">
+            <span class="token-stat-label">Decimals</span>
+            <span class="token-stat-value">18</span>
+          </div>
+          <div class="token-stat">
+            <span class="token-stat-label">Transfer Tax</span>
+            <span class="token-stat-value accent">None</span>
+          </div>
+          <div class="token-stat">
+            <span class="token-stat-label">Owner</span>
+            <span class="token-stat-value">Safe Multisig</span>
+          </div>
+          <div class="token-stat">
+            <span class="token-stat-label">Contract</span>
+            <span class="token-stat-value accent">Verified ✓</span>
+          </div>
+          <div class="token-stat">
+            <span class="token-stat-label">DEX</span>
+            <span class="token-stat-value">Uniswap V2</span>
+          </div>
+          <div class="token-stat">
+            <span class="token-stat-label">Ticker</span>
+            <span class="token-stat-value accent">XALRA</span>
+          </div>
+        </div>
+        <div class="supply-viz reveal" style="margin-top:1.5rem;">
+          <div class="supply-label"><span>Circulating</span><span id="circPct">—</span></div>
+          <div class="supply-bar"><div class="supply-bar-fill" id="circBar" style="width:0%"></div></div>
+          <div class="supply-label" style="margin-top:0.3rem;"><span style="font-size:0.68rem;color:var(--muted)">Live from chain</span><span id="circAmt" style="color:var(--accent)">—</span></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="token-features">
+          <div class="token-feature">
+            <span class="token-feature-icon">🔒</span>
+            <div>
+              <div class="token-feature-title">Safe Multisig Ownership</div>
+              <div class="token-feature-desc">The contract owner is a Gnosis Safe multisig, not an EOA. No single key controls the project. Transparent on-chain governance from day one.</div>
+            </div>
+          </div>
+          <div class="token-feature">
+            <span class="token-feature-icon">🔥</span>
+            <div>
+              <div class="token-feature-title">Burnable Supply</div>
+              <div class="token-feature-desc">XALRA supports ERC-20 burn functionality. Supply can only decrease, never increase. Fixed at deployment with no minting capability.</div>
+            </div>
+          </div>
+          <div class="token-feature">
+            <span class="token-feature-icon">⚡</span>
+            <div>
+              <div class="token-feature-title">EIP-2612 Permit</div>
+              <div class="token-feature-desc">Gasless approvals via signed permits. Enables more efficient DeFi integrations without requiring a separate approval transaction.</div>
+            </div>
+          </div>
+          <div class="token-feature">
+            <span class="token-feature-icon">✅</span>
+            <div>
+              <div class="token-feature-title">Verified Source Code</div>
+              <div class="token-feature-desc">Contract source fully verified on Etherscan. Read every line. No proxies, no hidden logic, no owner backdoors beyond standard Safe controls.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    function setNetworkBadge() {
-      const badge = $("networkNote");
-      const footerNet = $("footerNet");
-      if (!window.ethereum) {
-        if (badge) badge.textContent = "Wallet not detected (showing mainnet data)";
-        if (footerNet) footerNet.textContent = "Ethereum Mainnet";
-        return;
-      }
-      window.ethereum.request({ method: "eth_chainId" })
-        .then(idHex => {
-          const isMainnet = idHex === "0x1";
-          if (badge) badge.textContent = isMainnet
-            ? "Wallet network: Ethereum Mainnet ✓"
-            : `Wallet network: ${parseInt(idHex,16)} (not mainnet) — site shows mainnet data`;
-          if (footerNet) footerNet.textContent = isMainnet ? "Ethereum Mainnet" : "Other";
-        })
-        .catch(() => {
-          if (badge) badge.textContent = "Wallet network: unknown";
-          if (footerNet) footerNet.textContent = "Ethereum";
-        });
+    <!-- Live on-chain data -->
+    <div style="margin-top:4rem;">
+      <div class="section-tag reveal" style="margin-bottom:1rem;">Live On-Chain Data</div>
+      <div class="live-grid reveal">
+        <div class="live-card">
+          <div class="live-card-label">Price (ETH/XALRA)</div>
+          <div class="live-card-value accent loading" id="livePrice">—</div>
+          <div class="live-card-sub">Uniswap V2 mid price</div>
+        </div>
+        <div class="live-card">
+          <div class="live-card-label">ETH in Pool</div>
+          <div class="live-card-value loading" id="liveEth">—</div>
+          <div class="live-card-sub">Reserve balance</div>
+        </div>
+        <div class="live-card">
+          <div class="live-card-label">XALRA in Pool</div>
+          <div class="live-card-value loading" id="liveXalra">—</div>
+          <div class="live-card-sub">Reserve balance</div>
+        </div>
+        <div class="live-card">
+          <div class="live-card-label">Circulating Supply</div>
+          <div class="live-card-value loading" id="liveCirc">—</div>
+          <div class="live-card-sub">Excl. Safe + Deployer</div>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:var(--muted);margin-top:1rem;font-weight:300;">Data fetched live from Ethereum mainnet via public RPC. Not price advice.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ROADMAP -->
+<section id="roadmap" class="roadmap">
+  <div class="section-inner">
+    <div class="section-tag reveal">Roadmap</div>
+    <h2 class="section-title reveal">Community<br>milestones.</h2>
+    <p class="section-desc reveal">Each phase unlocks when the community hits real targets. Transparent, verifiable, announced publicly with on-chain proofs.</p>
+    <div class="roadmap-list">
+      <div class="roadmap-item done reveal">
+        <div class="roadmap-phase">Phase 0</div>
+        <div class="roadmap-line"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-milestone">✅ Complete</div>
+          <div class="roadmap-title">Foundation</div>
+          <div class="roadmap-desc">Deploy and verify contract on Ethereum mainnet. Establish Safe multisig ownership. Create initial Uniswap V2 liquidity pool. Launch website, X, and Telegram.</div>
+        </div>
+      </div>
+      <div class="roadmap-item active reveal">
+        <div class="roadmap-phase">Phase 1</div>
+        <div class="roadmap-line"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-milestone">🧪 In Progress — 100 X followers or 50 holders</div>
+          <div class="roadmap-title">Litepaper + First Demo</div>
+          <div class="roadmap-desc">Publish a 4-page litepaper outlining research focus areas. Ship first reproducible demo notebook. Lock initial portion of LP and post proof link on X.</div>
+        </div>
+      </div>
+      <div class="roadmap-item upcoming reveal">
+        <div class="roadmap-phase">Phase 2</div>
+        <div class="roadmap-line"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-milestone">🔭 250 X followers or 150 holders</div>
+          <div class="roadmap-title">First Micro-Grants</div>
+          <div class="roadmap-desc">Open the first micro-grant round for tooling and data curation. Announce LP lock schedule with exact timeline and on-chain proof.</div>
+        </div>
+      </div>
+      <div class="roadmap-item upcoming reveal">
+        <div class="roadmap-phase">Phase 3</div>
+        <div class="roadmap-line"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-milestone">🧬 500 X followers or 300 holders</div>
+          <div class="roadmap-title">LP Lock + Research Examples</div>
+          <div class="roadmap-desc">Lock a portion of LP (minimum 3 months) with verifiable proof. Ship two fully reproducible research examples. Community vote on next bounties.</div>
+        </div>
+      </div>
+      <div class="roadmap-item upcoming reveal">
+        <div class="roadmap-phase">Phase 4</div>
+        <div class="roadmap-line"></div>
+        <div class="roadmap-content">
+          <div class="roadmap-milestone">🌐 1,000 X followers or 500 holders</div>
+          <div class="roadmap-title">Scale Grants + Governance</div>
+          <div class="roadmap-desc">Scale grant programme. Community voting on next research bounties. Evaluate on-chain governance tooling for grant allocation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW TO BUY -->
+<section id="buy">
+  <div class="section-inner">
+    <div class="section-tag reveal">How to Buy</div>
+    <h2 class="section-title reveal">Get XALRA<br>in 3 steps.</h2>
+    <p class="section-desc reveal">XALRA trades on Uniswap V2 on Ethereum mainnet. Always verify the contract address before swapping.</p>
+    <div class="buy-steps reveal">
+      <div class="buy-step">
+        <div class="step-num">01</div>
+        <h4>Open Uniswap</h4>
+        <p>Go to <strong>app.uniswap.org</strong> and connect your Ethereum wallet (MetaMask, Rabby, Coinbase Wallet).</p>
+      </div>
+      <div class="buy-step">
+        <div class="step-num">02</div>
+        <h4>Paste Contract Address</h4>
+        <p>In the token selector, paste the verified XALRA address:<br><br><code>0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code><br><br>If Uniswap shows "Unknown token", click Import — normal for newer tokens.</p>
+      </div>
+      <div class="buy-step">
+        <div class="step-num">03</div>
+        <h4>Swap ETH → XALRA</h4>
+        <p>Select ETH as input, XALRA as output. Set slippage to 0.5–1%. Review and confirm the swap.</p>
+      </div>
+    </div>
+    <div class="buy-cta reveal">
+      <div class="buy-cta-text">
+        <h4>Ready to swap?</h4>
+        <p>Always verify: <code>0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3</code></p>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="https://app.uniswap.org/#/swap?outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3" target="_blank" class="btn-primary">Swap on Uniswap ↗</a>
+        <a href="https://etherscan.io/token/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3" target="_blank" class="btn-ghost">View on Etherscan ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GRANTS -->
+<section id="grants" class="grants">
+  <div class="section-inner">
+    <div class="section-tag reveal">Grants & Bounties</div>
+    <h2 class="section-title reveal">Fund real<br>work.</h2>
+    <p class="section-desc reveal">We prioritise useful, reproducible outputs over speculation. Micro-grants for tools, data, and research that the community can actually use.</p>
+    <div class="bounties-grid reveal">
+      <div class="bounty-card">
+        <span class="bounty-icon">🛠️</span>
+        <h4>Biomarker Dataset Normaliser</h4>
+        <p>A script to clean and normalise publicly available aging biomarker datasets into a consistent, reusable format.</p>
+      </div>
+      <div class="bounty-card">
+        <span class="bounty-icon">📊</span>
+        <h4>On-Chain Stats Dashboard</h4>
+        <p>A compact dashboard rendering key pool and holder on-chain stats — open source, reproducible, community maintained.</p>
+      </div>
+      <div class="bounty-card">
+        <span class="bounty-icon">🧠</span>
+        <h4>ML Methods Comparison Notebook</h4>
+        <p>A tutorial notebook comparing 2–3 ML methods on a longevity dataset. Reproducible, well-documented, openly published.</p>
+      </div>
+    </div>
+    <div class="buy-cta reveal">
+      <div class="buy-cta-text">
+        <h4>Propose a bounty or apply for a grant</h4>
+        <p>We review all proposals. Useful, reproducible, open-source work gets funded first.</p>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="mailto:xalara.project@gmail.com" class="btn-primary">Email Us</a>
+        <a href="https://t.me/xalara" target="_blank" class="btn-ghost">Telegram ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-inner">
+    <div class="section-tag reveal">Team</div>
+    <h2 class="section-title reveal">Who's<br>building this.</h2>
+    <p class="section-desc reveal">A small team with deep roots in engineering, data science, and the open science community.</p>
+    <div class="team-grid reveal">
+      <div class="team-card">
+        <div class="team-avatar">X</div>
+        <div class="team-name">Founder</div>
+        <div class="team-role">Research & Operations</div>
+        <div class="team-desc">Engineering background spanning meteorology and sustainable energy. Builder of tools and infrastructure for the project. More details coming soon.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:rgba(0,196,255,0.1);color:var(--accent2);">?</div>
+        <div class="team-name">Community Contributors</div>
+        <div class="team-role">Open Roles</div>
+        <div class="team-desc">We're looking for researchers, data scientists, and developers who believe in open science. Reach out via Telegram or email.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">XALA<span>RA</span></div>
+    <div class="footer-links">
+      <a href="https://x.com/xalara" target="_blank">X (Twitter)</a>
+      <a href="https://t.me/xalara" target="_blank">Telegram</a>
+      <a href="mailto:xalara.project@gmail.com">Email</a>
+      <a href="https://etherscan.io/token/0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3" target="_blank">Etherscan</a>
+      <a href="https://app.uniswap.org/#/swap?outputCurrency=0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3" target="_blank">Uniswap</a>
+    </div>
+  </div>
+  <div class="footer-disclaimer">
+    © 2026 Xalara · Contract: 0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3 · Owner: Safe multisig 0x5aBB…1405 ·
+    XALRA is not an investment and makes no promises of returns or medical outcomes.
+    Always verify the contract address before transacting. This site is for informational purposes only.
+  </div>
+</footer>
+
+<script>
+const PAIR = '0x87D0F6e909C459B1dA253F1A9570cceC8F59Bb91';
+const TOKEN = '0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3';
+const CIRC_API = '/api/circulating';
+
+const rpc = async (method, params) => {
+  const r = await fetch('https://eth.llamarpc.com', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({jsonrpc:'2.0',id:1,method,params})
+  });
+  const d = await r.json();
+  return d.result;
+};
+
+const getReserves = async () => {
+  const sig = '0x0902f1ac';
+  const result = await rpc('eth_call', [{to: PAIR, data: sig}, 'latest']);
+  if (!result || result === '0x') return null;
+  const r0 = BigInt('0x' + result.slice(2, 66));
+  const r1 = BigInt('0x' + result.slice(66, 130));
+  return { r0, r1 };
+};
+
+const fmt = (num, decimals = 4) => {
+  if (num === null || num === undefined) return '—';
+  return Number(num).toLocaleString(undefined, {maximumFractionDigits: decimals, minimumFractionDigits: decimals});
+};
+
+const fmtLarge = (num) => {
+  if (num >= 1e9) return (num/1e9).toFixed(2) + 'B';
+  if (num >= 1e6) return (num/1e6).toFixed(2) + 'M';
+  if (num >= 1e3) return (num/1e3).toFixed(2) + 'K';
+  return num.toFixed(2);
+};
+
+const setVal = (id, val, cls) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = val;
+  el.classList.remove('loading');
+  if (cls) el.classList.add(cls);
+};
+
+const loadData = async () => {
+  try {
+    const res = await getReserves();
+    if (!res) return;
+
+    const ethReserve = Number(res.r0) / 1e18;
+    const xalraReserve = Number(res.r1) / 1e18;
+    const price = ethReserve / xalraReserve;
+    const priceStr = price.toExponential(5);
+
+    setVal('barPrice', priceStr, 'green');
+    setVal('barEth', fmt(ethReserve, 6) + ' ETH');
+    setVal('barXalra', fmtLarge(xalraReserve) + ' XALRA');
+    setVal('livePrice', priceStr, 'accent');
+    setVal('liveEth', fmt(ethReserve, 6) + ' ETH');
+    setVal('liveXalra', fmtLarge(xalraReserve) + ' XALRA');
+  } catch(e) {
+    ['barPrice','livePrice'].forEach(id => setVal(id, 'n/a'));
+  }
+
+  try {
+    const r = await fetch(CIRC_API);
+    if (r.ok) {
+      const d = await r.json();
+      const circ = parseFloat(d.circulating || d);
+      const pct = (circ / 1e9 * 100).toFixed(4);
+      setVal('liveCirc', fmtLarge(circ) + ' XALRA');
+      setVal('circPct', pct + '%');
+      setVal('circAmt', fmtLarge(circ) + ' XALRA', 'accent');
+      const bar = document.getElementById('circBar');
+      if (bar) setTimeout(() => { bar.style.width = pct + '%'; }, 300);
     }
+  } catch(e) {
+    setVal('liveCirc', 'see Etherscan');
+  }
+};
 
-    function updateTradeLinks() {
-      const buyUniswap   = $("buyUniswap");
-      const swapLink     = $("swapLink");
-      const addLiqLink   = $("addLiqLink");
-      const pairInfoLink = $("pairInfoLink");
+const copyAddress = (el) => {
+  navigator.clipboard.writeText('0x20F58aC708D2ebBA5f4B6f1687073f631714f9F3');
+  const hint = document.getElementById('copyHint');
+  hint.textContent = 'copied!';
+  hint.style.color = 'var(--accent)';
+  setTimeout(() => { hint.textContent = 'click to copy'; hint.style.color = ''; }, 2000);
+};
 
-      const swapUrl = `https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=${MAINNET_TOKEN}&chain=ethereum`;
-      const addUrl  = `https://app.uniswap.org/#/add/v2/ETH/${MAINNET_TOKEN}?chain=ethereum`;
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-      if (buyUniswap) buyUniswap.href = swapUrl;
-      if (swapLink)   swapLink.href   = swapUrl;
-      if (addLiqLink) addLiqLink.href = addUrl;
-      if (pairInfoLink) pairInfoLink.href = `https://dexscreener.com/ethereum/${MAINNET_PAIR}`;
-    }
-
-    function wireLiquiditySection() {
-      const statusEl = $("liqStatus");
-      const dateEl   = $("liqDate");
-      if (dateEl) dateEl.textContent = PLANNED_LIQ_ACTION_DATE || "TBD";
-
-      if (statusEl) {
-        if (LP_BURN_TX) {
-          statusEl.innerHTML = `Locked (burn) · <a href="https://etherscan.io/tx/${LP_BURN_TX}" target="_blank" rel="noopener">proof ↗</a>`;
-        } else if (LP_LOCK_PROOF_URL) {
-          statusEl.innerHTML = `Locked (locker) · <a href="${LP_LOCK_PROOF_URL}" target="_blank" rel="noopener">proof ↗</a>`;
-        } else {
-          statusEl.textContent = "Unlocked";
-        }
-      }
-    }
-
-    // --- API readers (server-side endpoints) ---
-    async function updateSupply() {
-      try {
-        const r = await fetch("/api/circulating?format=human");
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        const j = await r.json();
-        $("circNow").textContent = fmt(j.circulating, 6);
-        $("exSafe").textContent  = fmt(j.excluded.safe.balance, 6);
-        $("exEoa").textContent   = fmt(j.excluded.deployer.balance, 6);
-      } catch (e) {
-        console.warn("Supply fetch failed:", e);
-        ["circNow","exSafe","exEoa"].forEach(id => { const el = $(id); if (el) el.textContent = "—"; });
-      }
-    }
-
-    async function updatePoolSnapshot() {
-      try {
-        const r = await fetch("/api/pool?format=human");
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        const j = await r.json();
-        $("resXalra").textContent = fmt(j.reserveXalara);
-        $("resEth").textContent   = fmt(j.reserveEth);
-        $("midPrice").textContent = `${Number(j.priceEthPerXalara).toPrecision(6)} ETH / XALRA`;
-        $("lpSafe").textContent   = `${j.lp.safe} / ${j.lp.total}`;
-      } catch (e) {
-        console.warn("Pool snapshot failed:", e);
-        ["resXalra","resEth","midPrice","lpSafe"].forEach(id => { const el = $(id); if (el) el.textContent = "—"; });
-      }
-    }
-
-    // Contract card buttons
-    function wireBasicButtons() {
-      $("copy")?.addEventListener("click", async () => {
-        try {
-          await navigator.clipboard.writeText(MAINNET_TOKEN);
-          const btn = $("copy"); const old = btn.textContent; btn.textContent = "Copied!"; setTimeout(() => btn.textContent = old, 1200);
-        } catch {}
-      });
-      $("add")?.addEventListener("click", async () => {
-        if (!window.ethereum) return alert("MetaMask not detected.");
-        try {
-          await window.ethereum.request({
-            method: "wallet_watchAsset",
-            params: { type: "ERC20", options: { address: MAINNET_TOKEN, symbol: "XALRA", decimals: 18 } }
-          });
-        } catch (e) { alert(e?.message || String(e)); }
-      });
-    }
-
-    // --- Optional: Balances panel (uses wallet provider) ---
-    function wireBalancesPanel() {
-      const addrBox   = $("addrList");
-      const listEl    = $("balancesList");
-      const totalEl   = $("balancesTotal");
-      const btnRef    = $("refreshBalances");
-      const btnClear  = $("clearBalances");
-      if (!addrBox || !listEl || !totalEl || !btnRef) return;
-
-      const TOKEN_ABI = ["function balanceOf(address) view returns (uint256)"];
-      const dedupe = (arr) => Array.from(new Set(arr.map(a => a.toLowerCase())));
-      const parseAddrs = (text) =>
-        (text || "")
-          .split(/[\s,;]+/g)
-          .map(s => s.trim())
-          .filter(Boolean)
-          .filter(ethers.isAddress);
-
-      function row(addr, text, isErr) {
-        const r = document.createElement("div");
-        r.style.cssText = "display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #1f2737;";
-        const left = document.createElement("code"); left.textContent = addr;
-        const right = document.createElement("strong"); right.textContent = text;
-        if (isErr) right.style.color = "#ffd166";
-        r.append(left, right);
-        listEl.appendChild(r);
-      }
-
-      async function refresh() {
-        try {
-          if (!window.ethereum) { listEl.innerHTML = ""; row("-", "Wallet not detected", true); totalEl.textContent = "–"; return; }
-          const provider = new ethers.BrowserProvider(window.ethereum);
-          const tokenRO  = new ethers.Contract(MAINNET_TOKEN, TOKEN_ABI, provider);
-
-          const inputAddrs = dedupe(parseAddrs(addrBox.value));
-          if (inputAddrs.length === 0) { listEl.innerHTML = ""; row("-", "No valid addresses", true); totalEl.textContent = "–"; return; }
-
-          listEl.innerHTML = "";
-          let total = 0n;
-          const results = await Promise.allSettled(inputAddrs.map(a => tokenRO.balanceOf(a)));
-          results.forEach((res, i) => {
-            const addr = inputAddrs[i];
-            if (res.status === "fulfilled") {
-              const bal = res.value;
-              total += bal;
-              row(addr, ethers.formatUnits(bal, 18), false);
-            } else {
-              row(addr, "Error", true);
-            }
-          });
-          totalEl.textContent = ethers.formatUnits(total, 18);
-        } catch (e) {
-          listEl.innerHTML = ""; row("-", (e?.message || String(e)), true); totalEl.textContent = "–";
-        }
-      }
-
-      async function addConnectedOnce() {
-        try {
-          if (!window.ethereum) return;
-          const accounts = await window.ethereum.request({ method: "eth_accounts" });
-          const me = (accounts[0] || "").toLowerCase();
-          if (ethers.isAddress(me)) {
-            const current = dedupe(parseAddrs(addrBox.value));
-            if (!current.includes(me)) {
-              addrBox.value = (addrBox.value.trim() + "\n" + me).trim() + "\n";
-            }
-          }
-        } catch {}
-      }
-
-      btnRef.addEventListener("click", refresh);
-      btnClear?.addEventListener("click", () => { addrBox.value = ""; listEl.innerHTML = ""; totalEl.textContent = "–"; });
-
-      if (window.ethereum?.on) {
-        window.ethereum.on("accountsChanged", async () => { await addConnectedOnce(); await refresh(); });
-        window.ethereum.on("chainChanged",    async () => { setNetworkBadge(); await refresh(); });
-      }
-
-      addConnectedOnce().then(refresh);
-    }
-
-    function onLoad() {
-      // small helpers
-      const y = $("year"); if (y) y.textContent = new Date().getFullYear();
-      setNetworkBadge();
-      updateTradeLinks();
-      wireLiquiditySection();
-      wireBasicButtons();
-
-      // API-driven sections
-      updateSupply();
-      updatePoolSnapshot();
-      setInterval(updateSupply,       60_000); // refresh every minute
-      setInterval(updatePoolSnapshot, 60_000);
-
-      // Optional balances panel
-      wireBalancesPanel();
-    }
-
-    // kick off
-    window.addEventListener("load", onLoad);
-  })();
-  </script>
+loadData();
+</script>
 </body>
 </html>
-
-
-
